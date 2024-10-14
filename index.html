@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag és Drop Canvas</title>
+    <style>
+        #canvas {
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            position: relative;
+					
+        }
+
+        .rectangle {
+            position: absolute;
+            border: 1px solid #000;
+            background-color: #f0f0f0;
+            padding: 5px;
+            cursor: pointer;
+						pointer-events: auto; 						
+        }
+    </style>
+</head>
+<body>
+
+    <div id="canvas" tabindex="0"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

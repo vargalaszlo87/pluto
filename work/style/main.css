@@ -1,0 +1,165 @@
+/* ------------------ "fonts" style */
+
+	@font-face {
+		font-family: 'Roboto';
+		font-style: normal;
+		font-weight: 400;
+		src: url('../style/fonts/roboto-v20-latin-regular.eot'); /* IE9 Compat Modes */
+		src: local('Roboto'), local('Roboto-Regular'),
+			 url('../style/fonts/roboto-v20-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+			 url('../style/fonts/roboto-v20-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+			 url('../style/fonts/roboto-v20-latin-regular.woff') format('woff'), /* Modern Browsers */
+			 url('../style/fonts/roboto-v20-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+			 url('../style/fonts/roboto-v20-latin-regular.svg#Roboto') format('svg'); /* Legacy iOS */
+	}	
+
+	@font-face {
+		font-family: 'Inconsolata';
+		font-style: normal;
+		font-weight: 400;
+		src: url('../style/fonts/inconsolata-v18-latin-regular.eot'); /* IE9 Compat Modes */
+		src: local('Inconsolata Regular'), local('Inconsolata-Regular'),
+			 url('../style/fonts/inconsolata-v18-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+			 url('../style/fonts/inconsolata-v18-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+			 url('../style/fonts/inconsolata-v18-latin-regular.woff') format('woff'), /* Modern Browsers */
+			 url('../style/fonts/inconsolata-v18-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+			 url('../style/fonts/inconsolata-v18-latin-regular.svg#Inconsolata') format('svg'); /* Legacy iOS */
+	}
+
+	@font-face {
+		font-family: 'Speedy-Regular';
+		font-style: normal;
+		font-weight: 400;
+		src: url('../style/fonts/Speedy-Regular.eot'); /* IE9 Compat Modes */
+		src: local('Speedy-Regular'), local('Speedy-Regular'),
+			 url('../style/fonts/Speedy-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+			 url('../style/fonts/Speedy-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+			 url('../style/fonts/Speedy-Regular.woff') format('woff'), /* Modern Browsers */
+			 url('../style/fonts/Speedy-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+			 url('../style/fonts/Speedy-Regular.svg#Inconsolata') format('svg'); /* Legacy iOS */
+	}
+	
+/* ------------------ "default" style */
+
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	
+	ul, li {
+		margin: 0;
+		padding: 0;
+		line-height: 0;
+	}
+
+	body {
+		font-family: 'Roboto', sans-serif;
+	}	
+	
+/* ------------------ "container" style */
+		
+	.full {
+		min-height: 100%;
+		height: 100%;	
+	}
+	
+	.row-not-full {
+		height: 90vh;
+	}
+	
+	.row-full {
+		/*height: 90vh;*/
+	}
+	
+		.row-full > div {
+			padding: 0;
+			padding: 0.5rem;
+		}
+
+	.row-half {
+		height: 45vh;
+	}	
+	
+	.container-fluid, .row, .null {
+		margin: 0;
+		padding: 0;
+	}
+	
+	.space {
+		margin: 0 1.0rem;
+	}
+			
+/* ------------------ "navigation" style */
+	
+	#navigation {
+		font-family: 'Roboto';
+		background: #D6DBDF;
+		background: #424;
+	}
+	
+		#navigation div {
+			padding: 5px 5px 0px 5px;
+			/*border-bottom: solid 3px #fff;*/
+		}
+		
+		#navigation button {
+			width: 4rem;
+			background: #fff;
+			border: 0;
+			border-bottom: solid 5px #424;
+		}
+		
+			#navigation button i {
+				color: #333;
+				padding: 5px;
+			}
+			
+				#navigation button i p {
+					margin: 0;
+					padding: 0;
+					margin-top: 0.5rem;
+					text-transform: uppercase;
+					font-size: 0.7rem;
+					font-family: 'Roboto';
+					color: #424;
+				}
+				
+			/* hover */	
+			
+				#navigation button:hover {
+					opacity: 0.7;
+					border-color: magenta;
+				}
+				
+	.sub-navigation {
+		width: 76px; 
+		height: 100%; 
+		background-color: #424;
+	}		
+		
+		.sub-navigation button {
+			width: 4.2rem;
+			background: #fff;
+			border: 0;
+			/*border-bottom: solid 5px #424;*/
+			font-size: 2rem;
+			color: #424;
+			margin-bottom: 0.25rem;
+			position: relative;
+			right: 3px;
+		}
+			
+			.sub-navigation button p {
+				margin: 0;
+				padding: 0;
+				text-transform: uppercase;
+				font-size: 0.7rem;
+				font-family: 'Roboto';
+				color: #424;
+			}		
+
+/* ------------------ "main" style */
+
+
+
+
