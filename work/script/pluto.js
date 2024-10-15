@@ -28,8 +28,6 @@ function clearSelection() {
 function createRectangle(text, x, y) {
     const rectangle = document.createElement('div');
     rectangle.classList.add('rectangle');
-    rectangle.style.width = '75px';
-    rectangle.style.height = '75px';
     rectangle.style.left = `${x + offsetX}px`; // X irányú eltolás
     rectangle.style.top = `${y + offsetY}px`; // Y irányú eltolás
     rectangle.textContent = (inputDataCounter + 1) + ". pack";
@@ -78,6 +76,7 @@ function createRectangle(text, x, y) {
             rectangle.style.border = '4px solid blue'; // Kijelöléskor vastagabb és kék border
             selectedRectangles.push(rectangle);
         }
+		rectangle.style.backgroundColor = "white";
     });
 
     // Drag and drop események
@@ -163,12 +162,15 @@ workSpace.addEventListener("focusin", (event) => {
         */
 
         const deactivateButton = document.getElementById("deactivateWorkSpace");
-        deactivateButton.style.display = "block";
+        deactivateButton.disabled = false;
+		const deactivateI = document.getElementById("deactivateWorkSpaceText");
+		deactivateI.classList.add("active");
 
         // Inaktiválás eseménykezelője
         deactivateButton.addEventListener('click', () => {
             //deactivateButton.remove(); // Gomb eltávolítása
-            deactivateButton.style.display = "none";
+            deactivateButton.disabled = true;
+			deactivateI.classList.remove("active");
             workSpace.removeEventListener('paste', paste); // Paste funkció eltávolítása
             workSpace.style.background = "white"; // workSpace háttér visszaállítása
             isButton = false;

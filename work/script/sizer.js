@@ -4,8 +4,8 @@
  */
 
 const forbidden = {
-    minWidth: 1024,
-    minHeight: 768,
+    minWidth: 102,
+    minHeight: 76,
     size: function(width, height) {
         document.getElementsByTagName("BODY")[0].style.display = (width < forbidden.minWidth || height < forbidden.minHeight) ? "none" : "block";
     }
@@ -15,23 +15,33 @@ const sizer = {
     width: 0,
     height: 0,
     navHeight: 0,
-    workPlaceHeight: 0,
-    workPlaceHeightClass: "row-full",
+    workSpaceHeight: 0,
+    workSpaceHeightClass: "row-full",
+	workSpaceDivId: "workSpaceDiv",
+	workSpaceCanvasId: "workSpace",
+	workSpaceCanvasPadding: 5,
 
     repeat: function(event, checkSizeCallback) {
         // check
         this.width = $(window).width();
         this.height = $(window).height();
         this.navHeight = $("#navigation").height();
-        this.workPlaceHeight = this.height - this.navHeight;
+        this.workSpaceHeight = this.height - this.navHeight;
 
         // recalc
-        const temp = document.getElementsByClassName(this.workPlaceHeightClass);
+        const temp = document.getElementsByClassName(this.workSpaceHeightClass);
         if (temp.length > 0) {
-            temp[0].style.height = this.workPlaceHeight + "px";
+            temp[0].style.height = this.workSpaceHeight + "px";
         }
         checkSizeCallback(this.width, this.height);
-    }
+		
+		// workSpaceCanvas
+		const temp_workSapce = document.getElementById(this.workSpaceCanvasId);
+		temp_workSapce.style.width = document.getElementById(this.workSpaceDivId).offsetWidth - 2 * this.workSpaceCanvasPadding + "px";
+		temp_workSapce.style.height = document.getElementById(this.workSpaceDivId).offsetHeight - 2 * this.workSpaceCanvasPadding + "px";
+		
+
+	}
 };
 
 $(window).on('load', (event) => {

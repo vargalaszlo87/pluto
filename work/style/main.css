@@ -123,6 +123,14 @@ body {
     padding: 5px;
 }
 
+	#deactivateWorkSpaceText {
+		color: red;
+	}
+
+#navigation button i.active {
+	color: red;
+}
+
 #navigation button i p {
     margin: 0;
     padding: 0;
@@ -141,44 +149,27 @@ body {
     border-color: magenta;
 }
 
-.sub-navigation {
-    width: 76px;
-    height: 100%;
-    background-color: #424;
-}
-
-.sub-navigation button {
-    width: 4.2rem;
-    background: #fff;
-    border: 0;
-    /*border-bottom: solid 5px #424;*/
-    font-size: 2rem;
-    color: #424;
-    margin-bottom: 0.25rem;
-    position: relative;
-    right: 3px;
-}
-
-.sub-navigation button p {
-    margin: 0;
-    padding: 0;
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    font-family: 'Roboto';
-    color: #424;
-}
-
-
 /* ------------------ "main" style */
 
+.watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5rem;
+  color: rgba(0, 0, 0, 0.1); 
+  z-index: 1; 
+  pointer-events: none;
+  white-space: nowrap; 
+}
 
 /* ------------------ "workSpace style */
 
 #workSpace {
     width: 800px;
     height: 600px;
-    border: 2px solid black;
-    position: relative;
+    border: 1px dashed black;
+    margin: 5px;
 }
 
 .rectangle {
@@ -188,4 +179,8 @@ body {
     padding: 5px;
     cursor: pointer;
     pointer-events: auto;
+	background: #fff;
+	width: 115px;
+	height: 115px;
+	z-index: 1;
 }
