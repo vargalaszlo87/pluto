@@ -1,52 +1,59 @@
 ﻿<!DOCTYPE html>
 <html lang="hu" class="wide">
-    <head>
-	    <meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />		
-		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="style/bootstrap/bootstrap.min.css" />
-		<link rel="stylesheet" href="style/swiper/swiper.min.css" />
-		<link rel="stylesheet" href="style/floatbox/floatbox.css" />
-		<link rel="stylesheet" href="style/chart/chart.css" />
-		<link rel="stylesheet" href="style/main.css">	
-		<script src="script/jquery/jquery-3.4.1.min.js"></script>
-		<script src="script/bootstrap/bootstrap.min.js"></script>
-		<script src="script/floatbox/floatbox.js"></script>
-		<script src="script/chart/chart.js"></script>
-		<!-- DEV:NET -->
-		<link rel="stylesheet" href="style/fonts/font-awesome.min.css">
-	</head>
-	<body id="pluto">
-		<section id="main">
-			<div class="container-fluid full">
-				<div class="row" id="navigation">
-					<div class="col-md-12 col-lg-12">
-						<!-- normal -->
-							<button data-type="nav" id="home" class="home"><i class="fa fa-home fa-2x" style="color: #666"><p>Home</p></i></button>
-							<span class="space"></span>	
-							<button onclick="window.location.reload()"  class="rajz green" data-green="4"><i class="fa fa-refresh fa-2x" style="color: #666"><p>Betölt</p></i></button>
-							<button onclick="self.close()"  class="rajz green" data-green="4"><i class="fa fa-window-close fa-2x" style="color: #666"><p>Kilépés</p></i></button>
-							<p style="float: right; font-family: 'Speedy-Regular'; font-size: 2.5rem; color: #898; padding: 0; margin: 0 0.75rem 0 0;">PLUTO</p>	
-							<img src="IMG/icon.png" id="rc" class="img-responsive" style="float: right; width: 56px; margin: 2px" />		
-					</div> 
-				</div> <!-- /navigation -->
-				<!-- home -->
-				<div id="content-home" data-id="home" class="row" style="background-color: #CFC3DA;" >
-					<div class="col-md-12 col-lg-12 row-full">
-						teszt
-					</div>	
-				</div> <!-- /content -->
-				
-		</section>
 
-		
-		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>-->
-		<script>
-			var temp = setTimeout(function() {
-				//preWindow();
-				//preButton();
-			}, 1000);
-		</script>
-		<script src="script/sizer.js"></script>	
-	</body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="style/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="style/floatbox/floatbox.css" />
+    <link rel="stylesheet" href="style/chart/chart.css" />
+    <link rel="stylesheet" href="style/main.css">
+    <script src="script/jquery/jquery-3.4.1.min.js"></script>
+    <script src="script/bootstrap/bootstrap.min.js"></script>
+    <script src="script/floatbox/floatbox.js"></script>
+    <script src="script/chart/chart.js"></script>
+    <!-- DEV:NET -->
+    <link rel="stylesheet" href="style/fonts/font-awesome.min.css">
+</head>
+
+<body id="pluto">
+    <section id="main">
+        <div class="container-fluid full">
+            <div class="row" id="navigation">
+                <div class="col-md-12 col-lg-12">
+                    <!-- normal -->
+                    <button data-type="nav" id="home" class="home"><i class="fa fa-home fa-2x" style="color: #666"><p>Home</p></i></button>
+                    <span class="space"></span>
+                    <button data-type="nav" class="save"><i class="fa fa-floppy-o fa-2x" style="color: #666"><p>Mentés</p></i></button>
+                    <button data-type="nav" class="load"><i class="fa fa-folder-open-o fa-2x" style="color: #666"><p>Betöltés</p></i></button>
+                    <button data-type="nav" class="export"><i class="fa fa-share fa-2x" style="color: #666"><p>Export</p></i></button>
+                    <span class="space"></span>
+                    <button data-type="nav" id="deactivateWorkSpace" style="display: none"><i class="fa fa-times fa-2x" style="color: #666"><p>Bezár</p></i></button>
+                    <button onclick="window.location.reload()" class="rajz green" data-green="4"><i class="fa fa-refresh fa-2x" style="color: #666"><p>Betölt</p></i></button>
+
+                    <p style="float: right; font-family: 'Speedy-Regular'; font-size: 2.5rem; color: #898; padding: 0; margin: 0 0.75rem 0 0;">PLUTO</p>
+                    <img src="IMG/icon.png" id="rc" class="img-responsive" style="float: right; width: 56px; margin: 2px" />
+                </div>
+            </div>
+            <!-- /navigation -->
+            <!-- home -->
+            <div id="content-home" data-id="home" class="row" style="background-color: #CFC3DA;">
+                <div class="col-md-9 col-lg-9 row-full" style="background: #ededed">
+                    <div id="workSpace" tabindex="0"></div>
+                </div>
+
+                <div class="col-md-3 col-lg-3 row-full">
+
+                </div>
+
+            </div>
+            <!-- /content -->
+
+    </section>
+    <script src="script/sizer.js"></script>
+    <script src="script/pluto.js"></script>
+    <script src="script/navigation.js"></script>
+</body>
+
 </html>
