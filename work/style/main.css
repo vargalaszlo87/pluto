@@ -42,6 +42,9 @@
     /* Legacy iOS */
 }
 
+.fa {
+    color: #666;
+}
 
 /* ------------------ "default" style */
 
@@ -174,7 +177,7 @@ body {
 
 .rectangle {
     position: absolute;
-    border: 1px solid #000;
+    border: 1px solid #333;
     background-color: #f0f0f0;
     padding: 5px;
     cursor: pointer;
@@ -183,4 +186,18 @@ body {
 	width: 115px;
 	height: 115px;
 	z-index: 1;
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(51,51,51,0.5);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(51,51,51,0.5);
+    box-shadow: 5px 5px 5px 0px rgba(51,51,51,0.5);
+}
+
+#deactivateButton {
+    position: absolute;
+    padding: 5px;
+    background: #c0392b;
+    border: 0;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #fff;
+    
 }

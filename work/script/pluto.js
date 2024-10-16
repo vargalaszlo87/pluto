@@ -3,6 +3,15 @@
  *
  */
 
+const pluto = {
+    design: {
+        unSelectedRectangleBorder: '1px solid #333',
+        selectedRectangleBorder: '2px solid #8a21c5'
+
+    }
+
+};
+
 const workSpace = document.getElementById('workSpace');
 const workSpaceRect = workSpace.getBoundingClientRect(); // A workSpace mérete és pozíciója
 
@@ -19,7 +28,7 @@ let isButton = false; // workSpace deaktiváló gomb állapota
 // Kijelölés törlése
 function clearSelection() {
     selectedRectangles.forEach(rect => {
-        rect.style.border = '2px solid black'; // Alapértelmezett border visszaállítása
+        rect.style.border = pluto.design.unSelectedRectangleBorder; // Alapértelmezett border visszaállítása
     });
     selectedRectangles = [];
 }
@@ -30,20 +39,22 @@ function createRectangle(text, x, y) {
     rectangle.classList.add('rectangle');
     rectangle.style.left = `${x + offsetX}px`; // X irányú eltolás
     rectangle.style.top = `${y + offsetY}px`; // Y irányú eltolás
-    rectangle.textContent = (inputDataCounter + 1) + ". pack";
-    rectangle.style.border = '2px solid black'; // Alapértelmezett border
-    rectangle.style.backgroundColor = '#ffffff';
+    //rectangle.textContent = (inputDataCounter + 1) + ". pack";
+    rectangle.innerHTML = '<i class="fa fa-list fa-3x" style="margin: 1.6rem;"></i>';
     rectangle.setAttribute('tabindex', '0'); // Fókuszálhatóvá tesszük
 
     workSpace.appendChild(rectangle);
 
     // Létrehozunk egy „X” gombot a törléshez
     const closeButton = document.createElement('button');
-    closeButton.textContent = 'X';
+    //closeButton.textContent = 'X';
+    closeButton.innerHTML = '<i class="fa fa-trash-o fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
+    closeButton.style.width = '35px';
+    closeButton.style.height = '35px';
     closeButton.style.position = 'absolute';
     closeButton.style.top = '0';
-    closeButton.style.right = '0';
-    closeButton.style.background = 'red';
+    closeButton.style.right = '-40px';
+    closeButton.style.background = '#c0392b';
     closeButton.style.color = 'white';
     closeButton.style.border = 'none';
     closeButton.style.cursor = 'pointer';
@@ -64,16 +75,16 @@ function createRectangle(text, x, y) {
         if (event.ctrlKey) {
             // Ctrl lenyomása esetén többszörös kijelölés
             if (selectedRectangles.includes(rectangle)) {
-                rectangle.style.border = '2px solid black'; // Visszaállítjuk az alapértelmezett border-t
+                rectangle.style.border = pluto.design.unSelectedRectangleBorder; // Visszaállítjuk az alapértelmezett border-t
                 selectedRectangles = selectedRectangles.filter(rect => rect !== rectangle);
             } else {
-                rectangle.style.border = '4px solid blue'; // Kijelöléskor vastagabb és kék border
+                rectangle.style.border = pluto.design.selectedRectangleBorder; // Kijelöléskor vastagabb és kék border
                 selectedRectangles.push(rectangle);
             }
         } else {
             // Ctrl nélkül csak egy téglalap kijelölése
             clearSelection(); // Előző kijelölések törlése
-            rectangle.style.border = '4px solid blue'; // Kijelöléskor vastagabb és kék border
+            rectangle.style.border = pluto.design.selectedRectangleBorder; // Kijelöléskor vastagabb és kék border
             selectedRectangles.push(rectangle);
         }
 		rectangle.style.backgroundColor = "white";
@@ -86,6 +97,8 @@ function createRectangle(text, x, y) {
         startX = event.clientX - rectangle.offsetLeft;
         startY = event.clientY - rectangle.offsetTop;
         rectangle.focus();
+        document.getElementById(sizer.workSpaceCanvasId).style.background = "#ffdcd5";
+        event.target.style.background = "#ffffff";
     });
 
     // Növeljük az eltolást a következő téglalaphoz
@@ -115,6 +128,8 @@ document.addEventListener('mousemove', (event) => {
 
         draggedElement.style.left = `${newLeft}px`;
         draggedElement.style.top = `${newTop}px`;
+
+
     }
 });
 
@@ -146,31 +161,25 @@ workSpace.addEventListener('paste', paste);
 // Focus kezelés
 workSpace.addEventListener("focusin", (event) => {
     workSpace.addEventListener("paste", paste, false);
-    event.target.style.background = "pink";
+    event.target.style.background = "#ffdcd5";
 
     // workSpace inaktiváló „X” gomb hozzáadása
     if (!isButton) {
-        //const deactivateButton = document.createElement('button');
-        //deactivateButton.setAttribute("id", "deactivateWorkSpace");
-        //deactivateButton.setAttribute("class", "close");
+        const deactivateButton = document.createElement('button');
+        deactivateButton.setAttribute("id", "deactivateButton");
+        deactivateButton.textContent = 'X';
+        deactivateButton.style.width = sizer.workSpaceCanvasDeactivateButtonSize + "px";
+        deactivateButton.style.height = sizer.workSpaceCanvasDeactivateButtonSize + "px";
 
-        /*deactivateButton.textContent = 'X';
-        deactivateButton.style.position = 'absolute';
-        deactivateButton.style.top = '10px';
-        deactivateButton.style.right = '10px';
+        // position
+        deactivateButton.style.left = document.getElementById(sizer.workSpaceDivId).offsetWidth - sizer.workSpaceCanvasDeactivateButtonSize - sizer.workSpaceCanvasPadding + 'px';
+        deactivateButton.style.top = sizer.navHeight + sizer.workSpaceCanvasPadding + "px";
+    
         document.body.appendChild(deactivateButton);
-        */
-
-        const deactivateButton = document.getElementById("deactivateWorkSpace");
-        deactivateButton.disabled = false;
-		const deactivateI = document.getElementById("deactivateWorkSpaceText");
-		deactivateI.classList.add("active");
-
+ 
         // Inaktiválás eseménykezelője
         deactivateButton.addEventListener('click', () => {
-            //deactivateButton.remove(); // Gomb eltávolítása
-            deactivateButton.disabled = true;
-			deactivateI.classList.remove("active");
+            deactivateButton.remove(); // Gomb eltávolítása
             workSpace.removeEventListener('paste', paste); // Paste funkció eltávolítása
             workSpace.style.background = "white"; // workSpace háttér visszaállítása
             isButton = false;

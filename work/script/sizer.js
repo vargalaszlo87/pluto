@@ -19,6 +19,8 @@ const sizer = {
     workSpaceHeightClass: "row-full",
 	workSpaceDivId: "workSpaceDiv",
 	workSpaceCanvasId: "workSpace",
+    workSpaceCanvasDeactivateButtonId: "deactivateButton",
+    workSpaceCanvasDeactivateButtonSize: 50,
 	workSpaceCanvasPadding: 5,
 
     repeat: function(event, checkSizeCallback) {
@@ -40,6 +42,13 @@ const sizer = {
 		temp_workSapce.style.width = document.getElementById(this.workSpaceDivId).offsetWidth - 2 * this.workSpaceCanvasPadding + "px";
 		temp_workSapce.style.height = document.getElementById(this.workSpaceDivId).offsetHeight - 2 * this.workSpaceCanvasPadding + "px";
 		
+        // deactivateButton
+        if (isButton) {
+            const temp_deactivateButton = document.getElementById(this.workSpaceCanvasDeactivateButtonId);
+            temp_deactivateButton.style.left = document.getElementById(this.workSpaceDivId).offsetWidth - this.workSpaceCanvasDeactivateButtonSize - this.workSpaceCanvasPadding + 'px';
+            temp_deactivateButton.style.top = this.navHeight + this.workSpaceCanvasPadding + "px";
+
+        }
 
 	}
 };
