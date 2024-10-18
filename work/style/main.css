@@ -177,8 +177,8 @@ body {
 
 .rectangle {
     position: absolute;
-    border: 1px solid #333;
-    background-color: #f0f0f0;
+    border: 2px dashed #bb8fce;
+    background-color: #fff;
     padding: 5px;
     cursor: pointer;
     pointer-events: auto;
@@ -186,10 +186,29 @@ body {
 	width: 115px;
 	height: 115px;
 	z-index: 1;
-    -webkit-box-shadow: 5px 5px 5px 0px rgba(51,51,51,0.5);
-    -moz-box-shadow: 5px 5px 5px 0px rgba(51,51,51,0.5);
-    box-shadow: 5px 5px 5px 0px rgba(51,51,51,0.5);
+    /*-webkit-box-shadow: -5px 5px 5px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: -5px 5px 5px -5px rgba(0,0,0,0.75);
+    box-shadow: -5px 5px 5px -3px rgba(0,0,0,0.75);*/
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;    
 }
+
+    .rectangle h5 {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 0.75rem;
+        color: #8a21c5;
+    }
+
+    .rectangle h6 {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 0.65rem;
+        color: #444;
+    }
 
 #deactivateButton {
     position: absolute;
@@ -198,6 +217,50 @@ body {
     border: 0;
     font-weight: bold;
     font-size: 1.5rem;
+    color: #fff;    
+}
+
+.closeButton {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 0;
+    right: -40px;
+    background: #c0392b;
     color: #fff;
-    
+    border: none;
+    cursor: pointer;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.rawButton {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 0;
+    left: -40px;
+    background: #2980b9;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.playButton {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 40px;
+    left: -40px;
+    background: #16a085;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
 }

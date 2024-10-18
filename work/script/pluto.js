@@ -5,11 +5,9 @@
 
 const pluto = {
     design: {
-        unSelectedRectangleBorder: '1px solid #333',
-        selectedRectangleBorder: '2px solid #8a21c5'
-
+        unSelectedRectangleBorder: '2px dashed #bb8fce',
+        selectedRectangleBorder: '2px dashed #8a21c5'
     }
-
 };
 
 const workSpace = document.getElementById('workSpace');
@@ -20,8 +18,17 @@ let offsetY = 20; // Kezdő eltolás Y irányba
 let isDragging = false;
 let draggedElement = null;
 let startX, startY;
-let inputDataCounter = 0;
-let maxClipboardSize = 10 * 1024; // max 10kb
+
+// datas
+const inputData = {
+    counter: 0,
+    maxSize: 10 * 1024, // max 10kb,
+    // vectors
+    all: [],
+    ID: [],
+};
+
+
 let selectedRectangles = []; // Kijelölt téglalapok listája
 let isButton = false; // workSpace deaktiváló gomb állapota
 
@@ -34,40 +41,54 @@ function clearSelection() {
 }
 
 // Téglalap létrehozása a kattintás helyén
-function createRectangle(text, x, y) {
+function createRectangle(generatedID, x, y) {
     const rectangle = document.createElement('div');
     rectangle.classList.add('rectangle');
     rectangle.style.left = `${x + offsetX}px`; // X irányú eltolás
     rectangle.style.top = `${y + offsetY}px`; // Y irányú eltolás
     //rectangle.textContent = (inputDataCounter + 1) + ". pack";
-    rectangle.innerHTML = '<i class="fa fa-list fa-3x" style="margin: 1.6rem;"></i>';
+    rectangle.innerHTML = '<h5>' + (inputData.counter + 1) + '. adatsor</h5>' + '<i class="fa fa-bar-chart fa-3x" style="margin: 0.75rem 1.6rem 0.1rem 1.6rem;"></i>  <h6>numerikus</h6>';
     rectangle.setAttribute('tabindex', '0'); // Fókuszálhatóvá tesszük
+    rectangle.setAttribute('data-id', generatedID);
 
     workSpace.appendChild(rectangle);
 
-    // Létrehozunk egy „X” gombot a törléshez
+    // Törlés gomb létrehozása
     const closeButton = document.createElement('button');
-    //closeButton.textContent = 'X';
     closeButton.innerHTML = '<i class="fa fa-trash-o fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
-    closeButton.style.width = '35px';
-    closeButton.style.height = '35px';
-    closeButton.style.position = 'absolute';
-    closeButton.style.top = '0';
-    closeButton.style.right = '-40px';
-    closeButton.style.background = '#c0392b';
-    closeButton.style.color = 'white';
-    closeButton.style.border = 'none';
-    closeButton.style.cursor = 'pointer';
-
+    closeButton.setAttribute('data-id', generatedID);
+    closeButton.setAttribute('class', 'closeButton');
     rectangle.appendChild(closeButton);
 
     // Törlés gomb kezelése
     closeButton.addEventListener('click', (event) => {
         event.stopPropagation(); // Megakadályozza, hogy a kattintás a téglalapra is átmenjen
+
+        // delete from vector
+        tempID = rectangle.getAttribute("data-id");
+        tempIndex = inputData.ID.indexOf(tempID);
+        removeElementFromArray(inputData.ID, tempIndex);
+        removeElementFromArray(inputData.all, tempIndex);
+       
+        // delete from workspace
         rectangle.remove();
-        inputDataCounter--;
+        inputData.counter--;
         selectedRectangles = selectedRectangles.filter(rect => rect !== rectangle); // Törlés a kijelölt listából
     });
+
+    // Raw adat gomb létrehozása
+    const rawButton = document.createElement('button');
+    rawButton.innerHTML = '<i class="fa fa-search fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
+    rawButton.setAttribute('data-id', generatedID);
+    rawButton.setAttribute('class', 'rawButton');
+    rectangle.appendChild(rawButton);   
+
+    // Play gomb létrehozása
+    const playButton = document.createElement('button');
+    playButton.innerHTML = '<i class="fa fa-play fa-1x" style="color: #fff; font-size: 1.25rem; padding-top: 4px;"></i>';
+    playButton.setAttribute('data-id', generatedID);
+    playButton.setAttribute('class', 'playButton');
+    rectangle.appendChild(playButton);   
 
     // Téglalap kijelölése
     rectangle.addEventListener('click', (event) => {
@@ -87,7 +108,7 @@ function createRectangle(text, x, y) {
             rectangle.style.border = pluto.design.selectedRectangleBorder; // Kijelöléskor vastagabb és kék border
             selectedRectangles.push(rectangle);
         }
-		rectangle.style.backgroundColor = "white";
+		rectangle.style.backgroundColor = "#fff";
     });
 
     // Drag and drop események
@@ -98,7 +119,7 @@ function createRectangle(text, x, y) {
         startY = event.clientY - rectangle.offsetTop;
         rectangle.focus();
         document.getElementById(sizer.workSpaceCanvasId).style.background = "#ffdcd5";
-        event.target.style.background = "#ffffff";
+        event.target.style.background = "#fff";
     });
 
     // Növeljük az eltolást a következő téglalaphoz
@@ -144,15 +165,43 @@ workSpace.addEventListener('click', (event) => {
     clearSelection(); // Kijelölések törlése, ha az üres területre kattintanak
 });
 
+
+function generateID() {
+    let randomPart = Math.random().toString(36).substring(2, 6); 
+    let utcPart = Date.now().toString(36).substring(6); 
+    return (randomPart + utcPart).substring(0, 8);
+}
+
+function removeElementFromArray(array, index) {
+    if (index !== -1) {
+        array.splice(index, 1);
+        return true;
+    }
+    else
+        return false;
+}
+
 // Paste funkció
 function paste(event) {
     const pastedData = (event.clipboardData || window.clipboardData).getData('text');
-    if (pastedData.length > maxClipboardSize) {
+    if (pastedData.length > inputData.maxSize) {
         alert('10kb-os limit túllépve');
         return;
     }
-    createRectangle(pastedData, 50, 50);
-    inputDataCounter++;
+
+    // new vector
+    let temp = pastedData.trim().split(/[\t\n; ]+/);
+    let vector = temp.map(Number);
+    inputData.all.push(vector);
+
+    // ID
+    let tempID = generateID();
+    inputData.ID.push(tempID);
+
+    // create rectangle
+    createRectangle(tempID, 50, 50);
+    inputData.counter++;
+
 }
 
 // Vágólap tartalom kezelése
