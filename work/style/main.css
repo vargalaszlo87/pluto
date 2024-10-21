@@ -46,6 +46,7 @@
     color: #666;
 }
 
+
 /* ------------------ "default" style */
 
 * {
@@ -126,12 +127,12 @@ body {
     padding: 5px;
 }
 
-	#deactivateWorkSpaceText {
-		color: red;
-	}
+#deactivateWorkSpaceText {
+    color: red;
+}
 
 #navigation button i.active {
-	color: red;
+    color: red;
 }
 
 #navigation button i p {
@@ -152,19 +153,21 @@ body {
     border-color: magenta;
 }
 
+
 /* ------------------ "main" style */
 
 .watermark {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 5rem;
-  color: rgba(0, 0, 0, 0.1); 
-  z-index: 1; 
-  pointer-events: none;
-  white-space: nowrap; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    color: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    pointer-events: none;
+    white-space: nowrap;
 }
+
 
 /* ------------------ "workSpace style */
 
@@ -182,33 +185,33 @@ body {
     padding: 5px;
     cursor: pointer;
     pointer-events: auto;
-	background: #fff;
-	width: 115px;
-	height: 115px;
-	z-index: 1;
+    background: #fff;
+    width: 115px;
+    height: 115px;
+    z-index: 1;
     /*-webkit-box-shadow: -5px 5px 5px -5px rgba(0,0,0,0.75);
     -moz-box-shadow: -5px 5px 5px -5px rgba(0,0,0,0.75);
     box-shadow: -5px 5px 5px -3px rgba(0,0,0,0.75);*/
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
-    border-radius: 10px;    
+    border-radius: 10px;
 }
 
-    .rectangle h5 {
-        text-align: center;
-        text-transform: uppercase;
-        font-weight: bold;
-        font-size: 0.75rem;
-        color: #8a21c5;
-    }
+.rectangle h5 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.75rem;
+    color: #8a21c5;
+}
 
-    .rectangle h6 {
-        text-align: center;
-        text-transform: uppercase;
-        font-weight: bold;
-        font-size: 0.65rem;
-        color: #444;
-    }
+.rectangle h6 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.65rem;
+    color: #444;
+}
 
 #deactivateButton {
     position: absolute;
@@ -217,7 +220,7 @@ body {
     border: 0;
     font-weight: bold;
     font-size: 1.5rem;
-    color: #fff;    
+    color: #fff;
 }
 
 .closeButton {
@@ -250,6 +253,10 @@ body {
     border-radius: 20px;
 }
 
+.rawButton:active {
+    background: #1bb5de;
+}
+
 .playButton {
     width: 35px;
     height: 35px;
@@ -263,4 +270,8 @@ body {
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
+}
+
+.playButton:active {
+    background: #32d55e;
 }

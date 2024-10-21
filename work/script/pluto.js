@@ -6,7 +6,7 @@
 const pluto = {
     design: {
         unSelectedRectangleBorder: '2px dashed #bb8fce',
-        selectedRectangleBorder: '2px dashed #8a21c5'
+        selectedRectangleBorder: '2px solid #8a21c5'
     }
 };
 
@@ -69,7 +69,7 @@ function createRectangle(generatedID, x, y) {
         tempIndex = inputData.ID.indexOf(tempID);
         removeElementFromArray(inputData.ID, tempIndex);
         removeElementFromArray(inputData.all, tempIndex);
-       
+
         // delete from workspace
         rectangle.remove();
         inputData.counter--;
@@ -80,15 +80,30 @@ function createRectangle(generatedID, x, y) {
     const rawButton = document.createElement('button');
     rawButton.innerHTML = '<i class="fa fa-search fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
     rawButton.setAttribute('data-id', generatedID);
+    rawButton.setAttribute('id', 'rawTeszt');
     rawButton.setAttribute('class', 'rawButton');
-    rectangle.appendChild(rawButton);   
+    rawButton.classList.add('open-floatbox');
+    rectangle.appendChild(rawButton);
+
+    rawButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        show.rawData(event, "teszt");
+        const data = '<i>teszt...</i>';
+        floatBox.open(event, data);
+    });
 
     // Play gomb létrehozása
     const playButton = document.createElement('button');
     playButton.innerHTML = '<i class="fa fa-play fa-1x" style="color: #fff; font-size: 1.25rem; padding-top: 4px;"></i>';
     playButton.setAttribute('data-id', generatedID);
+    playButton.setAttribute('id', 'playTeszt')
     playButton.setAttribute('class', 'playButton');
-    rectangle.appendChild(playButton);   
+    rectangle.appendChild(playButton);
+
+    playButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        console.log("play click");
+    });
 
     // Téglalap kijelölése
     rectangle.addEventListener('click', (event) => {
@@ -108,18 +123,22 @@ function createRectangle(generatedID, x, y) {
             rectangle.style.border = pluto.design.selectedRectangleBorder; // Kijelöléskor vastagabb és kék border
             selectedRectangles.push(rectangle);
         }
-		rectangle.style.backgroundColor = "#fff";
+        rectangle.style.backgroundColor = "#fff";
+        console.log("rectangle click");
     });
 
     // Drag and drop események
     rectangle.addEventListener('mousedown', (event) => {
+        if (event.target.tagName === 'BUTTON' || event.target.closest('button')) {
+            return; // Ha gombot kattintottak, ne indítsd el a drag műveletet
+        }
         isDragging = true;
         draggedElement = rectangle;
         startX = event.clientX - rectangle.offsetLeft;
         startY = event.clientY - rectangle.offsetTop;
         rectangle.focus();
         document.getElementById(sizer.workSpaceCanvasId).style.background = "#ffdcd5";
-        event.target.style.background = "#fff";
+        rectangle.background = "#fff";
     });
 
     // Növeljük az eltolást a következő téglalaphoz
@@ -149,8 +168,6 @@ document.addEventListener('mousemove', (event) => {
 
         draggedElement.style.left = `${newLeft}px`;
         draggedElement.style.top = `${newTop}px`;
-
-
     }
 });
 
@@ -162,13 +179,15 @@ document.addEventListener('mouseup', () => {
 
 // workSpace üres területére kattintás kezelése
 workSpace.addEventListener('click', (event) => {
-    clearSelection(); // Kijelölések törlése, ha az üres területre kattintanak
+    if (event.target === workSpace) {
+        clearSelection(); // Csak akkor törlünk kijelölést, ha a workSpace-re kattintottak közvetlenül
+    }
 });
 
 
 function generateID() {
-    let randomPart = Math.random().toString(36).substring(2, 6); 
-    let utcPart = Date.now().toString(36).substring(6); 
+    let randomPart = Math.random().toString(36).substring(2, 6);
+    let utcPart = Date.now().toString(36).substring(6);
     return (randomPart + utcPart).substring(0, 8);
 }
 
@@ -176,8 +195,7 @@ function removeElementFromArray(array, index) {
     if (index !== -1) {
         array.splice(index, 1);
         return true;
-    }
-    else
+    } else
         return false;
 }
 
@@ -210,7 +228,7 @@ workSpace.addEventListener('paste', paste);
 // Focus kezelés
 workSpace.addEventListener("focusin", (event) => {
     workSpace.addEventListener("paste", paste, false);
-    event.target.style.background = "#ffdcd5";
+    workSpace.style.background = "#ffdcd5";
 
     // workSpace inaktiváló „X” gomb hozzáadása
     if (!isButton) {
@@ -223,9 +241,9 @@ workSpace.addEventListener("focusin", (event) => {
         // position
         deactivateButton.style.left = document.getElementById(sizer.workSpaceDivId).offsetWidth - sizer.workSpaceCanvasDeactivateButtonSize - sizer.workSpaceCanvasPadding + 'px';
         deactivateButton.style.top = sizer.navHeight + sizer.workSpaceCanvasPadding + "px";
-    
+
         document.body.appendChild(deactivateButton);
- 
+
         // Inaktiválás eseménykezelője
         deactivateButton.addEventListener('click', () => {
             deactivateButton.remove(); // Gomb eltávolítása
