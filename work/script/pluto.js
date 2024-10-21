@@ -7,6 +7,13 @@ const pluto = {
     design: {
         unSelectedRectangleBorder: '2px dashed #bb8fce',
         selectedRectangleBorder: '2px solid #8a21c5'
+    },
+    inputData: {
+        counter: 0,
+        maxSize: 10 * 1024, // max 10kb,
+        // vectors
+        all: [],
+        ID: [],
     }
 };
 
@@ -18,16 +25,6 @@ let offsetY = 20; // Kezdő eltolás Y irányba
 let isDragging = false;
 let draggedElement = null;
 let startX, startY;
-
-// datas
-const inputData = {
-    counter: 0,
-    maxSize: 10 * 1024, // max 10kb,
-    // vectors
-    all: [],
-    ID: [],
-};
-
 
 let selectedRectangles = []; // Kijelölt téglalapok listája
 let isButton = false; // workSpace deaktiváló gomb állapota
@@ -47,7 +44,7 @@ function createRectangle(generatedID, x, y) {
     rectangle.style.left = `${x + offsetX}px`; // X irányú eltolás
     rectangle.style.top = `${y + offsetY}px`; // Y irányú eltolás
     //rectangle.textContent = (inputDataCounter + 1) + ". pack";
-    rectangle.innerHTML = '<h5>' + (inputData.counter + 1) + '. adatsor</h5>' + '<i class="fa fa-bar-chart fa-3x" style="margin: 0.75rem 1.6rem 0.1rem 1.6rem;"></i>  <h6>numerikus</h6>';
+    rectangle.innerHTML = '<h5>' + (pluto.inputData.counter + 1) + '. adatsor</h5>' + '<i class="fa fa-bar-chart fa-3x" style="margin: 0.75rem 1.6rem 0.1rem 1.6rem;"></i>  <h6>numerikus</h6>';
     rectangle.setAttribute('tabindex', '0'); // Fókuszálhatóvá tesszük
     rectangle.setAttribute('data-id', generatedID);
 
@@ -66,13 +63,13 @@ function createRectangle(generatedID, x, y) {
 
         // delete from vector
         tempID = rectangle.getAttribute("data-id");
-        tempIndex = inputData.ID.indexOf(tempID);
-        removeElementFromArray(inputData.ID, tempIndex);
-        removeElementFromArray(inputData.all, tempIndex);
+        tempIndex = pluto.inputData.ID.indexOf(tempID);
+        removeElementFromArray(pluto.inputData.ID, tempIndex);
+        removeElementFromArray(pluto.inputData.all, tempIndex);
 
         // delete from workspace
         rectangle.remove();
-        inputData.counter--;
+        pluto.inputData.counter--;
         selectedRectangles = selectedRectangles.filter(rect => rect !== rectangle); // Törlés a kijelölt listából
     });
 
@@ -87,8 +84,8 @@ function createRectangle(generatedID, x, y) {
 
     rawButton.addEventListener('click', (event) => {
         event.stopPropagation();
-        show.rawData(event, "teszt");
-        const data = '<i>teszt...</i>';
+        const dataID = event.currentTarget.getAttribute('data-id') || 'N/A';
+        const data = show.rawData(event, dataID);
         floatBox.open(event, data);
     });
 
@@ -202,7 +199,7 @@ function removeElementFromArray(array, index) {
 // Paste funkció
 function paste(event) {
     const pastedData = (event.clipboardData || window.clipboardData).getData('text');
-    if (pastedData.length > inputData.maxSize) {
+    if (pastedData.length > pluto.inputData.maxSize) {
         alert('10kb-os limit túllépve');
         return;
     }
@@ -210,15 +207,15 @@ function paste(event) {
     // new vector
     let temp = pastedData.trim().split(/[\t\n; ]+/);
     let vector = temp.map(Number);
-    inputData.all.push(vector);
+    pluto.inputData.all.push(vector);
 
     // ID
     let tempID = generateID();
-    inputData.ID.push(tempID);
+    pluto.inputData.ID.push(tempID);
 
     // create rectangle
     createRectangle(tempID, 50, 50);
-    inputData.counter++;
+    pluto.inputData.counter++;
 
 }
 
@@ -234,13 +231,14 @@ workSpace.addEventListener("focusin", (event) => {
     if (!isButton) {
         const deactivateButton = document.createElement('button');
         deactivateButton.setAttribute("id", "deactivateButton");
-        deactivateButton.textContent = 'X';
+        //deactivateButton.textContent = 'X';
+        deactivateButton.innerHTML = '<i class="fa fa-times fa-2x"></i>';
         deactivateButton.style.width = sizer.workSpaceCanvasDeactivateButtonSize + "px";
         deactivateButton.style.height = sizer.workSpaceCanvasDeactivateButtonSize + "px";
 
         // position
-        deactivateButton.style.left = document.getElementById(sizer.workSpaceDivId).offsetWidth - sizer.workSpaceCanvasDeactivateButtonSize - sizer.workSpaceCanvasPadding + 'px';
-        deactivateButton.style.top = sizer.navHeight + sizer.workSpaceCanvasPadding + "px";
+        deactivateButton.style.left = document.getElementById(sizer.workSpaceDivId).offsetWidth - sizer.workSpaceCanvasDeactivateButtonSize - sizer.workSpaceCanvasPadding + -10 + 'px';
+        deactivateButton.style.top = sizer.navHeight + sizer.workSpaceCanvasPadding + 10 + "px";
 
         document.body.appendChild(deactivateButton);
 

@@ -17,11 +17,11 @@ const sizer = {
     navHeight: 0,
     workSpaceHeight: 0,
     workSpaceHeightClass: "row-full",
-	workSpaceDivId: "workSpaceDiv",
-	workSpaceCanvasId: "workSpace",
+    workSpaceDivId: "workSpaceDiv",
+    workSpaceCanvasId: "workSpace",
     workSpaceCanvasDeactivateButtonId: "deactivateButton",
     workSpaceCanvasDeactivateButtonSize: 50,
-	workSpaceCanvasPadding: 5,
+    workSpaceCanvasPadding: 5,
 
     repeat: function(event, checkSizeCallback) {
         // check
@@ -36,12 +36,12 @@ const sizer = {
             temp[0].style.height = this.workSpaceHeight + "px";
         }
         checkSizeCallback(this.width, this.height);
-		
-		// workSpaceCanvas
-		const temp_workSapce = document.getElementById(this.workSpaceCanvasId);
-		temp_workSapce.style.width = document.getElementById(this.workSpaceDivId).offsetWidth - 2 * this.workSpaceCanvasPadding + "px";
-		temp_workSapce.style.height = document.getElementById(this.workSpaceDivId).offsetHeight - 2 * this.workSpaceCanvasPadding + "px";
-		
+
+        // workSpaceCanvas
+        const temp_workSapce = document.getElementById(this.workSpaceCanvasId);
+        temp_workSapce.style.width = document.getElementById(this.workSpaceDivId).offsetWidth - 2 * this.workSpaceCanvasPadding + "px";
+        temp_workSapce.style.height = document.getElementById(this.workSpaceDivId).offsetHeight - 2 * this.workSpaceCanvasPadding + "px";
+
         // deactivateButton
         if (isButton) {
             const temp_deactivateButton = document.getElementById(this.workSpaceCanvasDeactivateButtonId);
@@ -50,7 +50,7 @@ const sizer = {
 
         }
 
-	}
+    }
 };
 
 $(window).on('load', (event) => {

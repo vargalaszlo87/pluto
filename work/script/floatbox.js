@@ -7,8 +7,8 @@ const floatBox = {
     open: (event, data) => {
         const button = event.target.closest('.open-floatbox');
         if (button) {
-            const dataId = event.currentTarget.getAttribute('data-id') || 'N/A';
-            floatBox.content.textContent = `Data ID: ${dataId}`;
+            //const dataId = event.currentTarget.getAttribute('data-id') || 'N/A';
+            //floatBox.content.textContent = `Data ID: ${dataId}`;
             floatBox.content.innerHTML = data;
             floatBox.main.style.display = 'block';
             floatBox.overlay.style.display = 'block';

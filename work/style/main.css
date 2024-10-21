@@ -219,7 +219,14 @@ body {
     background: #c0392b;
     border: 0;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.0rem;
+    cursor: pointer;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+
+#deactivateButton i {
     color: #fff;
 }
 
