@@ -332,3 +332,37 @@ body {
         color: #fff;
         margin-right: 0.75rem;
     }
+
+.plutoToolButton {
+    margin-top: 1rem;
+    text-align: left;
+    /*border: dashed 2px #b5a6c3;*/
+    border: 0;
+    background: #F0C674;
+    -webkit-box-shadow: -5px 5px 5px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: -5px 5px 5px -5px rgba(0,0,0,0.75);
+    box-shadow: -5px 5px 5px -3px rgba(0,0,0,0.75);    
+}
+
+.plutoToolButton span {
+    text-transform: uppercase;
+    font-size: 1.15vw;
+    color: #5D4037;
+    position: relative;
+    top: 0.25vw;
+    font-weight: normal;
+}
+
+.plutoToolButton span:last-child {
+    font-size: 0.75vw;
+    color: #666;
+    position: rleative;
+    top: -0.12vw;
+    font-weight: normal;
+    text-transform: none;
+}
+
+.plutoToolButton img {
+    width: 3vw;
+    margin: 0px 0.5vw;
+}
