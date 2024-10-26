@@ -155,7 +155,7 @@ body {
 }
 
 #navigation button i {
-    color: #333;
+    color: #783278;
     padding: 5px;
 }
 
@@ -344,6 +344,11 @@ body {
     box-shadow: -5px 5px 5px -3px rgba(0,0,0,0.75);    
 }
 
+.plutoToolButton:active {
+    background: #d9a135;
+    border: 0;
+}
+
 .plutoToolButton span {
     text-transform: uppercase;
     font-size: 1.15vw;
@@ -365,4 +370,17 @@ body {
 .plutoToolButton img {
     width: 3vw;
     margin: 0px 0.5vw;
+}
+
+.plutoToolButtonSetup {
+    text-align: right;
+}
+
+.plutoToolButtonSetup a {
+    text-decoration: underline;
+    color: #4169E1;
+}
+
+.plutoToolButtonSetup a:hover {
+    color: #0000FF;
 }
