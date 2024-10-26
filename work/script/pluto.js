@@ -92,14 +92,19 @@ function createRectangle(generatedID, x, y) {
     // Play gomb létrehozása
     const playButton = document.createElement('button');
     playButton.innerHTML = '<i class="fa fa-play fa-1x" style="color: #fff; font-size: 1.25rem; padding-top: 4px;"></i>';
-    playButton.setAttribute('data-id', generatedID);
+    playButton.setAttribute('play-data-id', generatedID);
     playButton.setAttribute('id', 'playTeszt')
     playButton.setAttribute('class', 'playButton');
+    playButton.classList.add('open-floatbox');
     rectangle.appendChild(playButton);
 
     playButton.addEventListener('click', (event) => {
         event.stopPropagation();
-        console.log("play click");
+        const dataID = event.currentTarget.getAttribute('play-data-id') || 'N/A';
+        const data = play.descriptive(event, dataID);
+        console.log(data);
+        floatBox.open(event, data, sizer.width - 100);
+        play.descriptiveJS();
     });
 
     // Téglalap kijelölése

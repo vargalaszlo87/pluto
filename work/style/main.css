@@ -1,3 +1,35 @@
+/* ------------------ printable options */
+
+@media print {
+
+    @page {
+        size: A4 landscape; /* Fekvő (landscape) mód */
+        margin: 0; /* Margók eltávolítása a teljes szélesség kihasználásához */
+    }
+
+    body {
+        overflow: hidden !important; /* Görgetősáv elrejtése a body-n */
+    }
+
+    section, button {
+        display: none !important; 
+    }
+    .printable {
+        display: block !important; /* Csak a nyomtatható elem megjelenítése */
+        width: 100% !important; /* 100%-os szélesség beállítása */
+        margin: 0 !important; /* Margók eltávolítása a szélesség teljes kihasználásához */
+    }
+
+    #play-table {
+        width: 30%;
+    }
+
+    #play-chart {
+        width: 70%;
+    }
+}
+
+
 /* ------------------ "fonts" style */
 
 @font-face {
@@ -282,3 +314,21 @@ body {
 .playButton:active {
     background: #32d55e;
 }
+
+.printButton {
+    border: 0;
+    background: #16a085;
+    color: #fff;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;    
+    padding: 10px 15px;
+    margin: 0 auto;
+    display: block;
+    text-transform: uppercase;
+}
+
+    .printButton i {
+        color: #fff;
+        margin-right: 0.75rem;
+    }

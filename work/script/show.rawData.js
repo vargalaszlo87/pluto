@@ -16,7 +16,6 @@ const raw = {
         });
 
         raw.output.push('</table>');
-        console.log(raw.output.join(""));
         return raw.output.join("");
 
     }

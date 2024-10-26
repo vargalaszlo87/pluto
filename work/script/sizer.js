@@ -47,7 +47,6 @@ const sizer = {
             const temp_deactivateButton = document.getElementById(this.workSpaceCanvasDeactivateButtonId);
             temp_deactivateButton.style.left = document.getElementById(this.workSpaceDivId).offsetWidth - this.workSpaceCanvasDeactivateButtonSize - this.workSpaceCanvasPadding + 'px';
             temp_deactivateButton.style.top = this.navHeight + this.workSpaceCanvasPadding + "px";
-
         }
 
     }

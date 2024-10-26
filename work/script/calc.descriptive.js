@@ -14,8 +14,9 @@ const descriptive = {
     },
     median: (datas) => {
         const even = (datas.length % 2) ? false : true;
+        let half = 0;
         if (even) {
-            let half = Maht.floor(datas.length / 2);
+            half = Math.floor(datas.length / 2);
             return (datas[half - 1] + datas[half]) / 2;
         }
         else
@@ -72,6 +73,8 @@ const descriptive = {
         return temp;
     },
     kurtosis: (datas) => {
+        /* not stable */
+        /* don't use it! */
         let temp = 0;
         const mean = descriptive.mean(datas);
         const standardDeviation = descriptive.standardDeviation(datas);
@@ -84,14 +87,3 @@ const descriptive = {
     }  
 
 }
-
-
-
-
-
-const teszt = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
-
-
-console.log(descriptive.ZTransform(teszt));
-
-
