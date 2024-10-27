@@ -60,7 +60,7 @@ const descriptiveStatistic = {
 
         descriptiveStatistic.output.push('<tr><td>Átlag: </td><td>' + mean.toFixed(2) + '</td></tr>');
         descriptiveStatistic.output.push('<tr><td>Módusz: </td><td>' + mode + '</td></tr>');
-        descriptiveStatistic.output.push('<tr><td>Medián: </td><td>' + median + '</td></tr>');
+        descriptiveStatistic.output.push('<tr><td>Medián: </td><td>' + median.toFixed(2) + '</td></tr>');
         descriptiveStatistic.output.push('<tr><td>Szórás: </td><td>' + standardDeviation.toFixed(2) + '</td></tr>');
         descriptiveStatistic.output.push('<tr><td>Standard hiba: </td><td>' + standardError.toFixed(2) + '</td></tr>');
         descriptiveStatistic.output.push('<tr><td>Variancia: </td><td>' + variance.toFixed(2) + '</td></tr>');

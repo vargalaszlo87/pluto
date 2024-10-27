@@ -35,8 +35,9 @@ const descriptive = {
             if (mode[i] > maxCount) {
                 modes = [i];
                 maxCount = mode[i];
-            } else if (mode[i] === maxCount)
-                modes.push(i);
+            } else if (mode[i] === maxCount) {
+                modes.push(i.toFixed(2));
+            }
         });
         return modes;
     },

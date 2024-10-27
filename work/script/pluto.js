@@ -144,8 +144,8 @@ function createRectangle(generatedID, x, y) {
     });
 
     // Növeljük az eltolást a következő téglalaphoz
-    offsetX += 30;
-    offsetY += 30;
+    offsetX += 75;
+    offsetY += 75;
 
     // Ha az eltolás túl nagy lesz, visszaállítjuk
     if (offsetX > workSpaceRect.width - 50) offsetX = 20;
