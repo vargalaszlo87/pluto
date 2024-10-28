@@ -1,29 +1,31 @@
 /* ------------------ printable options */
 
 @media print {
-
     @page {
-        size: A4 landscape; /* Fekvő (landscape) mód */
-        margin: 0; /* Margók eltávolítása a teljes szélesség kihasználásához */
+        size: A4 landscape;
+        /* Fekvő (landscape) mód */
+        margin: 0;
+        /* Margók eltávolítása a teljes szélesség kihasználásához */
     }
-
     body {
-        overflow: hidden !important; /* Görgetősáv elrejtése a body-n */
+        overflow: hidden !important;
+        /* Görgetősáv elrejtése a body-n */
     }
-
-    section, button {
-        display: none !important; 
+    section,
+    button {
+        display: none !important;
     }
     .printable {
-        display: block !important; /* Csak a nyomtatható elem megjelenítése */
-        width: 100% !important; /* 100%-os szélesség beállítása */
-        margin: 0 !important; /* Margók eltávolítása a szélesség teljes kihasználásához */
+        display: block !important;
+        /* Csak a nyomtatható elem megjelenítése */
+        width: 100% !important;
+        /* 100%-os szélesség beállítása */
+        margin: 0 !important;
+        /* Margók eltávolítása a szélesség teljes kihasználásához */
     }
-
     #play-table {
         width: 30%;
     }
-
     #play-chart {
         width: 70%;
     }
@@ -321,27 +323,28 @@ body {
     color: #fff;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
-    border-radius: 12px;    
+    border-radius: 12px;
     padding: 10px 15px;
     margin: 0 auto;
     display: block;
     text-transform: uppercase;
 }
 
-    .printButton i {
-        color: #fff;
-        margin-right: 0.75rem;
-    }
+.printButton i {
+    color: #fff;
+    margin-right: 0.75rem;
+}
 
 .plutoToolButton {
+    width: 100%;
     margin-top: 1rem;
     text-align: left;
     /*border: dashed 2px #b5a6c3;*/
     border: 0;
     background: #F0C674;
-    -webkit-box-shadow: -5px 5px 5px -5px rgba(0,0,0,0.75);
-    -moz-box-shadow: -5px 5px 5px -5px rgba(0,0,0,0.75);
-    box-shadow: -5px 5px 5px -3px rgba(0,0,0,0.75);    
+    -webkit-box-shadow: -5px 5px 5px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -5px 5px 5px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -5px 5px 5px -3px rgba(0, 0, 0, 0.75);
 }
 
 .plutoToolButton:active {
@@ -369,7 +372,7 @@ body {
 
 .plutoToolButton img {
     width: 3vw;
-    margin: 0px 0.5vw;
+    margin: 0.2vw 0.5vw;
 }
 
 .plutoToolButtonSetup {
@@ -383,4 +386,16 @@ body {
 
 .plutoToolButtonSetup a:hover {
     color: #0000FF;
+}
+
+.greenButton {
+    background: #adddcd;
+}
+
+.greenButton:active {
+    background: #5fe4ae;
+}
+
+.greenButton img {
+    width: 2.7vw;
 }
