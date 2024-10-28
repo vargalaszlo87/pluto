@@ -54,34 +54,36 @@
                     <div id="workSpace" tabindex="0"></div>
                 </div>
 
-                <div class="col-md-3 col-lg-3 row-full">
+                <div id="toolsDiv" class="col-md-3 col-lg-3 row-full">
                     <div class="watermark">Tools</div>
+                        <div class="scroll-container">
 
-                    <button class="plutoToolButton open-floatbox greenButton" id="raw-examin">
-                        <div style="width: 4vw; float: left; height: 100%;">
-                            <img src="img/icon-raw.png" />
+                            <button class="plutoToolButton open-floatbox greenButton" id="raw-examin">
+                                <div style="width: 4vw; float: left; height: 100%;">
+                                    <img src="img/icon-raw.png" />
+                                </div>
+                                <div height="100%" style="float: left;">
+                                    <span>Nyers adatvizualizáció</span><br />
+                                    <span>konfigurálható adatmegjelenítő</span>
+                                </div>
+                            </button>
+
+                            <button class="plutoToolButton open-floatbox" id="intelligent-correlation" style="width: 100%;">
+                                    <div style="width: 4vw; float: left; height: 100%;">
+                                        <img src="img/icon-correlation.png" />
+                                    </div>
+                                    <div height="100%" style="float: left;">
+                                        <span>Összefüggések keresése</span><br />
+                                        <span>intellignes korreláció vizsgálat</span>
+                                    </div>
+                                </button>
+                            <p class="plutoToolButtonSetup"><a href="#">összefüggés vizsgálat beállítása</a> <i class="fa fa-cog"></i></p>
                         </div>
-                        <div height="100%" style="float: left;">
-                            <span>Nyers adatvizualizáció</span><br />
-                            <span>konfigurálható adatmegjelenítő</span>
-                        </div>
-                    </button>
-
-                    <button class="plutoToolButton open-floatbox" id="intelligent-correlation" style="width: 100%;">
-                            <div style="width: 4vw; float: left; height: 100%;">
-                                <img src="img/icon-correlation.png" />
-                            </div>
-                            <div height="100%" style="float: left;">
-                                <span>Összefüggések keresése</span><br />
-                                <span>intellignes korreláció vizsgálat</span>
-                            </div>
-                        </button>
-                    <p class="plutoToolButtonSetup"><a href="#">összefüggés vizsgálat beállítása</a> <i class="fa fa-cog"></i></p>
-
                 </div>
 
             </div>
             <!-- /content -->
+        </div>
 
     </section>
     <script src="script/sizer.js"></script>
