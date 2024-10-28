@@ -21,3 +21,7 @@ p.resultValue {
     text-align: center;
     color: #666;
 }
+
+h4#play-descriptive-statistic {
+    text-transform: uppercase;
+}
