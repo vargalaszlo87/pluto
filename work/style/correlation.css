@@ -1,0 +1,23 @@
+canvas#collerationLineChart {}
+
+canvas#correlationProgressBar {
+    margin-top: 1.75vw;
+}
+
+h6.resultTitle {
+    margin-top: 2vw;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+h3.resultText {
+    text-align: center;
+    margin-top: 1.5vw;
+}
+
+p.resultValue {
+    text-align: center;
+    color: #666;
+}
