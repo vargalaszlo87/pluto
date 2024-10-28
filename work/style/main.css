@@ -246,25 +246,22 @@ body {
     height: 600px;
     border: 1px dashed black;
     margin: 5px;
+    background-color: #fff; 
+    background-image: radial-gradient(#dbdbdb 1px, transparent 1px);
+    background-size: 5px 5px; 
 }
 
 .rectangle {
     position: absolute;
-    border: 2px dashed #bb8fce;
     background-color: #fff;
     padding: 5px;
     cursor: pointer;
     pointer-events: auto;
-    background: #fff;
-    width: 115px;
-    height: 115px;
+    width: 135px;
+    height: 135px;
     z-index: 1;
-    /*-webkit-box-shadow: -5px 5px 5px -5px rgba(0,0,0,0.75);
-    -moz-box-shadow: -5px 5px 5px -5px rgba(0,0,0,0.75);
-    box-shadow: -5px 5px 5px -3px rgba(0,0,0,0.75);*/
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.35) 0px 6px 12px -2px, rgba(0, 0, 0, 0.4) 0px 3px 7px -3px;
+    /*user-select: none; */
 }
 
 .rectangle h5 {

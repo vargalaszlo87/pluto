@@ -5,8 +5,10 @@
 
 const pluto = {
     design: {
-        unSelectedRectangleBorder: '2px dashed #bb8fce',
-        selectedRectangleBorder: '2px solid #8a21c5'
+        unSelectedRectangleBorder: '6px dashed #fff', // #bb8fce
+        selectedRectangleBorder: '6px solid #8a21c5',
+        selectedWorkspace: '#fdeeeb',
+        unSelectedWorkspace: '#fff'
     },
     inputData: {
         counter: 0,
@@ -32,7 +34,7 @@ let isButton = false; // workSpace deaktiváló gomb állapota
 // Kijelölés törlése
 function clearSelection() {
     selectedRectangles.forEach(rect => {
-        rect.style.border = pluto.design.unSelectedRectangleBorder; // Alapértelmezett border visszaállítása
+        rect.style.borderBottom = pluto.design.unSelectedRectangleBorder; // Alapértelmezett border visszaállítása
     });
     selectedRectangles = [];
 }
@@ -44,7 +46,7 @@ function createRectangle(generatedID, x, y) {
     rectangle.style.left = `${x + offsetX}px`; // X irányú eltolás
     rectangle.style.top = `${y + offsetY}px`; // Y irányú eltolás
     //rectangle.textContent = (inputDataCounter + 1) + ". pack";
-    rectangle.innerHTML = '<h5>' + (pluto.inputData.counter + 1) + '. adatsor</h5>' + '<i class="fa fa-bar-chart fa-3x" style="margin: 0.75rem 1.6rem 0.1rem 1.6rem;"></i>  <h6>numerikus</h6>';
+    rectangle.innerHTML = '<h5>' + (pluto.inputData.counter + 1) + '. adatsor</h5>' + '<img src="img/icon-numerical.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />  <h6>numerikus</h6>';
     rectangle.setAttribute('tabindex', '0'); // Fókuszálhatóvá tesszük
     rectangle.setAttribute('data-id', generatedID);
 
@@ -52,7 +54,7 @@ function createRectangle(generatedID, x, y) {
 
     // Törlés gomb létrehozása
     const closeButton = document.createElement('button');
-    closeButton.innerHTML = '<i class="fa fa-trash-o fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
+    closeButton.innerHTML = '<i class="fa fa-times fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
     closeButton.setAttribute('data-id', generatedID);
     closeButton.setAttribute('class', 'closeButton');
     rectangle.appendChild(closeButton);
@@ -113,16 +115,16 @@ function createRectangle(generatedID, x, y) {
         if (event.ctrlKey) {
             // Ctrl lenyomása esetén többszörös kijelölés
             if (selectedRectangles.includes(rectangle)) {
-                rectangle.style.border = pluto.design.unSelectedRectangleBorder; // Visszaállítjuk az alapértelmezett border-t
+                rectangle.style.borderBottom = pluto.design.unSelectedRectangleBorder; // Visszaállítjuk az alapértelmezett border-t
                 selectedRectangles = selectedRectangles.filter(rect => rect !== rectangle);
             } else {
-                rectangle.style.border = pluto.design.selectedRectangleBorder; // Kijelöléskor vastagabb és kék border
+                rectangle.style.borderBottom = pluto.design.selectedRectangleBorder; // Kijelöléskor vastagabb és kék border
                 selectedRectangles.push(rectangle);
             }
         } else {
             // Ctrl nélkül csak egy téglalap kijelölése
             clearSelection(); // Előző kijelölések törlése
-            rectangle.style.border = pluto.design.selectedRectangleBorder; // Kijelöléskor vastagabb és kék border
+            rectangle.style.borderBottom = pluto.design.selectedRectangleBorder; // Kijelöléskor vastagabb és kék border
             selectedRectangles.push(rectangle);
         }
         rectangle.style.backgroundColor = "#fff";
@@ -139,8 +141,9 @@ function createRectangle(generatedID, x, y) {
         startX = event.clientX - rectangle.offsetLeft;
         startY = event.clientY - rectangle.offsetTop;
         rectangle.focus();
-        document.getElementById(sizer.workSpaceCanvasId).style.background = "#ffdcd5";
+        document.getElementById(sizer.workSpaceCanvasId).style.background = pluto.design.selectedWorkspace;
         rectangle.background = "#fff";
+        event.preventDefault();
     });
 
     // Növeljük az eltolást a következő téglalaphoz
@@ -230,13 +233,12 @@ workSpace.addEventListener('paste', paste);
 // Focus kezelés
 workSpace.addEventListener("focusin", (event) => {
     workSpace.addEventListener("paste", paste, false);
-    workSpace.style.background = "#ffdcd5";
+    workSpace.style.background = pluto.design.selectedWorkspace;
 
     // workSpace inaktiváló „X” gomb hozzáadása
     if (!isButton) {
         const deactivateButton = document.createElement('button');
         deactivateButton.setAttribute("id", "deactivateButton");
-        //deactivateButton.textContent = 'X';
         deactivateButton.innerHTML = '<i class="fa fa-times fa-2x"></i>';
         deactivateButton.style.width = sizer.workSpaceCanvasDeactivateButtonSize + "px";
         deactivateButton.style.height = sizer.workSpaceCanvasDeactivateButtonSize + "px";
@@ -251,7 +253,9 @@ workSpace.addEventListener("focusin", (event) => {
         deactivateButton.addEventListener('click', () => {
             deactivateButton.remove(); // Gomb eltávolítása
             workSpace.removeEventListener('paste', paste); // Paste funkció eltávolítása
-            workSpace.style.background = "white"; // workSpace háttér visszaállítása
+            workSpace.style.backgroundColor = pluto.design.unSelectedWorkspace; // workSpace háttér visszaállítása
+            workSpace.style.backgroundImage ='radial-gradient(#dbdbdb 1px, transparent 1px)';
+            workSpace.style.backgroundSize = '5px 5px';
             isButton = false;
         });
 
