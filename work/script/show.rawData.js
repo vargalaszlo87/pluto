@@ -12,7 +12,7 @@ const raw = {
 
         // DEV: ellenőrizni!
         pluto.inputData.all[tempIndex].forEach((item, index) => {
-            raw.output.push('<tr><td> ' + (index + 1) + '</td><td>' + item + '</td></tr>');
+            raw.output.push('<tr><td> ' + (index + 1) + '</td><td>' + item + '<button class="buttonItemDelete"><i class="fa fa-1x fa-trash"></i></button><button class="buttonItemUpdate"><i class="fa fa-1x fa-pencil"></i></button></td></tr>');
         });
 
         raw.output.push('</table>');

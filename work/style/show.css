@@ -40,3 +40,25 @@ table.numeric-simple tr {}
     color: #333;
     min-width: 16vh;
 }
+
+.buttonItemDelete {
+    float: right;
+    margin-left: 0.5vw;
+    border: 0;
+    background: 0;
+}
+
+.buttonItemDelete i {
+    color: #c0392b;
+}
+
+.buttonItemUpdate {
+    float: right;
+    margin-left: 0.5vw;
+    border: 0;
+    background: 0;
+}
+
+.buttonItemUpdate i {
+    color: #2980b9;
+}
