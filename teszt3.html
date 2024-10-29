@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korrelációs Mátrix Megjelenítő</title>
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+		<script type="text/javascript">
+					
+			const N = 5;  // Mátrix mérete
+			const cellSize = 50;  // Egy cella mérete
+			const labelMargin = 100;  // Szöveg helye a bal oldalon
+
+			// Példa adatsorok neveire
+			const labels = ["Adatsor1", "Adatsor2", "Adatsor3", "Adatsor4", "Adatsor5"];
+
+			// Canvas beállítása
+			const canvas = document.getElementById("matrixCanvas");
+			canvas.width = labelMargin + N * cellSize + cellSize;  // Extra cellaméret hozzáadva
+			canvas.height = labelMargin + N * cellSize;
+			const ctx = canvas.getContext("2d");
+
+			// Szöveg stílus beállítása
+			ctx.font = "16px Arial";
+			ctx.textAlign = "right";
+			ctx.textBaseline = "middle";
+
+			// Bal oldali eltolás az átló mentén
+			for (let i = 0; i < N; i++) {
+					const x = labelMargin - 10 + i * cellSize;
+					const y = labelMargin + i * cellSize + cellSize / 2;
+					ctx.fillText(labels[i], x, y);
+			}
+
+			// Felső eltolás döntött szövegekkel, X irányú eltolással
+			ctx.textAlign = "center";  // Középre igazított szöveg a cellák felett
+			ctx.textBaseline = "middle";
+			for (let i = 0; i < N; i++) {
+					const x = labelMargin + i * cellSize + cellSize;  // Eltolás a cella méretének felével
+					const y = labelMargin / 2;  // Szöveg helye a felső részen, állandó magasság
+
+					ctx.save();  // Aktuális állapot mentése
+					ctx.translate(x, y);  // Szöveg kezdőpontjának beállítása
+					ctx.rotate(-Math.PI / 4);  // Szöveg elforgatása -45 fokban
+					ctx.fillText(labels[i], 0, 0);  // Szöveg megjelenítése az új helyen
+					ctx.restore();  // Állapot visszaállítása
+			}
+
+			// Felső háromszög rács rajzolása és körök elhelyezése a cellák közepén
+			for (let row = 0; row < N; row++) {
+					for (let col = row; col < N; col++) {
+							const x = labelMargin + col * cellSize;
+							const y = labelMargin + row * cellSize;
+							
+							// Rácsvonalak rajzolása
+							ctx.strokeRect(x, y, cellSize, cellSize);
+							
+							// Kör rajzolása a cella közepére
+							const centerX = x + cellSize / 2;
+							const centerY = y + cellSize / 2;
+							const radius = (cellSize / 2) * 0.8;  // Átmérő a cellaméret 80%-a
+
+							ctx.beginPath();
+							ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+							ctx.stroke();
+					}
+			}
+
+		</script>
+</body>
+</html>
