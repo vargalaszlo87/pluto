@@ -8,13 +8,169 @@
 <body>
     <canvas id="matrixCanvas"></canvas>
 		<script type="text/javascript">
-					
+
+			const drawCorrMatrix = {
+				cellSize: 50,
+				labelMargin: 100,
+				canvas: null,
+				ctx: null,
+
+				// font
+				fontSize: 16,
+				fontFamily: "Calibri",
+
+				// value
+				maxValue: 0,
+				minValue: 0,	
+		
+				setFontSize (size) {
+					if (this.ctx) 
+						this.fontSize = size;
+				},
+
+				setFontFamily (family) {
+					if (this.ctx)
+						this.fontFamily = family;
+				},
+
+				setLeftLabels (N, labels) {
+					for (let i = 0; i < N; i++) {
+						const x = this.labelMargin - 10 + i * this.cellSize;
+						const y = this.labelMargin + i * this.cellSize + this.cellSize / 2;
+						this.ctx.fillText(labels[i], x, y);
+					}
+				},
+
+				setTopLabels (N, labels) {
+					this.ctx.textAlign = "left"; 
+					this.ctx.textBaseline = "middle";
+					for (let i = 0; i < N; i++) {
+							const x = this.labelMargin + i * this.cellSize + this.cellSize / 2;  
+							const y = this.labelMargin / 1.1; 
+
+							// rotate
+							this.ctx.save();  
+							this.ctx.translate(x, y);  
+							this.ctx.rotate(-Math.PI / 4);  
+							this.ctx.fillText(labels[i], 5, 0);  
+							this.ctx.restore(); 
+					}
+				},
+
+				drawLegend(N) {
+					const legendWidth = this.cellSize / 2; // Jelmagyarázat szélessége
+					const legendX = this.canvas.width - legendWidth - 10; // Jobb oldalon, kis margóval
+					const legendHeight = this.canvas.height - this.labelMargin;
+
+					// init gradient
+					const gradient = this.ctx.createLinearGradient(0, 0 + this.labelMargin, 0, legendHeight + this.labelMargin);
+					gradient.addColorStop(0, "rgba(41, 128, 185)");    // Felül kék
+					gradient.addColorStop(0.5, "#FFFFFF");  // Középen fehér
+					gradient.addColorStop(1, "rgb(192, 57, 43)");     // Alul piros
+
+					// draw gradient
+					this.ctx.fillStyle = gradient;
+					this.ctx.fillRect(legendX - 15, this.labelMargin, legendWidth - 10 , legendHeight);
+
+					// legends style
+					this.ctx.fillStyle = "#000";
+					this.ctx.font = `${this.fontSize}px ${this.fontFamily}`;
+					this.ctx.textAlign = "center";
+					this.ctx.textBaseline = "middle";
+
+					// legends positions
+					const upPoint = legendX - 10 + legendWidth / 2 + this.cellSize / 3;
+					const upText = 15 + this.labelMargin;
+					const middleText = legendHeight / 2 + this.labelMargin;
+					const bottomText = legendHeight - 10 + this.labelMargin;
+
+					// text for legends
+					this.ctx.fillText("1.0", upPoint, upText);
+					this.ctx.fillText("0.5", upPoint, (upText + middleText) / 2);
+					this.ctx.fillText("0", upPoint, middleText);
+					this.ctx.fillText("-0.5", upPoint, (middleText + bottomText) / 2);
+					this.ctx.fillText("-1.0", upPoint, bottomText);
+				},				
+
+				matrix (N, datas) {
+					for (let row = 0; row < N; row++) {
+						for (let col = row; col < N; col++) {
+							// actual data
+							const actual = datas[row][col];
+
+							// shifting
+							const x = this.labelMargin + col * this.cellSize;
+							const y = this.labelMargin + row * this.cellSize;
+
+							// rect
+							this.ctx.strokeStyle = "#999999";
+							this.ctx.lineWidth = 2;
+							this.ctx.strokeRect(x, y, this.cellSize, this.cellSize);
+			
+							// circle
+							const centerX = x + this.cellSize / 2;
+							const centerY = y + this.cellSize / 2;
+							const radius = Math.abs(actual) * (this.maxValue - this.minValue) + this.minValue;  // Átmérő a cellaméret 80%-a
+
+							// coloring
+							this.ctx.beginPath();
+							this.ctx.fillStyle = (actual) < 0 ? "rgba(192, 57, 43, "+ Math.abs(actual) +")" : "rgba(41, 128, 185, "+ Math.abs(actual) +")";
+							this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+							this.ctx.fill();
+						}
+					}
+				},
+
+				chart (canvasName = "corrMatrixCanvas", N = 1, labels, datas) {
+					// N is min 3
+					if (N < 3)
+						return;
+
+					// set canvas
+					this.canvas = document.getElementById(canvasName);
+					this.canvas.width = this.labelMargin + N * this.cellSize + this.cellSize * 1.25;  // Extra cellaméret hozzáadva
+					this.canvas.height = this.labelMargin + N * this.cellSize + 1;
+					this.ctx = this.canvas.getContext("2d");
+
+					// set font
+					this.ctx.font = `${this.fontSize}px ${this.fontFamily}`;
+					this.ctx.textAlign = "right";
+					this.ctx.textBaseline = "middle";
+
+					// set circle
+					this.maxValue = (this.cellSize / 2) * 0.75,
+					this.minValue = (this.cellSize / 2) * 0.2,
+
+					// methods
+					drawCorrMatrix.setLeftLabels(N, labels);
+					drawCorrMatrix.setTopLabels(N, labels);
+					drawCorrMatrix.matrix(N, datas);
+					drawCorrMatrix.drawLegend(N);
+				},
+			}
+
+			const datas = [
+				[1.00,-0.85,-0.78,0.68,-0.87,0.42],
+				[-0.85,1.00,0.79,-0.71,0.89,-0.43],
+				[-0.78,0.79,1.00,-0.45,0.66,-0.71],
+				[0.68,-0.71,-0.45,1.00,-0.71,0.09],
+				[-0.87,0.89,0.66,-0.71,1.00,-0.17],
+				[0.42,-0.43,-0.71,0.09,-0.17,1.00]
+				];
+			const labels = ["Adatsor1", "Adatsor2", "Adatsor3 sdfsdf ", "Adatsor4", "Adatsor5", "Adatsor6"];
+			drawCorrMatrix.chart("matrixCanvas", 6, labels, datas);
+
+
+
+		/*			
 			const N = 5;  // Mátrix mérete
 			const cellSize = 50;  // Egy cella mérete
 			const labelMargin = 100;  // Szöveg helye a bal oldalon
+			const maxValue = (cellSize / 2) * 0.8;
+			const minValue = (cellSize / 2) * 0.15;
 
 			// Példa adatsorok neveire
-			const labels = ["Adatsor1", "Adatsor2", "Adatsor3", "Adatsor4", "Adatsor5"];
+			const labels = ["Adatsor1", "Adatsor2", "Adatsor3", "Adatsor4", "Adatsor5", "Adatsor6"];
 
 			// Canvas beállítása
 			const canvas = document.getElementById("matrixCanvas");
@@ -60,14 +216,14 @@
 							// Kör rajzolása a cella közepére
 							const centerX = x + cellSize / 2;
 							const centerY = y + cellSize / 2;
-							const radius = (cellSize / 2) * 0.8;  // Átmérő a cellaméret 80%-a
+							const radius = minValue;  // Átmérő a cellaméret 80%-a
 
 							ctx.beginPath();
 							ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
 							ctx.stroke();
 					}
 			}
-
+*/
 		</script>
 </body>
 </html>
