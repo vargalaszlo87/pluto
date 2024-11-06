@@ -4,7 +4,7 @@ const floatBox = {
     content: document.getElementById('floatbox-content'),
     overlay: document.getElementById('overlay'),
     close: document.getElementById('close-floatbox'),
-    open: (event, data, size = 800) => {
+    open: (event, data, size = 800, sizeH = "") => {
         const button = event.target.closest('.open-floatbox');
         if (button) {
             //const dataId = event.currentTarget.getAttribute('data-id') || 'N/A';
@@ -13,6 +13,7 @@ const floatBox = {
             floatBox.main.style.display = 'block';
             floatBox.overlay.style.display = 'block';
             floatBox.main.style.width = size + 'px';
+            floatBox.main.style.height = sizeH + 'px';
             console.log(sizer.width);
         } 
         

@@ -47,11 +47,15 @@ const examin = {
     },
     chartJS(multiDataY) {
 
+        const borderColors = ['#922b21', '#76448a', '#1f618d', '#148f77', '#1e8449', '#b7950b','#af601a','#717d7e', '#283747', '#000000'];
+
         const datasets = multiDataY.map((dataset, index) => ({
             label: `Adatsor ${index + 1}`,
             data: dataset,
-            borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+            //borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+            borderColor: borderColors[index],
             fill: false,
+            yAxisID: `y-axis-${index + 1}`,
         }));
 
         const ctx = document.getElementById('showExaminChart').getContext('2d');
@@ -63,17 +67,45 @@ const examin = {
             },
             options: {
                 legend: {
-                    display: false
+                    display: true
                 },
                 responsive: false,
                 scales: {
+                    yAxes: multiDataY.map((_, index) => {
+                        const color = datasets[index].borderColor;
+                        return {
+                            id: `y-axis-${index + 1}`,
+                            type: 'linear',
+                            position: index % 2 === 0 ? 'left' : 'right',
+                            scaleLabel: {
+                                display: true,
+                                labelString: `Adatsor ${index + 1} tengely`,
+                                fontColor: color, // Tengely címke színe
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: color, // Címkék színe a tengely mentén
+                            },
+                            gridLines: {
+                                display: index === 0, // Csak az első tengelyhez rácsvonal
+                            },
+                        };
+                    }),
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'X tengely',
+                        }
+                    }],
                     x: {
                         beginAtZero: true
                     },
                     y: {
                         beginAtZero: true
-                    }
-                }
+                    },
+
+                },
+
             }
         });
     }
@@ -87,7 +119,7 @@ buttonRawExamin.addEventListener('click', (event) => {
     let multiDataY = [];
     selectedRectangles.forEach((rect, index) => {
         dataID[index] = rect.getAttribute("data-id");
-        multiDataY.push(pluto.inputData.ID.indexOf(dataID[index]));
+        multiDataY.push(pluto.inputData.all[pluto.inputData.ID.indexOf(dataID[index])]);
 
         if (dataID.length > 5) {
             alert('A demó verzió 5 kijelölt adatsorral képes dolgozni.');
@@ -95,6 +127,8 @@ buttonRawExamin.addEventListener('click', (event) => {
         }
 
     });
+
+    console.log(multiDataY[0][0]);
 
     // data for floatbox
     const data = examin.show(event, dataID[0]);

@@ -9,7 +9,7 @@
     <canvas id="matrixCanvas"></canvas>
 		<script type="text/javascript">
 
-			const drawCorrMatrix = {
+			const drawCorrelationMatrix = {
 
 				// cell & margin
 				cellSize: 50,
@@ -89,10 +89,12 @@
 							// circle
 							const centerX = x + this.cellSize / 2;
 							const centerY = y + this.cellSize / 2;
-							const radius = Math.abs(actual) * (maxValue - minValue) + minValue;  
+							const radius = minValue + Math.abs(actual) * (maxValue - minValue);  
 							// coloring
 							this.ctx.beginPath();
-							this.ctx.fillStyle = (actual) < 0 ? "rgba(192, 57, 43, "+ Math.abs(actual) +")" : "rgba(41, 128, 185, "+ Math.abs(actual) +")";
+							this.ctx.fillStyle = (actual) < 0 
+								? "rgba(192, 57, 43, "+ Math.abs(actual) +")" 
+								: "rgba(41, 128, 185, "+ Math.abs(actual) +")";
 							this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
 							this.ctx.fill();
 						}
@@ -108,6 +110,7 @@
 					this.canvas.width = this.labelMargin + N * this.cellSize + this.cellSize * 1.25;
 					this.canvas.height = this.labelMargin + N * this.cellSize + 1;
 					this.ctx = this.canvas.getContext("2d");
+					if (!this.ctx) return; 
 					// set font
 					this.ctx.font = `${this.fontSize}px ${this.fontFamily}`;
 					this.ctx.textAlign = "right";
@@ -116,10 +119,10 @@
 					let maxValue = (this.cellSize / 2) * 0.75;
 					let minValue = (this.cellSize / 2) * 0.2;
 					// methods
-					drawCorrMatrix.setLeftLabels(N, labels);
-					drawCorrMatrix.setTopLabels(N, labels);
-					drawCorrMatrix.matrix(N, datas, minValue, maxValue);
-					drawCorrMatrix.drawLegend(N);
+					this.setLeftLabels(N, labels);
+					this.setTopLabels(N, labels);
+					this.matrix(N, datas, minValue, maxValue);
+					this.drawLegend(N);
 				},
 			}
 
@@ -132,7 +135,7 @@
 				[0.42,-0.43,-0.71,0.09,-0.17,1.00]
 			];
 			const labels = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta"];
-			drawCorrMatrix.chart("matrixCanvas", 6, labels, corrMatrix);
+			drawCorrelationMatrix.chart("matrixCanvas", 6, labels, corrMatrix);
 		</script>
 </body>
 </html>
