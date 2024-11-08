@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radio Test</title>
+</head>
+<body>
+    <input type="radio" name="chartType" value="line"> Line
+    <input type="radio" name="chartType" value="bar"> Bar
+    <input type="radio" name="chartType" value="pie"> Pie
+
+    <script>
+        function addRadioEventListeners() {
+            const radios = document.querySelectorAll('input[name="chartType"]');
+            radios.forEach((radio) => {
+						console.log(radio);
+                radio.addEventListener('click', (event) => {
+                    console.log("Kiválasztott diagram típus:", event.target.value);
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', addRadioEventListeners);
+    </script>
+</body>
+</html>

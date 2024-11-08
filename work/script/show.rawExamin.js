@@ -6,6 +6,8 @@ const examin = {
     labels: [],
     data: [],
     chartInstance: null, // A meglévő diagram tárolására
+    chartInstanceCtx: null,
+    chartInstanceOptions: null,
     currentChartType: 'line', // Alapértelmezett diagram típus
 
     show(event, dataID) {
@@ -32,21 +34,11 @@ const examin = {
             <div id="chartTypeSelector">
                 <label><input type="radio" name="chartType" value="line" checked> Vonal</label>
                 <label><input type="radio" name="chartType" value="bar"> Oszlop</label>
-                <label><input type="radio" name="chartType" value="radar"> Radar</label>
             </div>
         `);
 
         // DOM frissítése
         document.getElementById("floatbox-content").innerHTML = this.output.join("");
-
-        /*
-        document.querySelectorAll('input[name="chartType"]').forEach((radio) => {
-            radio.addEventListener('change', (event) => {
-                examin.currentChartType = event.target.value;
-                examin.updateChart(); // Diagram frissítése a kiválasztott típus alapján
-                console.log(examin.currentChartType);
-            });
-        });*/
 
         // Ellenőrizzük, hogy valóban létezik-e a canvas
         const canvas = document.getElementById('showExaminChart');
@@ -60,8 +52,11 @@ const examin = {
             this.labels.push(index);
         });
 
+        this.output.push('</div></div></div>');
+
         // Diagram inicializálása
         this.addRadioEventListeners(); // Eseményfigyelők hozzáadása a rádiógombokhoz
+
 
         return this.output.join("");
     },
@@ -77,7 +72,7 @@ const examin = {
             yAxisID: `y-axis-${index + 1}`,
         }));
 
-        const ctx = document.getElementById('showExaminChart').getContext('2d');
+        this.chartInstanceCtx = document.getElementById('showExaminChart').getContext('2d');
 
         // Meglévő diagram törlése, ha van
         if (this.chartInstance) {
@@ -85,7 +80,7 @@ const examin = {
         }
 
         // Új diagram létrehozása a kiválasztott típus alapján
-        this.chartInstance = new Chart(ctx, {
+        this.chartInstanceOptions = {
             type: this.currentChartType,
             data: {
                 labels: this.labels,
@@ -95,7 +90,10 @@ const examin = {
                 legend: {
                     display: true
                 },
-                responsive: false,
+                hover: {
+                    mode: null // Így nem történik hover kiemelés
+                },
+                responsive: true,
                 scales: {
                     yAxes: multiDataY.map((_, index) => {
                         const color = datasets[index].borderColor;
@@ -125,33 +123,42 @@ const examin = {
                     }]
                 }
             }
-        });
+        };
+
+        this.chartInstance = new Chart(this.chartInstanceCtx, this.chartInstanceOptions);
     },
 
     // Rádiógomb eseményfigyelők hozzáadása
     addRadioEventListeners() {
-        const radios = document.querySelectorAll('input[name="chartType"]');
-        console.log("Rádiógombok:", radios);
-    
-        radios.forEach((radio) => {
-            radio.addEventListener('click', (event) => {
-                console.log("Kiválasztott diagram típus:", event.target.value);
-                //this.currentChartType = event.target.value;
-                //this.updateChart(); 
-            });
-        });      
+        document.body.addEventListener('change', (event) => {
+            if (event.target.matches('input[name="chartType"]')) {
+                event.stopPropagation();
+                event.preventDefault();
+                const newType = event.target.value;
+                if (newType !== this.currentChartType) { // Csak akkor vált, ha új a típus
+                    this.currentChartType = newType;
+                    this.changeType(newType);
+                }
+            }
+        });
     },
 
+    changeType(newType) {
+        
+        if (this.chartInstance) {
+            this.chartInstance.destroy();
+        }
+        else   
+            return;
+        this.chartInstanceCtx = document.getElementById("showExaminChart").getContext("2d");
+        var temp = JSON.parse(JSON.stringify(this.chartInstanceOptions));
+        temp.type = newType;
+        myChart = new Chart(this.chartInstanceCtx, temp);
+    },
+          
 
-    // Diagram frissítése
-    updateChart() {
-        const multiDataY = []; // Az adatsorok betöltése
-        selectedRectangles.forEach((rect, index) => {
-            const dataID = rect.getAttribute("data-id");
-            multiDataY.push(pluto.inputData.all[pluto.inputData.ID.indexOf(dataID)]);
-        });
-        this.chartJS(multiDataY);
-    }
+
+
 };
 
 // events
@@ -179,6 +186,9 @@ buttonRawExamin.addEventListener('click', (event) => {
     examin.chartJS(multiDataY);
 
 });
+
+
+
 
 
 

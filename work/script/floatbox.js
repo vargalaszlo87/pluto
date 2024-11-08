@@ -14,7 +14,6 @@ const floatBox = {
             floatBox.overlay.style.display = 'block';
             floatBox.main.style.width = size + 'px';
             floatBox.main.style.height = sizeH + 'px';
-            console.log(sizer.width);
         } 
         
     }
