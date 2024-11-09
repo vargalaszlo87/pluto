@@ -24,9 +24,18 @@ const examin = {
         this.output.push('<div class="row">');
 
         // Canvas hozzáadása a DOM-hoz
-        this.output.push('<div class="col-mg-12 col-lg-12" id="play-chart">');
+        this.output.push('<div class="col-mg-9 col-lg-9" id="play-chart">');
         this.output.push('<canvas id="showExaminChart" style="width: 100%; height: 500px;"></canvas>');
         this.output.push('</div>');
+        this.output.push('<div class="col-mg-3 col-lg-3">');
+
+        // Rádiógombok hozzáadása a diagram típusának kiválasztásához
+        this.output.push(`
+            <div id="chartTypeSelector">
+                <label><input type="radio" name="chartType" value="line" checked> Vonal</label>
+                <label><input type="radio" name="chartType" value="bar"> Oszlop</label>
+            </div>
+        `);
 
         // DOM frissítése
         document.getElementById("floatbox-content").innerHTML = this.output.join("");
@@ -44,6 +53,10 @@ const examin = {
         });
 
         this.output.push('</div></div></div>');
+
+        // Diagram inicializálása
+        this.addRadioEventListeners(); // Eseményfigyelők hozzáadása a rádiógombokhoz
+
 
         return this.output.join("");
     },
@@ -114,6 +127,37 @@ const examin = {
 
         this.chartInstance = new Chart(this.chartInstanceCtx, this.chartInstanceOptions);
     },
+
+    // Rádiógomb eseményfigyelők hozzáadása
+    addRadioEventListeners() {
+        document.body.addEventListener('change', (event) => {
+            if (event.target.matches('input[name="chartType"]')) {
+                event.stopPropagation();
+                event.preventDefault();
+                const newType = event.target.value;
+                if (newType !== this.currentChartType) { // Csak akkor vált, ha új a típus
+                    this.currentChartType = newType;
+                    this.changeType(newType);
+                }
+            }
+        });
+    },
+
+    changeType(newType) {
+        
+        if (this.chartInstance) {
+            this.chartInstance.destroy();
+        }
+        else   
+            return;
+        this.chartInstanceCtx = document.getElementById("showExaminChart").getContext("2d");
+        var temp = JSON.parse(JSON.stringify(this.chartInstanceOptions));
+        temp.type = newType;
+        myChart = new Chart(this.chartInstanceCtx, temp);
+    },
+          
+
+
 
 };
 
