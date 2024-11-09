@@ -43,7 +43,7 @@ const examin = {
             this.labels.push(index);
         });
 
-        this.output.push('</div></div></div>');
+        this.output.push('</div></div>');
 
         return this.output.join("");
     },
