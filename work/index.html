@@ -78,7 +78,16 @@
                                 <i class="fa fa-minus rotate45"></i>
                             </div>
                         </button>
+                        <!-- -->
+                        <button class="plutoToolMathButton open-floatbox greenButton" id="math-const">
+                            <div height="100%" style="text-align: center">
+                                <span style="font-size: 1vw">CONST:</span>
+                            </div>
+                        </button>
+                        <input type="text" id="math-const-input" value="1.0" />
                         <div class="toolSpace"></div>
+
+
 
                         <h4 class="toolLabel">Intelligens eszközök</h4>
                         <button class="plutoToolButton open-floatbox greenButton" id="raw-examin">
@@ -125,8 +134,13 @@
     <script src="script/navigation.js"></script>
     <script src="script/show.rawExamin.js"></script>
 
+    <script src="script/event.mathtool.js"></script>
     <script src="script/event.correlation.js"></script>
 
+    <!-- dev -->
+    <script type="text/javascript">
+        document.getElementById("math-const-input").value = '1.0';
+    </script>
 </body>
 
 </html>

@@ -489,3 +489,12 @@ div.toolSpace {
     -o-transform: rotate(-45deg);
     filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
+
+#math-const-input {
+    width: 24%;
+    text-align: right;
+    font-weight: bold;
+    border: 0;
+    background: none;
+    border-bottom: solid 2px #424;
+}

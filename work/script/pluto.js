@@ -11,6 +11,7 @@ const pluto = {
         unSelectedWorkspace: '#fff'
     },
     inputData: {
+        constant: 0,
         counter: 0,
         maxSize: 10 * 1024, // max 10kb,
         // vectors
@@ -40,13 +41,22 @@ function clearSelection() {
 }
 
 // Téglalap létrehozása a kattintás helyén
-function createRectangle(generatedID, x, y) {
+function createRectangle(generatedID, x, y, type = 'default') {
     const rectangle = document.createElement('div');
     rectangle.classList.add('rectangle');
     rectangle.style.left = `${x + offsetX}px`; // X irányú eltolás
     rectangle.style.top = `${y + offsetY}px`; // Y irányú eltolás
     //rectangle.textContent = (inputDataCounter + 1) + ". pack";
-    rectangle.innerHTML = '<h5>' + (pluto.inputData.counter + 1) + '. adatsor</h5>' + '<img src="img/icon-numerical.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />  <h6>numerikus</h6>';
+
+    if (type == 'default') {
+        rectangle.innerHTML = '<h5>' + (pluto.inputData.counter + 1) + '. adatsor</h5>' + '<img src="img/icon-numerical.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />  <h6>numerikus</h6>';
+    }
+    if (type == 'const') {
+        let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
+        rectangle.innerHTML = '<h5>Konstans</h5>' + '  <span id="constNumberInRectangle" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: ' + fontSize + 'vw">' + pluto.inputData.constant + '</span>';
+    }
+
+
     rectangle.setAttribute('tabindex', '0'); // Fókuszálhatóvá tesszük
     rectangle.setAttribute('data-id', generatedID);
 
@@ -75,39 +85,41 @@ function createRectangle(generatedID, x, y) {
         selectedRectangles = selectedRectangles.filter(rect => rect !== rectangle); // Törlés a kijelölt listából
     });
 
-    // Raw adat gomb létrehozása
-    const rawButton = document.createElement('button');
-    rawButton.innerHTML = '<i class="fa fa-search fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
-    rawButton.setAttribute('data-id', generatedID);
-    rawButton.setAttribute('id', 'rawTeszt');
-    rawButton.setAttribute('class', 'rawButton');
-    rawButton.classList.add('open-floatbox');
-    rectangle.appendChild(rawButton);
+    if (type == 'default') {
+        // Raw adat gomb létrehozása
+        const rawButton = document.createElement('button');
+        rawButton.innerHTML = '<i class="fa fa-search fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
+        rawButton.setAttribute('data-id', generatedID);
+        rawButton.setAttribute('id', 'rawTeszt');
+        rawButton.setAttribute('class', 'rawButton');
+        rawButton.classList.add('open-floatbox');
+        rectangle.appendChild(rawButton);
 
-    rawButton.addEventListener('click', (event) => {
-        event.stopPropagation();
-        const dataID = event.currentTarget.getAttribute('data-id') || 'N/A';
-        const data = show.rawData(event, dataID);
-        floatBox.open(event, data);
-    });
+        rawButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const dataID = event.currentTarget.getAttribute('data-id') || 'N/A';
+            const data = show.rawData(event, dataID);
+            floatBox.open(event, data);
+        });
 
-    // Play gomb létrehozása
-    const playButton = document.createElement('button');
-    playButton.innerHTML = '<i class="fa fa-play fa-1x" style="color: #fff; font-size: 1.25rem; padding-top: 4px;"></i>';
-    playButton.setAttribute('play-data-id', generatedID);
-    playButton.setAttribute('id', 'playTeszt')
-    playButton.setAttribute('class', 'playButton');
-    playButton.classList.add('open-floatbox');
-    rectangle.appendChild(playButton);
+        // Play gomb létrehozása
+        const playButton = document.createElement('button');
+        playButton.innerHTML = '<i class="fa fa-play fa-1x" style="color: #fff; font-size: 1.25rem; padding-top: 4px;"></i>';
+        playButton.setAttribute('play-data-id', generatedID);
+        playButton.setAttribute('id', 'playTeszt')
+        playButton.setAttribute('class', 'playButton');
+        playButton.classList.add('open-floatbox');
+        rectangle.appendChild(playButton);
 
-    playButton.addEventListener('click', (event) => {
-        event.stopPropagation();
-        const dataID = event.currentTarget.getAttribute('play-data-id') || 'N/A';
-        const data = play.descriptive(event, dataID);
-        console.log(data);
-        floatBox.open(event, data, sizer.width - 100);
-        play.descriptiveJS();
-    });
+        playButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const dataID = event.currentTarget.getAttribute('play-data-id') || 'N/A';
+            const data = play.descriptive(event, dataID);
+            console.log(data);
+            floatBox.open(event, data, sizer.width - 100);
+            play.descriptiveJS();
+        });
+    }
 
     // Téglalap kijelölése
     rectangle.addEventListener('click', (event) => {
@@ -254,7 +266,7 @@ workSpace.addEventListener("focusin", (event) => {
             deactivateButton.remove(); // Gomb eltávolítása
             workSpace.removeEventListener('paste', paste); // Paste funkció eltávolítása
             workSpace.style.backgroundColor = pluto.design.unSelectedWorkspace; // workSpace háttér visszaállítása
-            workSpace.style.backgroundImage ='radial-gradient(#dbdbdb 1px, transparent 1px)';
+            workSpace.style.backgroundImage = 'radial-gradient(#dbdbdb 1px, transparent 1px)';
             workSpace.style.backgroundSize = '5px 5px';
             isButton = false;
         });
