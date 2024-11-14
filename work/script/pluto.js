@@ -17,6 +17,7 @@ const pluto = {
         // vectors
         all: [],
         ID: [],
+        type: [],
     }
 };
 
@@ -78,6 +79,7 @@ function createRectangle(generatedID, x, y, type = 'default') {
         tempIndex = pluto.inputData.ID.indexOf(tempID);
         removeElementFromArray(pluto.inputData.ID, tempIndex);
         removeElementFromArray(pluto.inputData.all, tempIndex);
+        removeElementFromArray(pluto.inputData.type, tempIndex);
 
         // delete from workspace
         rectangle.remove();
@@ -232,6 +234,9 @@ function paste(event) {
     // ID
     let tempID = generateID();
     pluto.inputData.ID.push(tempID);
+
+    // type
+    pluto.inputData.type.push('default');
 
     // create rectangle
     createRectangle(tempID, 50, 50);

@@ -18,6 +18,9 @@ constButton.addEventListener('click', (event) => {
     let tempID = generateID();
     pluto.inputData.ID.push(tempID);
 
+    // type
+    pluto.inputData.type.push('const');
+
     // create rectangle
     createRectangle(tempID, 50, 50, 'const');
     pluto.inputData.counter++;

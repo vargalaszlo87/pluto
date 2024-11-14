@@ -4,37 +4,54 @@ const button = document.getElementById("intelligent-correlation");
 
 button.addEventListener('click', (event) => {
     let dataID = [];
+    let isNotDefaultData = false;
     selectedRectangles.forEach((rect, index) => {
         dataID[index] = rect.getAttribute("data-id");
+
+        // check is not default data
+        if (pluto.inputData.type[pluto.inputData.ID.indexOf(dataID[index])] == "const") {
+            isNotDefaultData = true;
+        }
+
     });
-    if (dataID.length != 2) {
-        alert('A demó verzió két kijelölt adatsorral képes dolgozni.');
+    if (isNotDefaultData) {
+        alert("Konstans számokkal nem végezhető korreláció analízis.");
         return;
     }
 
-    // search datas
-    xIndex = pluto.inputData.ID.indexOf(dataID[0]);
-    yIndex = pluto.inputData.ID.indexOf(dataID[1]);
+    // check min 2 data packages
+    if (dataID.length < 2) {
+        alert('Legalább 2 adatsor kiválasztása szükséges a korreláció analízishez.');
+        return;       
+    }
 
-    // calc
-    const R = correlation.pearson(pluto.inputData.all[xIndex], pluto.inputData.all[yIndex]);
+    // 2D correlation
+    if (dataID.length == 2) {
+        // search datas
+        xIndex = pluto.inputData.ID.indexOf(dataID[0]);
+        yIndex = pluto.inputData.ID.indexOf(dataID[1]);
 
-    // data for floatbox
-    const data = correlation.template(R);
+        // calc
+        const R = correlation.pearson(pluto.inputData.all[xIndex], pluto.inputData.all[yIndex]);
 
-    // open floatbox
-    floatBox.open(event, data, sizer.width - 100);
+        // data for floatbox
+        const data = correlation.template(R);
 
-    // add JS
-    correlation.chartJS(pluto.inputData.all[xIndex], pluto.inputData.all[yIndex]);
+        // open floatbox
+        floatBox.open(event, data, sizer.width - 100);
 
-    console.log("AZ R erteke: " + R);
-    /*
-            const data = play.descriptive(event, dataID);
-            console.log(data);
-            floatBox.open(event, data, sizer.width - 100);
-            play.descriptiveJS();
-    */
+        // add JS
+        correlation.chartJS(pluto.inputData.all[xIndex], pluto.inputData.all[yIndex]);
+    }
+    // correlation-n
+    else {
+        alert('Coming soon...');
+    }
+
+
+
+
+
 
 
 });
