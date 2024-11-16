@@ -21,6 +21,47 @@ const pluto = {
     }
 };
 
+// DEV for lines
+let connections = [];
+
+function getRectangleById(rectId) {
+    return document.querySelector(`[data-id="${rectId}"]`);
+}
+
+function addConnection(parent1Id, parent2Id, childId) {
+    const parent1 = getRectangleById(parent1Id);
+    const parent2 = getRectangleById(parent2Id);
+    const child = getRectangleById(childId);
+
+    if (!parent1 || !parent2 || !child) {
+        console.error("One or more rectangles not found for given IDs.");
+        return;
+    }
+
+    const line1 = createLine(parent1, child);
+    const line2 = createLine(parent2, child);
+
+    connections.push({ parent1Id, parent2Id, childId, lines: [line1, line2] });
+}
+
+function updateAllLines() {
+    connections.forEach(({ parent1Id, parent2Id, childId, lines }) => {
+        const parent1 = getRectangleById(parent1Id);
+        const parent2 = getRectangleById(parent2Id);
+        const child = getRectangleById(childId);
+
+        if (!parent1 || !parent2 || !child) {
+            console.error("One or more rectangles not found for given IDs.");
+            return;
+        }
+
+        updateLine(lines[0], parent1, child);
+        updateLine(lines[1], parent2, child);
+    });
+}
+
+/* ---------------- */
+
 const workSpace = document.getElementById('workSpace');
 const workSpaceRect = workSpace.getBoundingClientRect(); // A workSpace mérete és pozíciója
 
@@ -56,7 +97,10 @@ function createRectangle(generatedID, x, y, type = 'default') {
         let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
         rectangle.innerHTML = '<h5>Konstans</h5>' + '  <span id="constNumberInRectangle" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: ' + fontSize + 'vw">' + pluto.inputData.constant + '</span>';
     }
-
+    if (type == 'calculated') {
+        let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
+        rectangle.innerHTML = '<h5>Kalkulált</h5>' + '  <img src="img/icon-calculated.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />';
+    }
 
     rectangle.setAttribute('tabindex', '0'); // Fókuszálhatóvá tesszük
     rectangle.setAttribute('data-id', generatedID);
@@ -87,7 +131,7 @@ function createRectangle(generatedID, x, y, type = 'default') {
         selectedRectangles = selectedRectangles.filter(rect => rect !== rectangle); // Törlés a kijelölt listából
     });
 
-    if (type == 'default') {
+    if (type == 'default' || type == 'calculated') {
         // Raw adat gomb létrehozása
         const rawButton = document.createElement('button');
         rawButton.innerHTML = '<i class="fa fa-search fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
@@ -187,6 +231,10 @@ document.addEventListener('mousemove', (event) => {
 
         draggedElement.style.left = `${newLeft}px`;
         draggedElement.style.top = `${newTop}px`;
+
+        // vonalak frissítése
+        updateAllLines();
+
     }
 });
 

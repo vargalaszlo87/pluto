@@ -498,3 +498,13 @@ div.toolSpace {
     background: none;
     border-bottom: solid 2px #424;
 }
+
+/* contactLine */
+
+.line {
+    position: absolute;
+    height: 2px; /* Vonal vastagsága */
+    background-color: black;
+    transform-origin: 0 50%; /* Elforgatás bal oldali középpontból */
+    z-index: 0; /* Téglalapok mögé kerül */
+}
