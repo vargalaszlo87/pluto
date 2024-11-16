@@ -180,7 +180,10 @@ arithmeticButtons.forEach(button => {
 
     // create rectangle
     createRectangle(tempID, 50, 50, 'calculated');
-    pluto.inputData.counter++;        
+    pluto.inputData.counter++;    
+    
+    // add lines
+    addConnection(dataID[0], dataID[1], tempID);
 
 
     });
