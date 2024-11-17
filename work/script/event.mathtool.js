@@ -32,13 +32,54 @@ constButton.addEventListener('click', (event) => {
 
 });
 
-const arithmeticButtons = document.getElementsByName("arithmetic");
 
+const functionButtons = document.getElementsByName("function");
+const createLinearArray = (n, ascending = true) => {
+    if (n <= 0)
+        return;
+
+    const array = [];
+    const step = 1 / (n - 1); 
+
+    for (let i = 0; i < n; i++) {
+        const value = ascending ? i * step : 1 - i * step;
+        array.push(value);
+    }
+    return array;
+}
+
+// math-lin-up math-lin-down
+functionButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+        // type of math-arithmetic
+        const clickedButtonId = event.currentTarget.id;
+
+        // new vector
+        value = createLinearArray(32, (clickedButtonId == "math-lin-up") ? true : false);        
+        pluto.inputData.all.push(value);
+
+        // ID
+        let tempID = generateID();
+        pluto.inputData.ID.push(tempID);
+
+        // type
+        pluto.inputData.type.push('function');
+
+        // create rectangle
+        createRectangle(tempID, 50, 50, 'function');
+        pluto.inputData.counter++;
+
+    });
+});
+
+
+
+const arithmeticButtons = document.getElementsByName("arithmetic");
 const isConstAndDefaultOrCalculated = (arr) => 
-    arr.includes("const") && (arr.includes("default") || arr.includes("calculated"))  && arr.length === 2;
+    arr.includes("const") && (arr.includes("default") || arr.includes("calculated") || arr.includes("function"))  && arr.length === 2;
 
 const isDefaultOrCalculated = (arr) => 
-    (arr.includes("default") || arr.includes("calculated")) && arr.length === 2 && !arr.includes("const");
+    (arr.includes("default") || arr.includes("calculated") || arr.includes("function")) && arr.length === 2 && !arr.includes("const");
 
 const expandArray = (value, size) => 
     Array(size).fill(value);
@@ -131,7 +172,7 @@ arithmeticButtons.forEach(button => {
             const constantID = dataID[innerConstantID];
             const constant = pluto.inputData.all[pluto.inputData.ID.indexOf(constantID)];
             
-            const innerDatasetID = dataType.findIndex(item => item === "default" || item === "calculated");
+            const innerDatasetID = dataType.findIndex(item => item === "default" || item === "calculated" || item === "function");
             const datasetID = dataID[innerDatasetID];
             const dataset = pluto.inputData.all[pluto.inputData.ID.indexOf(datasetID)];
             const datasetSize = dataset.length;

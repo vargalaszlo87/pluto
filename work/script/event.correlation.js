@@ -31,8 +31,29 @@ button.addEventListener('click', (event) => {
         xIndex = pluto.inputData.ID.indexOf(dataID[0]);
         yIndex = pluto.inputData.ID.indexOf(dataID[1]);
 
+        // two arrays
+        arr1 = pluto.inputData.all[xIndex];
+        arr2 = pluto.inputData.all[yIndex];
+
+        console.log(pluto.inputData.type[xIndex]);
+        console.log(pluto.inputData.type[yIndex]);
+
+        // extend
+        if (arr1.length != arr2.length) {
+            if (pluto.inputData.type[xIndex] == "function" && arr1.length < arr2.lenght) {
+                correlation.extendLin(arr1, Math.max(arr1.length, arr2.length));
+            }
+            else if (pluto.inputData.type[yIndex] == "function" && arr2.length < arr1.lenght) {
+                correlation.extendLin(arr2, Math.max(arr1.length, arr2.length));
+            }
+            else {
+                correlation.extendMAVG(arr1, arr2);
+            }
+        }
+
+
         // calc
-        const R = correlation.pearson(pluto.inputData.all[xIndex], pluto.inputData.all[yIndex]);
+        const R = correlation.pearson(arr1, arr2);
 
         // data for floatbox
         const data = correlation.template(R);
@@ -41,7 +62,7 @@ button.addEventListener('click', (event) => {
         floatBox.open(event, data, sizer.width - 100);
 
         // add JS
-        correlation.chartJS(pluto.inputData.all[xIndex], pluto.inputData.all[yIndex]);
+        correlation.chartJS(arr1, arr2);
     }
     // correlation-n
     else {

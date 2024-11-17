@@ -24,6 +24,54 @@ const correlation = {
         else
             return '#4caf50';
     },
+
+    calcMAVG: (array, windowSize) => {
+        const start = Math.max(0, array.length - windowSize);
+        const window = array.slice(start);
+        const sum = window.reduce((acc, val) => acc + val, 0);
+        return sum / window.length;
+    },
+    extendMAVG: (arr1, arr2, windowSize = 3) => {
+        // which is the shorter
+        const shorter = arr1.length < arr2.length ? arr1 : arr2;
+        const longer = arr1.length >= arr2.length ? arr1 : arr2;
+
+        // diff
+        const diff = longer.length - shorter.length;
+        if (diff === 0)
+            return [arr1, arr2];
+
+         // extend if they are not equal
+         for (let i = 0; i < diff; i++) {
+            const movingAverage = correlation.calcMAVG(shorter, windowSize);
+            shorter.push(movingAverage);
+        }
+    
+    // Visszatérés a helyes sorrenddel
+    /*return arr1.length < arr2.length
+        ? [shorter, longer] // Ha az arr1 volt a rövidebb
+        : [longer, shorter]; // Ha az arr2 volt a rövidebb
+*/
+        return [arr1, arr2];
+    },
+    extendLin: (arr, size) => {
+        const minValue = Math.min(...arr);
+        const maxValue = Math.max(...arr);
+
+        out = [];
+        let i = 0;
+
+        if (minValue < maxValue) {
+            for (i = 0; i < size; i++) {
+                arr.push(i * (maxValue / size))
+            }
+        }
+        else {
+            for (i = size - 1; i >= 0; i++) {
+                arr.push(i * (maxValue / size))
+            }            
+        }
+    },
     pearson: (dataX, dataY) => {
         correlation.output.length = 0;
 

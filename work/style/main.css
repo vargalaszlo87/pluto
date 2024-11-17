@@ -497,6 +497,7 @@ div.toolSpace {
     border: 0;
     background: none;
     border-bottom: solid 2px #424;
+    padding-right: 0.25vw;
 }
 
 /* contactLine */

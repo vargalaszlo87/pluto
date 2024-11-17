@@ -149,6 +149,11 @@ function createRectangle(generatedID, x, y, type = 'default') {
         let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
         rectangle.innerHTML = '<h5>Kalkulált</h5>' + '  <img src="img/icon-calculated.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />';
     }
+    if (type == 'function') {
+        let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
+        rectangle.innerHTML = '<h5>Függvény</h5>' + '  <img src="img/icon-function.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />';
+    }
+
 
     rectangle.setAttribute('tabindex', '0'); // Fókuszálhatóvá tesszük
     rectangle.setAttribute('data-id', generatedID);
