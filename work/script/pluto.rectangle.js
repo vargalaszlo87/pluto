@@ -13,8 +13,10 @@ function createRectangle(generatedID, x, y, type = 'default', connection) {
     rectangle.style.left = `${x + offsetX}px`; // X irányú eltolás
     rectangle.style.top = `${y + offsetY}px`; // Y irányú eltolás
 
+    // four type of rectangle
     if (type == 'default') {
-        const tempIndex = pluto.inputData.ID.indexOf(generatedID);
+         // search ID
+        const tempIndex = pluto.inputData.ID.indexOf(generatedID);      
         rectangle.innerHTML =
             '<h5 class="title">' + pluto.inputData.name[tempIndex] + '</h5>' +
             '<img src="img/icon-numerical.png" draggable="false"  />' +
@@ -46,10 +48,12 @@ function createRectangle(generatedID, x, y, type = 'default', connection) {
     }
 
     if (type == 'function') {
-        let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
+        // search ID
+        const tempIndex = pluto.inputData.ID.indexOf(generatedID);    
         rectangle.innerHTML =
             '<h5 class="title">Függvény</h5>' +
-            '<img src="img/icon-function.png" draggable="false" />';
+            '<img src="img/icon-function.png" draggable="false" />' +
+            '<h6>' + pluto.inputData.name[tempIndex] + '</h6>';
     }
 
     rectangle.setAttribute('tabindex', '0'); // Fókuszálhatóvá tesszük

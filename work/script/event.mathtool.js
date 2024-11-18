@@ -1,5 +1,6 @@
 // event
 
+// constant
 const constButton = document.getElementById("math-const");
 constButton.addEventListener('click', (event) => {
     // get the value
@@ -33,6 +34,7 @@ constButton.addEventListener('click', (event) => {
 
 });
 
+// maht-functions
 const functionButtons = document.getElementsByName("function");
 const createLinearArray = (n, ascending = true) => {
     if (n <= 0)
@@ -58,9 +60,12 @@ functionButtons.forEach(button => {
         value = createLinearArray(32, (clickedButtonId == "math-lin-up") ? true : false);
         pluto.inputData.all.push(value);
 
+        console.log(clickedButtonId);
+
         // ID
         let tempID = generateID();
         pluto.inputData.ID.push(tempID);
+        pluto.inputData.name.push("Lineáris " + ((clickedButtonId == "math-lin-up") ? "növekvő" : "csökkenő"));
 
         // type
         pluto.inputData.type.push('function');
@@ -73,7 +78,7 @@ functionButtons.forEach(button => {
 });
 
 
-
+// arithmetic
 const arithmeticButtons = document.getElementsByName("arithmetic");
 const isConstAndDefaultOrCalculated = (arr) =>
     arr.includes("const") && (arr.includes("default") || arr.includes("calculated") || arr.includes("function")) && arr.length === 2;
