@@ -85,6 +85,7 @@ function createRectangle(generatedID, x, y, type = 'default', connection) {
         removeElementFromArray(pluto.inputData.ID, tempIndex);
         removeElementFromArray(pluto.inputData.all, tempIndex);
         removeElementFromArray(pluto.inputData.type, tempIndex);
+        removeElementFromArray(pluto.inputData.name, tempIndex);
 
         // delete from workspace
         rectangle.remove();

@@ -132,7 +132,13 @@
                                 <span>intellignes korreláció vizsgálat</span>
                             </div>
                         </button>
-                        <p class="plutoToolButtonSetup"><a href="#">összefüggés vizsgálat beállítása</a> <i class="fa fa-cog"></i></p>
+                        <p class="plutoToolButtonSetup"><a href="#" class="toggle-menu" data-menu-id="correlationDropdown">összefüggés vizsgálat beállítása</a> <i class="fa fa-cog"></i></p>
+                        <ul class="toolsDropdownMenu" id="correlationDropdown">
+                            <li><input type="checkbox" name="aac" checked> Automatikus adatmennyiség korrekció</li>
+                            <li><input type="checkbox" name="mlc"> Kiterjesztett összefüggés keresés</li>
+                        </ul>
+
+ 
                     </div>
                 </div>
 
@@ -149,6 +155,7 @@
     <script src="script/play.js"></script>
     <script src="script/calc.descriptive.js"></script>
     <script src="script/play.descriptiveStatistic.js"></script>
+    <script src="script/show.rawExamin.js"></script>
     <script src="script/show.correlation-2d.js"></script>
     <script src="script/show.correlation-multiple.js"></script>
 
@@ -158,10 +165,12 @@
     <script src="script/pluto.rectangle.js"></script>
     <script src="script/pluto.contextMenu.js"></script>
     <script src="script/navigation.js"></script>
-    <script src="script/show.rawExamin.js"></script>
+
+
 
     <script src="script/event.mathtool.js"></script>
     <script src="script/event.correlation.js"></script>
+    <script src="script/event.toggle.js"></script>
 
     <!-- dev -->
     <script type="text/javascript">

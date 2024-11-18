@@ -266,6 +266,15 @@ body {
     background-color: #fff;
     background-image: radial-gradient(#dbdbdb 1px, transparent 1px);
     background-size: 5px 5px;
+
+/*
+    background-image: 
+        url('../img/sunsystem-pluto.png'), 
+        radial-gradient(#dbdbdb 1px, transparent 1px); 
+    background-repeat: no-repeat, repeat; 
+    background-position: center, 0 0; 
+    background-size: contain, 5px 5px; */
+
 }
 
 .rectangle {
@@ -433,7 +442,7 @@ h4.toolLabel {
 
 .plutoToolButton {
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     text-align: left;
     /*border: dashed 2px #b5a6c3;*/
     border: 0;
@@ -498,7 +507,7 @@ h4.toolLabel {
 
 .plutoToolMathButton {
     width: 24%;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     text-align: left;
     border: 0;
     /*background: #F0C674;*/
@@ -564,3 +573,20 @@ div.toolSpace {
 .hidden {
     display: none;
 }
+
+/* ------------------ dropdown-menu
+ */
+
+.toolsDropdownMenu {
+    display: none;
+    list-style: none;
+    padding: 0.25vw;
+    margin: 0;
+    background-color: #f0f0f0; 
+    text-align: right;
+}
+
+.toolsDropdownMenu li {
+    padding: 0.65vw 0.25vw;
+}
+
