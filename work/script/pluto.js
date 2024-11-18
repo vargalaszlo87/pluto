@@ -18,97 +18,15 @@ const pluto = {
         all: [],
         ID: [],
         type: [],
+        name: [],
+    },
+    network: {
+        connections: []
+    },
+    event: {
+        lastMathToolButtonId: null
     }
 };
-
-// DEV for lines
-let connections = [];
-
-function getRectangleById(rectId) {
-    return document.querySelector(`[data-id="${rectId}"]`);
-}
-
-function createLine(parent, child) {
-    // Új div elem létrehozása a vonal számára
-    const line = document.createElement('div');
-    line.classList.add('line'); // A CSS osztály, amely meghatározza a vonal kinézetét
-    workSpace.appendChild(line);
-
-    // Inicializáljuk a vonal pozícióját és szögét
-    updateLine(line, parent, child);
-
-    return line;
-}
-
-function updateLine(line, parent, child) {
-    const parentRect = parent.getBoundingClientRect();
-    const childRect = child.getBoundingClientRect();
-    const workSpaceRect = workSpace.getBoundingClientRect();
-
-    // Kiindulási és célpont koordináták kiszámítása
-    const startX = parentRect.left + parentRect.width / 2 - workSpaceRect.left;
-    const startY = parentRect.top + parentRect.height / 2 - workSpaceRect.top;
-    const endX = childRect.left + childRect.width / 2 - workSpaceRect.left;
-    const endY = childRect.top + childRect.height / 2 - workSpaceRect.top;
-
-    // Távolság és szög számítása
-    const deltaX = endX - startX;
-    const deltaY = endY - startY;
-    const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    const angle = Math.atan2(deltaY, deltaX);
-
-    // Vonal pozíciójának és stílusának frissítése
-    line.style.width = `${length}px`;
-    line.style.left = `${startX}px`;
-    line.style.top = `${startY}px`;
-    line.style.transform = `rotate(${angle}rad)`;
-}
-
-function addConnection(parent1Id, parent2Id, childId) {
-    const parent1 = getRectangleById(parent1Id);
-    const parent2 = getRectangleById(parent2Id);
-    const child = getRectangleById(childId);
-
-    if (!parent1 || !parent2 || !child) {
-        console.error("One or more rectangles not found for given IDs.");
-        return;
-    }
-
-    const line1 = createLine(parent1, child);
-    const line2 = createLine(parent2, child);
-
-    connections.push({ parent1Id, parent2Id, childId, lines: [line1, line2] });
-}
-
-function updateAllLines() {
-    connections.forEach(({ parent1Id, parent2Id, childId, lines }) => {
-        const parent1 = getRectangleById(parent1Id);
-        const parent2 = getRectangleById(parent2Id);
-        const child = getRectangleById(childId);
-
-        if (!parent1 || !parent2 || !child) {
-            console.error("One or more rectangles not found for given IDs.");
-            return;
-        }
-
-        updateLine(lines[0], parent1, child);
-        updateLine(lines[1], parent2, child);
-    });
-}
-
-function deleteContactLines(rectId) {
-    // Szűrjük ki azokat a kapcsolatokat, amelyek tartalmazzák a rectId-t
-    connections = connections.filter(connection => {
-        if (connection.parent1Id === rectId || connection.parent2Id === rectId || connection.childId === rectId) {
-            // Töröljük a vonalakat a DOM-ból
-            connection.lines.forEach(line => line.remove());
-            return false; // Eltávolítjuk ezt a kapcsolatot a tömbből
-        }
-        return true; // Megtartjuk azokat, amelyek nem ehhez az ID-hez tartoznak
-    });
-}
-
-/* ---------------- */
 
 const workSpace = document.getElementById('workSpace');
 const workSpaceRect = workSpace.getBoundingClientRect(); // A workSpace mérete és pozíciója
@@ -122,7 +40,9 @@ let startX, startY;
 let selectedRectangles = []; // Kijelölt téglalapok listája
 let isButton = false; // workSpace deaktiváló gomb állapota
 
-// Kijelölés törlése
+/* ------------------ auxiliary functions for the pluto system */
+
+// clear selection
 function clearSelection() {
     selectedRectangles.forEach(rect => {
         rect.style.borderBottom = pluto.design.unSelectedRectangleBorder; // Alapértelmezett border visszaállítása
@@ -130,147 +50,63 @@ function clearSelection() {
     selectedRectangles = [];
 }
 
-// Téglalap létrehozása a kattintás helyén
-function createRectangle(generatedID, x, y, type = 'default') {
-    const rectangle = document.createElement('div');
-    rectangle.classList.add('rectangle');
-    rectangle.style.left = `${x + offsetX}px`; // X irányú eltolás
-    rectangle.style.top = `${y + offsetY}px`; // Y irányú eltolás
-    //rectangle.textContent = (inputDataCounter + 1) + ". pack";
-
-    if (type == 'default') {
-        rectangle.innerHTML = '<h5>' + (pluto.inputData.counter + 1) + '. adatsor</h5>' + '<img src="img/icon-numerical.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />  <h6>numerikus</h6>';
-    }
-    if (type == 'const') {
-        let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
-        rectangle.innerHTML = '<h5>Konstans</h5>' + '  <span id="constNumberInRectangle" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: ' + fontSize + 'vw">' + pluto.inputData.constant + '</span>';
-    }
-    if (type == 'calculated') {
-        let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
-        rectangle.innerHTML = '<h5>Kalkulált</h5>' + '  <img src="img/icon-calculated.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />';
-    }
-    if (type == 'function') {
-        let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
-        rectangle.innerHTML = '<h5>Függvény</h5>' + '  <img src="img/icon-function.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />';
+// paste (ctrl + v) function
+function paste(event) {
+    const pastedData = (event.clipboardData || window.clipboardData).getData('text');
+    if (pastedData.length > pluto.inputData.maxSize) {
+        alert('10kb-os limit túllépve');
+        return;
     }
 
+    // new vector
+    let temp = pastedData.trim().split(/[\t\n; ]+/);
+    let vector = temp.map(Number);
+    pluto.inputData.all.push(vector);
 
-    rectangle.setAttribute('tabindex', '0'); // Fókuszálhatóvá tesszük
-    rectangle.setAttribute('data-id', generatedID);
+    // ID
+    let tempID = generateID();
+    pluto.inputData.ID.push(tempID);
+    pluto.inputData.name.push("Adatsor - " + tempID);
 
-    workSpace.appendChild(rectangle);
+    // type
+    pluto.inputData.type.push('default');
 
-    // Törlés gomb létrehozása
-    const closeButton = document.createElement('button');
-    closeButton.innerHTML = '<i class="fa fa-times fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
-    closeButton.setAttribute('data-id', generatedID);
-    closeButton.setAttribute('class', 'closeButton');
-    rectangle.appendChild(closeButton);
+    // create rectangle
+    createRectangle(tempID, 50, 50);
+    pluto.inputData.counter++;
 
-    // Törlés gomb kezelése
-    closeButton.addEventListener('click', (event) => {
-        event.stopPropagation(); // Megakadályozza, hogy a kattintás a téglalapra is átmenjen
-
-        // delete from vector
-        tempID = rectangle.getAttribute("data-id");
-        tempIndex = pluto.inputData.ID.indexOf(tempID);
-        removeElementFromArray(pluto.inputData.ID, tempIndex);
-        removeElementFromArray(pluto.inputData.all, tempIndex);
-        removeElementFromArray(pluto.inputData.type, tempIndex);
-
-        // delete from workspace
-        rectangle.remove();
-        pluto.inputData.counter--;
-        selectedRectangles = selectedRectangles.filter(rect => rect !== rectangle); // Törlés a kijelölt listából
-    
-        // delete line
-        deleteContactLines(tempID);
-    
-    });
-
-    if (type == 'default' || type == 'calculated') {
-        // Raw adat gomb létrehozása
-        const rawButton = document.createElement('button');
-        rawButton.innerHTML = '<i class="fa fa-search fa-1x" style="color: #fff; font-size: 1.25rem"></i>';
-        rawButton.setAttribute('data-id', generatedID);
-        rawButton.setAttribute('id', 'rawTeszt');
-        rawButton.setAttribute('class', 'rawButton');
-        rawButton.classList.add('open-floatbox');
-        rectangle.appendChild(rawButton);
-
-        rawButton.addEventListener('click', (event) => {
-            event.stopPropagation();
-            const dataID = event.currentTarget.getAttribute('data-id') || 'N/A';
-            const data = show.rawData(event, dataID);
-            floatBox.open(event, data);
-        });
-
-        // Play gomb létrehozása
-        const playButton = document.createElement('button');
-        playButton.innerHTML = '<i class="fa fa-play fa-1x" style="color: #fff; font-size: 1.25rem; padding-top: 4px;"></i>';
-        playButton.setAttribute('play-data-id', generatedID);
-        playButton.setAttribute('id', 'playTeszt')
-        playButton.setAttribute('class', 'playButton');
-        playButton.classList.add('open-floatbox');
-        rectangle.appendChild(playButton);
-
-        playButton.addEventListener('click', (event) => {
-            event.stopPropagation();
-            const dataID = event.currentTarget.getAttribute('play-data-id') || 'N/A';
-            const data = play.descriptive(event, dataID);
-            console.log(data);
-            floatBox.open(event, data, sizer.width - 100);
-            play.descriptiveJS();
-        });
-    }
-
-    // Téglalap kijelölése
-    rectangle.addEventListener('click', (event) => {
-        event.stopPropagation(); // Megakadályozzuk, hogy a workSpacera átmenjen a kattintás
-        if (event.ctrlKey) {
-            // Ctrl lenyomása esetén többszörös kijelölés
-            if (selectedRectangles.includes(rectangle)) {
-                rectangle.style.borderBottom = pluto.design.unSelectedRectangleBorder; // Visszaállítjuk az alapértelmezett border-t
-                selectedRectangles = selectedRectangles.filter(rect => rect !== rectangle);
-            } else {
-                rectangle.style.borderBottom = pluto.design.selectedRectangleBorder; // Kijelöléskor vastagabb és kék border
-                selectedRectangles.push(rectangle);
-            }
-        } else {
-            // Ctrl nélkül csak egy téglalap kijelölése
-            clearSelection(); // Előző kijelölések törlése
-            rectangle.style.borderBottom = pluto.design.selectedRectangleBorder; // Kijelöléskor vastagabb és kék border
-            selectedRectangles.push(rectangle);
-        }
-        rectangle.style.backgroundColor = "#fff";
-        console.log("rectangle click");
-    });
-
-    // Drag and drop események
-    rectangle.addEventListener('mousedown', (event) => {
-        if (event.target.tagName === 'BUTTON' || event.target.closest('button')) {
-            return; // Ha gombot kattintottak, ne indítsd el a drag műveletet
-        }
-        isDragging = true;
-        draggedElement = rectangle;
-        startX = event.clientX - rectangle.offsetLeft;
-        startY = event.clientY - rectangle.offsetTop;
-        rectangle.focus();
-        document.getElementById(sizer.workSpaceCanvasId).style.background = pluto.design.selectedWorkspace;
-        rectangle.background = "#fff";
-        event.preventDefault();
-    });
-
-    // Növeljük az eltolást a következő téglalaphoz
-    offsetX += 75;
-    offsetY += 75;
-
-    // Ha az eltolás túl nagy lesz, visszaállítjuk
-    if (offsetX > workSpaceRect.width - 50) offsetX = 20;
-    if (offsetY > workSpaceRect.height - 50) offsetY = 20;
 }
 
-// Drag funkció
+// generate id for rectangle
+function generateID() {
+    let randomPart = Math.random().toString(36).substring(2, 6);
+    let utcPart = Date.now().toString(36).substring(6);
+    return (randomPart + utcPart).substring(0, 8);
+}
+
+// remove element from array
+function removeElementFromArray(array, index) {
+    if (index !== -1) {
+        array.splice(index, 1);
+        return true;
+    } else
+        return false;
+}
+
+function findParentsByChildId(dataArray, childId) {
+    const result = dataArray.find(item => item.childId === childId);
+    if (result) {
+        return {
+            parent1Id: result.parent1Id,
+            parent2Id: result.parent2Id
+        };
+    }
+    return null;
+}
+
+/* ------------------event handler for the pluto system */
+
+// drag function
 document.addEventListener('mousemove', (event) => {
     if (isDragging && draggedElement) {
         let newLeft = event.clientX - startX;
@@ -295,7 +131,7 @@ document.addEventListener('mousemove', (event) => {
     }
 });
 
-// Drag végén leállítjuk a drag eseményt
+// end of drag stops event
 document.addEventListener('mouseup', () => {
     isDragging = false;
     draggedElement = null;
@@ -307,47 +143,6 @@ workSpace.addEventListener('click', (event) => {
         clearSelection(); // Csak akkor törlünk kijelölést, ha a workSpace-re kattintottak közvetlenül
     }
 });
-
-
-function generateID() {
-    let randomPart = Math.random().toString(36).substring(2, 6);
-    let utcPart = Date.now().toString(36).substring(6);
-    return (randomPart + utcPart).substring(0, 8);
-}
-
-function removeElementFromArray(array, index) {
-    if (index !== -1) {
-        array.splice(index, 1);
-        return true;
-    } else
-        return false;
-}
-
-// Paste funkció
-function paste(event) {
-    const pastedData = (event.clipboardData || window.clipboardData).getData('text');
-    if (pastedData.length > pluto.inputData.maxSize) {
-        alert('10kb-os limit túllépve');
-        return;
-    }
-
-    // new vector
-    let temp = pastedData.trim().split(/[\t\n; ]+/);
-    let vector = temp.map(Number);
-    pluto.inputData.all.push(vector);
-
-    // ID
-    let tempID = generateID();
-    pluto.inputData.ID.push(tempID);
-
-    // type
-    pluto.inputData.type.push('default');
-
-    // create rectangle
-    createRectangle(tempID, 50, 50);
-    pluto.inputData.counter++;
-
-}
 
 // Vágólap tartalom kezelése
 workSpace.addEventListener('paste', paste);
@@ -383,4 +178,16 @@ workSpace.addEventListener("focusin", (event) => {
 
         isButton = true;
     }
+});
+
+// global right click
+document.addEventListener("contextmenu", (event) => {
+    // Engedélyezett elemek
+    if (event.target.classList.contains("contextmenu")) {
+        return; // Engedélyezzük a jobbklikket
+    }
+
+    // Minden más esetben tiltás
+    event.preventDefault();
+    console.log("Globális jobbklikk tiltva!");
 });

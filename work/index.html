@@ -21,12 +21,18 @@
 
 <body id="pluto">
     <!-- floatBox -->
-
     <div class="overlay" id="overlay"></div>
     <div class="floatbox printable" id="floatbox">
         <button id="close-floatbox"><i class="fa fa-times fa-2x"></i></button>
         <div id="floatbox-content" class="printable"></div>
     </div>
+
+    <!-- context-menu -->
+    <div id="context-menu" class="hidden">
+        Név: <input type="text" id="rename-input" maxlength="16" placeholder="Új név" />
+        <button id="rename-btn">Módosítás</button>
+    </div>
+
 
     <!-- main -->
     <section id="main">
@@ -99,7 +105,7 @@
                             <div height="100%" style="text-align: center">
                                 <i class="fa fa-long-arrow-down rotate45"></i>
                             </div>
-                        </button>                       
+                        </button>
 
 
                         <div class="toolSpace"></div>
@@ -148,6 +154,9 @@
 
     <script src="script/calc.transformation.js"></script>
     <script src="script/pluto.js"></script>
+    <script src="script/pluto.connection.js"></script>
+    <script src="script/pluto.rectangle.js"></script>
+    <script src="script/pluto.contextMenu.js"></script>
     <script src="script/navigation.js"></script>
     <script src="script/show.rawExamin.js"></script>
 

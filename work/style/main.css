@@ -500,12 +500,32 @@ div.toolSpace {
     padding-right: 0.25vw;
 }
 
-/* contactLine */
+
+/* ------------------ contactLine */
 
 .line {
     position: absolute;
-    height: 2px; /* Vonal vastagsága */
+    height: 2px;
+    /* Vonal vastagsága */
     background-color: black;
-    transform-origin: 0 50%; /* Elforgatás bal oldali középpontból */
-    z-index: 0; /* Téglalapok mögé kerül */
+    transform-origin: 0 50%;
+    /* Elforgatás bal oldali középpontból */
+    z-index: 0;
+    /* Téglalapok mögé kerül */
+}
+
+
+/* ------------------ contest-menu */
+
+#context-menu {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+    display: none;
+}
+
+.hidden {
+    display: none;
 }

@@ -39,7 +39,7 @@ const createLinearArray = (n, ascending = true) => {
         return;
 
     const array = [];
-    const step = 1 / (n - 1); 
+    const step = 1 / (n - 1);
 
     for (let i = 0; i < n; i++) {
         const value = ascending ? i * step : 1 - i * step;
@@ -55,7 +55,7 @@ functionButtons.forEach(button => {
         const clickedButtonId = event.currentTarget.id;
 
         // new vector
-        value = createLinearArray(32, (clickedButtonId == "math-lin-up") ? true : false);        
+        value = createLinearArray(32, (clickedButtonId == "math-lin-up") ? true : false);
         pluto.inputData.all.push(value);
 
         // ID
@@ -75,28 +75,27 @@ functionButtons.forEach(button => {
 
 
 const arithmeticButtons = document.getElementsByName("arithmetic");
-const isConstAndDefaultOrCalculated = (arr) => 
-    arr.includes("const") && (arr.includes("default") || arr.includes("calculated") || arr.includes("function"))  && arr.length === 2;
+const isConstAndDefaultOrCalculated = (arr) =>
+    arr.includes("const") && (arr.includes("default") || arr.includes("calculated") || arr.includes("function")) && arr.length === 2;
 
-const isDefaultOrCalculated = (arr) => 
+const isDefaultOrCalculated = (arr) =>
     (arr.includes("default") || arr.includes("calculated") || arr.includes("function")) && arr.length === 2 && !arr.includes("const");
 
-const expandArray = (value, size) => 
+const expandArray = (value, size) =>
     Array(size).fill(value);
 
-const typeOfArithmetic = 
-    ["math-plus", "math-minus", "math-times", "math-divide"];
+const typeOfArithmetic = ["math-plus", "math-minus", "math-times", "math-divide"];
 
-const plusArrays = (arr1, arr2) => 
+const plusArrays = (arr1, arr2) =>
     arr1.map((num, index) => num + arr2[index]);
 
-const minusArrays = (arr1, arr2) => 
+const minusArrays = (arr1, arr2) =>
     arr1.map((num, index) => num - arr2[index]);
 
-const timesArrays = (arr1, arr2) => 
+const timesArrays = (arr1, arr2) =>
     arr1.map((num, index) => num * arr2[index]);
 
-const divideArrays = (arr1, arr2) => 
+const divideArrays = (arr1, arr2) =>
     arr1.map((num, index) => {
         if (arr2[index] === 0) throw new Error("Osztás nullával!");
         return num / arr2[index];
@@ -109,19 +108,19 @@ const arithmeticProcess = (type, arg1, arg2) => {
         case 0:
             out = plusArrays(arg1, arg2);
             break;
-        // minus
+            // minus
         case 1:
             out = minusArrays(arg1, arg2);
             break;
-        // times
+            // times
         case 2:
             out = timesArrays(arg1, arg2);
             break;
-        // divide
+            // divide
         case 3:
             out = divideArrays(arg1, arg2);
             break;
-        // plus
+            // plus
         default:
             out = plusArrays(arg1, arg2);
             break;
@@ -142,7 +141,7 @@ arithmeticButtons.forEach(button => {
         selectedRectangles.forEach((rect, index) => {
             // actual ID
             dataID[index] = rect.getAttribute("data-id");
-    
+
             // actual type for 
             dataType.push(pluto.inputData.type[pluto.inputData.ID.indexOf(dataID[index])]);
 
@@ -171,7 +170,7 @@ arithmeticButtons.forEach(button => {
             const innerConstantID = dataType.indexOf("const");
             const constantID = dataID[innerConstantID];
             const constant = pluto.inputData.all[pluto.inputData.ID.indexOf(constantID)];
-            
+
             const innerDatasetID = dataType.findIndex(item => item === "default" || item === "calculated" || item === "function");
             const datasetID = dataID[innerDatasetID];
             const dataset = pluto.inputData.all[pluto.inputData.ID.indexOf(datasetID)];
@@ -180,7 +179,7 @@ arithmeticButtons.forEach(button => {
             // expand the constant
             expandConstant = expandArray(constant[0], datasetSize);
             expandArray(expandConstant, datasetSize);
-            
+
             // two arguments
             arithmeticArguments[0] = dataset;
             arithmeticArguments[1] = expandConstant;
@@ -198,8 +197,7 @@ arithmeticButtons.forEach(button => {
             if (tempArg1.length != tempArg2.length) {
                 arithmeticArguments[0] = tempArg1 < tempArg2 ? tempArg1 : tempArg2;
                 arithmeticArguments[1] = tempArg1 > tempArg2 ? tempArg1 : tempArg2;
-            } 
-            else {
+            } else {
                 arithmeticArguments[0] = tempArg1;
                 arithmeticArguments[1] = tempArg2;
             }
@@ -209,22 +207,25 @@ arithmeticButtons.forEach(button => {
         const typeOfArithmeticIndex = typeOfArithmetic.indexOf(clickedButtonId);
         outputArray = arithmeticProcess(typeOfArithmeticIndex, arithmeticArguments[0], arithmeticArguments[1]);
 
-    // new vector
-    pluto.inputData.all.push(outputArray);
+        // new vector
+        pluto.inputData.all.push(outputArray);
 
-    // ID
-    let tempID = generateID();
-    pluto.inputData.ID.push(tempID);
+        // ID
+        let tempID = generateID();
+        pluto.inputData.ID.push(tempID);
 
-    // type
-    pluto.inputData.type.push('calculated');
+        // type
+        pluto.inputData.type.push('calculated');
 
-    // create rectangle
-    createRectangle(tempID, 50, 50, 'calculated');
-    pluto.inputData.counter++;    
-    
-    // add lines
-    addConnection(dataID[0], dataID[1], tempID);
+        // event
+        pluto.event.lastMathToolButtonId = typeOfArithmetic[typeOfArithmeticIndex];
+
+        // create rectangle
+        createRectangle(tempID, 50, 50, 'calculated');
+        pluto.inputData.counter++;
+
+        // add lines
+        addConnection(dataID[0], dataID[1], tempID);
 
 
     });
