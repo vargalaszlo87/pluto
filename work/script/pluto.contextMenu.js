@@ -18,6 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const tempIndex = pluto.inputData.ID.indexOf(tempID);
         const tempType = pluto.inputData.type[tempIndex];
 
+        // if not in a network
+        // DEV ------------------------------------------------------------------------------------------
+        const checkInNetwork = findParentsByChildId(pluto.network.connections, tempID);
+        console.log(pluto.network.connections);
+        if (checkInNetwork)
+            return;
+        // DEV ------------------------------------------------------------------------------------------
+
         if (rectangle && tempType == "default") {
             event.preventDefault(); // Alapértelmezett jobb klikk menü tiltása
             currentRectangle = rectangle;

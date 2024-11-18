@@ -7,35 +7,49 @@
 // Téglalap létrehozása a kattintás helyén
 
 
-function createRectangle(generatedID, x, y, type = 'default') {
+function createRectangle(generatedID, x, y, type = 'default', connection) {
     const rectangle = document.createElement('div');
     rectangle.classList.add('rectangle');
     rectangle.style.left = `${x + offsetX}px`; // X irányú eltolás
     rectangle.style.top = `${y + offsetY}px`; // Y irányú eltolás
-    //rectangle.textContent = (inputDataCounter + 1) + ". pack";
 
     if (type == 'default') {
         const tempIndex = pluto.inputData.ID.indexOf(generatedID);
-        rectangle.innerHTML = '<h5>' + pluto.inputData.name[tempIndex] + '</h5>' + '<img src="img/icon-numerical.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />  <h6>numerikus</h6>';
+        rectangle.innerHTML =
+            '<h5 class="title">' + pluto.inputData.name[tempIndex] + '</h5>' +
+            '<img src="img/icon-numerical.png" draggable="false"  />' +
+            '<h6>numerikus</h6>';
     }
+
     if (type == 'const') {
         let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
-        rectangle.innerHTML = '<h5>Konstans</h5>' + '  <span id="constNumberInRectangle" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: ' + fontSize + 'vw">' + pluto.inputData.constant + '</span>';
+        rectangle.innerHTML =
+            '<h5 class="title">Konstans</h5>' +
+            '<span class="constNumber" style="font-size: ' + fontSize + 'vw">' + pluto.inputData.constant + '</span>';
     }
+
     if (type == 'calculated') {
         // search the parents
-        const parents = findParentsByChildId(pluto.network.connections, generatedID);
-        parent1Name = pluto.inputData.name[parents.parent1Id];
-        parent2Name = pluto.inputData.name[parents.parent2Id];
+        const parents = findParentsByChildId(connection, generatedID);
+        parent1Name = pluto.inputData.name[pluto.inputData.ID.indexOf(parents[0])];
+        parent2Name = pluto.inputData.name[pluto.inputData.ID.indexOf(parents[1])];
 
-        console.log(parent1Name, parent2Name);
+        // make the icons
+        let iconTagType = pluto.event.lastMathToolButtonId.replace("math-", "");
+        iconTagType = (iconTagType != "divide") ? iconTagType : "minus rotate45";
 
-        let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
-        rectangle.innerHTML = '<h5>Kalkulált</h5>' + '  <img src="img/icon-calculated.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />';
+        rectangle.innerHTML =
+            '<h5 class="title">Kalkuláció - ' + pluto.calculation.counter + '</h5>' +
+            '<h5 class="data">' + parent1Name + '</h5>' +
+            '<i class="fa fa-4x fa-' + iconTagType + '"></i>' +
+            '<h5 class="data">' + parent2Name + '</h5>';
     }
+
     if (type == 'function') {
         let fontSize = 4 * (1 - (0.08 * pluto.inputData.constant.toString().length));
-        rectangle.innerHTML = '<h5>Függvény</h5>' + '  <img src="img/icon-function.png" draggable="false"  style="width: 4vw; margin: 0 auto; display: block; margin-bottom: 0.25rem; cursor: pointer;" />';
+        rectangle.innerHTML =
+            '<h5 class="title">Függvény</h5>' +
+            '<img src="img/icon-function.png" draggable="false" />';
     }
 
     rectangle.setAttribute('tabindex', '0'); // Fókuszálhatóvá tesszük
@@ -97,7 +111,7 @@ function createRectangle(generatedID, x, y, type = 'default') {
 
         // Play gomb létrehozása
         const playButton = document.createElement('button');
-        playButton.innerHTML = '<i class="fa fa-play fa-1x" style="color: #fff; font-size: 1.25rem; padding-top: 4px;"></i>';
+        playButton.innerHTML = '<i class="fa fa-play fa-1x" style="color: #fff; font-size: 1.25rem;"></i>';
         playButton.setAttribute('play-data-id', generatedID);
         playButton.setAttribute('id', 'playTeszt')
         playButton.setAttribute('class', 'playButton');

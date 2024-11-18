@@ -5,7 +5,7 @@ function getRectangleById(rectId) {
 function createLine(parent, child) {
     // Új div elem létrehozása a vonal számára
     const line = document.createElement('div');
-    line.classList.add('line'); // A CSS osztály, amely meghatározza a vonal kinézetét
+    line.classList.add('line');
     workSpace.appendChild(line);
 
     // Inicializáljuk a vonal pozícióját és szögét

@@ -20,11 +20,14 @@ const pluto = {
         type: [],
         name: [],
     },
+    calculation: {
+        counter: 0
+    },
     network: {
         connections: []
     },
     event: {
-        lastMathToolButtonId: null
+        lastMathToolButtonId: null,
     }
 };
 
@@ -74,7 +77,6 @@ function paste(event) {
     // create rectangle
     createRectangle(tempID, 50, 50);
     pluto.inputData.counter++;
-
 }
 
 // generate id for rectangle
@@ -93,13 +95,10 @@ function removeElementFromArray(array, index) {
         return false;
 }
 
-function findParentsByChildId(dataArray, childId) {
-    const result = dataArray.find(item => item.childId === childId);
-    if (result) {
-        return {
-            parent1Id: result.parent1Id,
-            parent2Id: result.parent2Id
-        };
+// find parents
+function findParentsByChildId(dataArray, target) {
+    if (dataArray.includes(target)) {
+        return dataArray.filter(item => item !== target);
     }
     return null;
 }
@@ -163,7 +162,6 @@ workSpace.addEventListener("focusin", (event) => {
         // position
         deactivateButton.style.left = document.getElementById(sizer.workSpaceDivId).offsetWidth - sizer.workSpaceCanvasDeactivateButtonSize - sizer.workSpaceCanvasPadding + -10 + 'px';
         deactivateButton.style.top = sizer.navHeight + sizer.workSpaceCanvasPadding + 10 + "px";
-
         document.body.appendChild(deactivateButton);
 
         // Inaktiválás eseménykezelője
@@ -175,19 +173,15 @@ workSpace.addEventListener("focusin", (event) => {
             workSpace.style.backgroundSize = '5px 5px';
             isButton = false;
         });
-
         isButton = true;
     }
 });
 
 // global right click
 document.addEventListener("contextmenu", (event) => {
-    // Engedélyezett elemek
-    if (event.target.classList.contains("contextmenu")) {
-        return; // Engedélyezzük a jobbklikket
-    }
-
-    // Minden más esetben tiltás
+    // enabled
+    if (event.target.classList.contains("contextmenu"))
+        return;
+    // others are disabled
     event.preventDefault();
-    console.log("Globális jobbklikk tiltva!");
 });

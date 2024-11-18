@@ -287,6 +287,26 @@ body {
     font-weight: bold;
     font-size: 0.75rem;
     color: #8a21c5;
+    margin-bottom: 0.1rem;
+}
+
+.rectangle h5.title {
+    font-weight: bold;
+    color: #8a21c5;
+    margin-bottom: 0.4rem;
+}
+
+.rectangle h5.data {
+    font-weight: normal;
+    color: #777;
+}
+
+.rectangle i {
+    color: #CFC3DA;
+    font-weight: normal;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
 }
 
 .rectangle h6 {
@@ -295,6 +315,21 @@ body {
     font-weight: bold;
     font-size: 0.65rem;
     color: #444;
+}
+
+.rectangle span.constNumber {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.rectangle img {
+    width: 4vw;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
 }
 
 #deactivateButton {

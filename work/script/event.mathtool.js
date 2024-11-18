@@ -22,6 +22,7 @@ constButton.addEventListener('click', (event) => {
     // ID
     let tempID = generateID();
     pluto.inputData.ID.push(tempID);
+    pluto.inputData.name.push(pluto.inputData.constant);
 
     // type
     pluto.inputData.type.push('const');
@@ -31,7 +32,6 @@ constButton.addEventListener('click', (event) => {
     pluto.inputData.counter++;
 
 });
-
 
 const functionButtons = document.getElementsByName("function");
 const createLinearArray = (n, ascending = true) => {
@@ -209,10 +209,12 @@ arithmeticButtons.forEach(button => {
 
         // new vector
         pluto.inputData.all.push(outputArray);
+        pluto.calculation.counter++;
 
         // ID
         let tempID = generateID();
         pluto.inputData.ID.push(tempID);
+        pluto.inputData.name.push("Kalkuláció - " + pluto.calculation.counter);
 
         // type
         pluto.inputData.type.push('calculated');
@@ -221,7 +223,7 @@ arithmeticButtons.forEach(button => {
         pluto.event.lastMathToolButtonId = typeOfArithmetic[typeOfArithmeticIndex];
 
         // create rectangle
-        createRectangle(tempID, 50, 50, 'calculated');
+        createRectangle(tempID, 50, 50, 'calculated', [dataID[0], dataID[1], tempID]);
         pluto.inputData.counter++;
 
         // add lines
