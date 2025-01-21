@@ -57,7 +57,12 @@ functionButtons.forEach(button => {
         const clickedButtonId = event.currentTarget.id;
 
         // new vector
-        value = createLinearArray(32, (clickedButtonId == "math-lin-up") ? true : false);
+
+        // get the value
+        const vectorSize = document.getElementById("math-function-input");
+        let value = Number(vectorSize.value);
+
+        value = createLinearArray((value < 2 || isNaN(value)) ? 2 : value, (clickedButtonId == "math-lin-up") ? true : false);
         pluto.inputData.all.push(value);
 
         console.log(clickedButtonId);

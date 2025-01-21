@@ -15,8 +15,8 @@ function createRectangle(generatedID, x, y, type = 'default', connection) {
 
     // four type of rectangle
     if (type == 'default') {
-         // search ID
-        const tempIndex = pluto.inputData.ID.indexOf(generatedID);      
+        // search ID
+        const tempIndex = pluto.inputData.ID.indexOf(generatedID);
         rectangle.innerHTML =
             '<h5 class="title">' + pluto.inputData.name[tempIndex] + '</h5>' +
             '<img src="img/icon-numerical.png" draggable="false"  />' +
@@ -42,14 +42,14 @@ function createRectangle(generatedID, x, y, type = 'default', connection) {
 
         rectangle.innerHTML =
             '<h5 class="title">Kalkuláció - ' + pluto.calculation.counter + '</h5>' +
-            '<h5 class="data">' + parent1Name + '</h5>' +
+            '<h5 class="data">' + (parents.length > 2 ? parents.length + " adatsorral" : parent1Name) + '</h5>' +
             '<i class="fa fa-4x fa-' + iconTagType + '"></i>' +
-            '<h5 class="data">' + parent2Name + '</h5>';
+            '<h5 class="data">' + (parents.length > 2 ? "" : parent2Name) + '</h5>';
     }
 
     if (type == 'function') {
         // search ID
-        const tempIndex = pluto.inputData.ID.indexOf(generatedID);    
+        const tempIndex = pluto.inputData.ID.indexOf(generatedID);
         rectangle.innerHTML =
             '<h5 class="title">Függvény</h5>' +
             '<img src="img/icon-function.png" draggable="false" />' +

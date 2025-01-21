@@ -87,14 +87,15 @@
                             </div>
                         </button>
                         <!-- -->
-                        <input type="text" id="math-const-input" value="1.0" />
+                        <input type="text" id="math-const-input" class="math-input" value="1.0" />
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-const">
                             <div height="100%" style="text-align: center">
                                 <span style="font-size: 1vw">CONST</span>
                             </div>
                         </button>
+                        <br />
 
-
+                        <input type="text" id="math-function-input" class="math-input" value="32" />
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-lin-up" name="function">
                             <div height="100%" style="text-align: center">
                                 <i class="fa fa-long-arrow-right rotate45"></i>
@@ -107,6 +108,24 @@
                             </div>
                         </button>
 
+                        <a href="#" class="toggle-menu" data-menu-id="moreFunctions"><button class="plutoToolMathButton blueButton" >
+                        <div height="100%" style="text-align: center">
+                            <i class="fa fa-angle-down"></i>
+                        </div>
+                        </button></a>
+                        <ul class="toolsDropdownMenu margin-top-1vw" id="moreFunctions">
+                            <li>Exponenciális függvény <a href="">NÖVEKVŐ</a> / <a href="">CSÖKKENŐ</a></li>
+                            <li>Négyzetgyök függvény <a href="">NÖVEKVŐ</a> / <a href="">CSÖKKENŐ</a></li>
+                            <li>Periodikus függvény <a href="">SZINUSZ</a> / <a href="">KOSZINUSZ</a></li>
+                        </ul>
+
+                        <!--
+                        <p class="plutoToolButtonSetup"><a href="#" class="toggle-menu" data-menu-id="correlationDropdown">összefüggés vizsgálat beállítása</a> <i class="fa fa-cog"></i></p>
+                        <ul class="toolsDropdownMenu" id="correlationDropdown">
+                            <li><input type="checkbox" name="aac" checked> Automatikus adatmennyiség korrekció</li>
+                            <li><input type="checkbox" name="mlc"> Intelligens adattranszformáció alkalmazása</li>
+                        </ul>
+-->
 
                         <div class="toolSpace"></div>
 
@@ -138,7 +157,7 @@
                             <li><input type="checkbox" name="mlc"> Intelligens adattranszformáció alkalmazása</li>
                         </ul>
 
- 
+
                     </div>
                 </div>
 

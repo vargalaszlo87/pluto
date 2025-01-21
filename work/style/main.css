@@ -266,15 +266,13 @@ body {
     background-color: #fff;
     background-image: radial-gradient(#dbdbdb 1px, transparent 1px);
     background-size: 5px 5px;
-
-/*
+    /*
     background-image: 
         url('../img/sunsystem-pluto.png'), 
         radial-gradient(#dbdbdb 1px, transparent 1px); 
     background-repeat: no-repeat, repeat; 
     background-position: center, 0 0; 
     background-size: contain, 5px 5px; */
-
 }
 
 .rectangle {
@@ -505,6 +503,14 @@ h4.toolLabel {
     width: 2.5vw;
 }
 
+.blueButton {
+    background: #adc0dd;
+}
+
+.blueButton:active {
+    background: #5f9be4;
+}
+
 .plutoToolMathButton {
     width: 24%;
     margin-top: 0.5rem;
@@ -534,6 +540,19 @@ div.toolSpace {
     filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 
+.math-input {
+    width: 24%;
+    text-align: right;
+    font-weight: bold;
+    border: 0;
+    background: none;
+    border-bottom: solid 2px #424;
+    padding-right: 0.25vw;
+}
+
+
+/*
+DELETE
 #math-const-input {
     width: 24%;
     text-align: right;
@@ -543,6 +562,7 @@ div.toolSpace {
     border-bottom: solid 2px #424;
     padding-right: 0.25vw;
 }
+*/
 
 
 /* ------------------ contactLine */
@@ -574,6 +594,7 @@ div.toolSpace {
     display: none;
 }
 
+
 /* ------------------ dropdown-menu
  */
 
@@ -582,11 +603,18 @@ div.toolSpace {
     list-style: none;
     padding: 0.25vw;
     margin: 0;
-    background-color: #f0f0f0; 
+    background-color: #f0f0f0;
     text-align: right;
 }
 
 .toolsDropdownMenu li {
-    padding: 0.65vw 0.25vw;
+    padding: 0.85vw 0.25vw;
 }
 
+
+/* ------------------ predefiniton
+ */
+
+.margin-top-1vw {
+    margin-top: 1vw;
+}
