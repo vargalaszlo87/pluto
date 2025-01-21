@@ -38,6 +38,7 @@ function updateLine(line, parent, child) {
     line.style.transform = `rotate(${angle}rad)`;
 }
 
+/*
 function addConnection(parent1Id, parent2Id, childId) {
     const parent1 = getRectangleById(parent1Id);
     const parent2 = getRectangleById(parent2Id);
@@ -82,5 +83,63 @@ function deleteContactLines(rectId) {
             return false; // Eltávolítjuk ezt a kapcsolatot a tömbből
         }
         return true; // Megtartjuk azokat, amelyek nem ehhez az ID-hez tartoznak
+    });
+}
+*/
+
+
+function addConnection(parentIds, childId) {
+    const child = getRectangleById(childId);
+    if (!child) {
+        console.error("Child rectangle not found for given ID:", childId);
+        return;
+    }
+
+    const lines = [];
+
+    parentIds.forEach(parentId => {
+        const parent = getRectangleById(parentId);
+        if (!parent) {
+            console.error("Parent rectangle not found for given ID:", parentId);
+            return;
+        }
+
+        const line = createLine(parent, child);
+        lines.push(line);
+    });
+
+    // Kapcsolat hozzáadása a hálózathoz
+    pluto.network.connections.push({ parentIds, childId, lines });
+}
+
+function updateAllLines() {
+    pluto.network.connections.forEach(({ parentIds, childId, lines }) => {
+        const child = getRectangleById(childId);
+        if (!child) {
+            console.error("Child rectangle not found for given ID:", childId);
+            return;
+        }
+
+        parentIds.forEach((parentId, index) => {
+            const parent = getRectangleById(parentId);
+            if (!parent) {
+                console.error("Parent rectangle not found for given ID:", parentId);
+                return;
+            }
+
+            updateLine(lines[index], parent, child);
+        });
+    });
+}
+
+function deleteContactLines(rectId) {
+    // Kapcsolatok szűrése
+    pluto.network.connections = pluto.network.connections.filter(connection => {
+        // Ha a kapcsolatban szerepel az adott ID, töröljük a vonalakat
+        if (connection.parentIds.includes(rectId) || connection.childId === rectId) {
+            connection.lines.forEach(line => line.remove());
+            return false; // Kapcsolat eltávolítása
+        }
+        return true; // Megtartjuk a kapcsolatot
     });
 }
