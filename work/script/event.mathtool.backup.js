@@ -81,10 +81,10 @@ functionButtons.forEach(button => {
 // arithmetic
 const arithmeticButtons = document.getElementsByName("arithmetic");
 const isConstAndDefaultOrCalculated = (arr) =>
-    arr.includes("const") && (arr.includes("default") || arr.includes("calculated") || arr.includes("function"));
+    arr.includes("const") && (arr.includes("default") || arr.includes("calculated") || arr.includes("function")) && arr.length === 2;
 
 const isDefaultOrCalculated = (arr) =>
-    (arr.includes("default") || arr.includes("calculated") || arr.includes("function")) && !arr.includes("const");
+    (arr.includes("default") || arr.includes("calculated") || arr.includes("function")) && arr.length === 2 && !arr.includes("const");
 
 const expandArray = (value, size) =>
     Array(size).fill(value);
@@ -106,28 +106,33 @@ const divideArrays = (arr1, arr2) =>
         return num / arr2[index];
     });
 
-const arithmeticProcess = (type, ...arrays) => {
-    if (arrays.length < 2) {
-        throw new Error("Legalább két tömb szükséges a művelethez!");
+const arithmeticProcess = (type, arg1, arg2) => {
+    let out = [];
+    switch (type) {
+        // plus
+        case 0:
+            out = plusArrays(arg1, arg2);
+            break;
+            // minus
+        case 1:
+            out = minusArrays(arg1, arg2);
+            break;
+            // times
+        case 2:
+            out = timesArrays(arg1, arg2);
+            break;
+            // divide
+        case 3:
+            out = divideArrays(arg1, arg2);
+            break;
+            // plus
+        default:
+            out = plusArrays(arg1, arg2);
+            break;
     }
-
-    return arrays.reduce((accumulator, currentArray) => {
-        switch (type) {
-            case 0: // plus
-                return plusArrays(accumulator, currentArray);
-            case 1: // minus
-                return minusArrays(accumulator, currentArray);
-            case 2: // times
-                return timesArrays(accumulator, currentArray);
-            case 3: // divide
-                return divideArrays(accumulator, currentArray);
-            default:
-                throw new Error("Érvénytelen aritmetikai típus!");
-        }
-    });
+    return out;
 };
 
-/*
 arithmeticButtons.forEach(button => {
     button.addEventListener('click', (event) => {
         // type of math-arithmetic
@@ -144,10 +149,12 @@ arithmeticButtons.forEach(button => {
 
             // actual type for 
             dataType.push(pluto.inputData.type[pluto.inputData.ID.indexOf(dataID[index])]);
+
         });
 
-        // at least two values
+        //  only two values
         if (dataID.length < 2) {
+            //alert('Egyszerre két elemet kell kijelölni.');
             console.log('Egyszerre legalább két elemet kell kijelölni.');
             return;
         }
@@ -162,15 +169,48 @@ arithmeticButtons.forEach(button => {
             }
         }
 
-        // add all valid arguments
-        dataID.forEach(id => {
-            const data = pluto.inputData.all[pluto.inputData.ID.indexOf(id)];
-            arithmeticArguments.push(data);
-        });
+        // constant and dataset
+        if (isConstAndDefaultOrCalculated(dataType)) {
+            // serach IDs
+            const innerConstantID = dataType.indexOf("const");
+            const constantID = dataID[innerConstantID];
+            const constant = pluto.inputData.all[pluto.inputData.ID.indexOf(constantID)];
 
-        // math process
+            const innerDatasetID = dataType.findIndex(item => item === "default" || item === "calculated" || item === "function");
+            const datasetID = dataID[innerDatasetID];
+            const dataset = pluto.inputData.all[pluto.inputData.ID.indexOf(datasetID)];
+            const datasetSize = dataset.length;
+
+            // expand the constant
+            expandConstant = expandArray(constant[0], datasetSize);
+            expandArray(expandConstant, datasetSize);
+
+            // two arguments
+            arithmeticArguments[0] = dataset;
+            arithmeticArguments[1] = expandConstant;
+
+        }
+
+        // dataset or calculated
+        if (isDefaultOrCalculated(dataType)) {
+            console.log('Adatcsomag vagy kauklált.');
+
+            // serach IDs
+            const tempArg1 = pluto.inputData.all[pluto.inputData.ID.indexOf(dataID[0])];
+            const tempArg2 = pluto.inputData.all[pluto.inputData.ID.indexOf(dataID[1])];
+
+            if (tempArg1.length != tempArg2.length) {
+                arithmeticArguments[0] = tempArg1 < tempArg2 ? tempArg1 : tempArg2;
+                arithmeticArguments[1] = tempArg1 > tempArg2 ? tempArg1 : tempArg2;
+            } else {
+                arithmeticArguments[0] = tempArg1;
+                arithmeticArguments[1] = tempArg2;
+            }
+        }
+
+        // maht process
         const typeOfArithmeticIndex = typeOfArithmetic.indexOf(clickedButtonId);
-        outputArray = arithmeticProcess(typeOfArithmeticIndex, ...arithmeticArguments);
+        outputArray = arithmeticProcess(typeOfArithmeticIndex, arithmeticArguments[0], arithmeticArguments[1]);
 
         // new vector
         pluto.inputData.all.push(outputArray);
@@ -188,79 +228,12 @@ arithmeticButtons.forEach(button => {
         pluto.event.lastMathToolButtonId = typeOfArithmetic[typeOfArithmeticIndex];
 
         // create rectangle
-        createRectangle(tempID, 50, 50, 'calculated', [...dataID, tempID]);
+        createRectangle(tempID, 50, 50, 'calculated', [dataID[0], dataID[1], tempID]);
         pluto.inputData.counter++;
 
         // add lines
-        dataID.forEach(id => addConnection(id, tempID));
-    });
-});
-*/
+        addConnection(dataID[0], dataID[1], tempID);
 
-arithmeticButtons.forEach(button => {
-    button.addEventListener('click', (event) => {
-        // type of math-arithmetic
-        const clickedButtonId = event.currentTarget.id;
 
-        let dataID = [];
-        let dataType = [];
-        let arithmeticArguments = [];
-        let outputArray = [];
-
-        selectedRectangles.forEach((rect, index) => {
-            // actual ID
-            dataID[index] = rect.getAttribute("data-id");
-
-            // actual type for 
-            dataType.push(pluto.inputData.type[pluto.inputData.ID.indexOf(dataID[index])]);
-        });
-
-        // at least two values
-        if (dataID.length < 2) {
-            console.log('Egyszerre legalább két elemet kell kijelölni.');
-            return;
-        }
-
-        // max one constant
-        let count = 0;
-        for (const word of dataType) {
-            if (word === "const") count++;
-            if (count > 1) {
-                console.log("Csak egy konstans elem lehet a kijelöltek között.");
-                return;
-            }
-        }
-
-        // add all valid arguments
-        dataID.forEach(id => {
-            const data = pluto.inputData.all[pluto.inputData.ID.indexOf(id)];
-            arithmeticArguments.push(data);
-        });
-
-        // math process
-        const typeOfArithmeticIndex = typeOfArithmetic.indexOf(clickedButtonId);
-        outputArray = arithmeticProcess(typeOfArithmeticIndex, ...arithmeticArguments);
-
-        // new vector
-        pluto.inputData.all.push(outputArray);
-        pluto.calculation.counter++;
-
-        // ID
-        let tempID = generateID();
-        pluto.inputData.ID.push(tempID);
-        pluto.inputData.name.push("Kalkuláció - " + pluto.calculation.counter);
-
-        // type
-        pluto.inputData.type.push('calculated');
-
-        // event
-        pluto.event.lastMathToolButtonId = typeOfArithmetic[typeOfArithmeticIndex];
-
-        // create rectangle
-        createRectangle(tempID, 50, 50, 'calculated', [...dataID, tempID]);
-        pluto.inputData.counter++;
-
-        // add lines
-        addConnection(dataID, tempID); // Tömböt adunk át a szülőkhöz és a gyermek azonosítóját
     });
 });
