@@ -111,6 +111,16 @@ const arithmeticProcess = (type, ...arrays) => {
         throw new Error("Legalább két tömb szükséges a művelethez!");
     }
 
+    // bővítsük a kijelölés legnagyobb tömbjéhez
+    const maxLength = Math.max(...arrays.map(arr => arr.length));
+    arrays = arrays.map(arr =>
+        arr.length === 1 ? expandArray(arr[0], maxLength) : arr
+    );
+
+    // minden arrayt szűkítsünk az egynél nagyobb Math.min tömb méretéhez.
+    const minLength = Math.min(...arrays.map(arr => arr.length));
+    arrays = arrays.map(arr => arr.slice(0, minLength));
+
     return arrays.reduce((accumulator, currentArray) => {
         switch (type) {
             case 0: // plus
