@@ -68,22 +68,22 @@
                         <h4 class="toolLabel">Matematikai eszközök</h4>
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-plus" name="arithmetic">
                             <div height="100%" style="text-align: center">
-                                <i class="fa fa-plus"></i>
+                                +
                             </div>
                         </button>
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-minus" name="arithmetic">
                             <div height="100%" style="text-align: center">
-                                <i class="fa fa-minus"></i>
+                                -
                             </div>
                         </button>
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-times" name="arithmetic">
                             <div height="100%" style="text-align: center">
-                                <i class="fa fa-times"></i>
+                                &times;
                             </div>
                         </button>
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-divide" name="arithmetic">
                             <div height="100%" style="text-align: center">
-                                <i class="fa fa-minus rotate45"></i>
+                                &divide;
                             </div>
                         </button>
                         <!-- -->
@@ -93,6 +93,21 @@
                                 <span style="font-size: 1vw">CONST</span>
                             </div>
                         </button>
+
+                        <button class="plutoToolMathButton open-floatbox greenButton" id="math-pi">
+                            <div height="100%" style="text-align: center">
+                                <span style="font-size: 1vw">x&#178;</span>
+                            </div>
+                        </button>
+
+                        <button class="plutoToolMathButton open-floatbox greenButton" id="math-pi">
+                            <div height="100%" style="text-align: center">
+                                <span style="font-size: 1vw">&radic;</span>
+                            </div>
+                        </button>                       
+
+                        
+
                         <br />
 
                         <input type="text" id="math-function-input" class="math-input" value="32" />
@@ -114,9 +129,8 @@
                         </div>
                         </button></a>
                         <ul class="toolsDropdownMenu margin-top-1vw" id="moreFunctions">
-                            <li>Exponenciális függvény <a href="">NÖVEKVŐ</a> / <a href="">CSÖKKENŐ</a></li>
-                            <li>Négyzetgyök függvény <a href="">NÖVEKVŐ</a> / <a href="">CSÖKKENŐ</a></li>
-                            <li>Periodikus függvény <a href="">SZINUSZ</a> / <a href="">KOSZINUSZ</a></li>
+                            <li>Exponenciális függvény [ <a href="#" id="math-exp-up" name="function">növekvő</a> / <a href="#" id="math-exp-down" name="function">csökkenő</a> ]</li>
+                            <li>Négyzetgyök függvény [ <a href="#" id="math-sqrt-up" name="function">növekvő</a> / <a href="#" id="math-sqrt-down" name="function">csökkenő</a> ]</li>
                         </ul>
 
                         <!--

@@ -605,10 +605,16 @@ DELETE
     margin: 0;
     background-color: #f0f0f0;
     text-align: right;
+
 }
 
 .toolsDropdownMenu li {
     padding: 0.85vw 0.25vw;
+    font-size: 0.85vw;
+}
+
+.toolsDropdownMenu li a {
+    font-weight: bold;
 }
 
 
