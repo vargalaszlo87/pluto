@@ -66,27 +66,31 @@
                     <div class="watermark">Tools</div>
                     <div class="scroll-container">
                         <h4 class="toolLabel">Matematikai eszközök</h4>
+
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-plus" name="arithmetic">
                             <div height="100%" style="text-align: center">
                                 +
                             </div>
                         </button>
+
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-minus" name="arithmetic">
                             <div height="100%" style="text-align: center">
                                 -
                             </div>
                         </button>
+
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-times" name="arithmetic">
                             <div height="100%" style="text-align: center">
                                 &times;
                             </div>
                         </button>
+
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-divide" name="arithmetic">
                             <div height="100%" style="text-align: center">
                                 &divide;
                             </div>
                         </button>
-                        <!-- -->
+
                         <input type="text" id="math-const-input" class="math-input" value="1.0" />
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-const">
                             <div height="100%" style="text-align: center">
@@ -105,9 +109,6 @@
                                 <span style="font-size: 1vw">&radic;</span>
                             </div>
                         </button>                       
-
-                        
-
                         <br />
 
                         <input type="text" id="math-function-input" class="math-input" value="32" />
@@ -133,19 +134,10 @@
                             <li>Négyzetgyök függvény [ <a href="#" id="math-sqrt-up" name="function">növekvő</a> / <a href="#" id="math-sqrt-down" name="function">csökkenő</a> ]</li>
                         </ul>
 
-                        <!--
-                        <p class="plutoToolButtonSetup"><a href="#" class="toggle-menu" data-menu-id="correlationDropdown">összefüggés vizsgálat beállítása</a> <i class="fa fa-cog"></i></p>
-                        <ul class="toolsDropdownMenu" id="correlationDropdown">
-                            <li><input type="checkbox" name="aac" checked> Automatikus adatmennyiség korrekció</li>
-                            <li><input type="checkbox" name="mlc"> Intelligens adattranszformáció alkalmazása</li>
-                        </ul>
--->
-
+                    <!-- automatic tools -->
                         <div class="toolSpace"></div>
+                        <h4 class="toolLabel">Automatikus eszközök</h4>
 
-
-
-                        <h4 class="toolLabel">Intelligens eszközök</h4>
                         <button class="plutoToolButton open-floatbox greenButton" id="raw-examin">
                             <div style="width: 4vw; float: left; height: 100%;">
                                 <img src="img/icon-raw.png" style="margin-bottom: 0.75vw;" />
@@ -170,6 +162,34 @@
                             <li><input type="checkbox" name="aac" checked> Automatikus adatmennyiség korrekció</li>
                             <li><input type="checkbox" name="mlc"> Intelligens adattranszformáció alkalmazása</li>
                         </ul>
+
+                    <!-- manual tools -->
+                        <div class="toolSpace"></div>
+                        <h4 class="toolLabel">Manuális eszközök</h4>
+
+                        <a href="#" class="toggle-menu" data-menu-id="pre-processing">
+                            <button class="plutoToolButton open-floatbox redButton" id="raw-examin">
+                                <div style="width: 4vw; float: left; height: 100%;">
+                                    <img src="img/icon-raw.png" style="margin-bottom: 0.75vw;" />
+                                </div>
+                                <div height="100%" style="float: left;">
+                                    <span>Előfeldolgozás</span><br />
+                                    <span>szűrés, aggregálás, dimenzió csökkentés, etc.</span>
+                                </div>
+                            </button>
+                        </a>
+                        <div class="toolsDropdownMenu-extended margin-top-1vw" id="pre-processing">
+
+                            <button class="plutoToolButton redButton" id="pre-processing-filter">
+                                <div style="height: 2vw">
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Zajszűrés</span>
+                                </div>
+                            </button>
+                            <input type="radio" name="data-pre-processing-filter" value="" checked /> Z-Score
+                            <input type="radio" name="data-pre-processing-filter" value="" /> IQR
+                            <input type="radio" name="data-pre-processing-filter" value="" /> Mozgóátlag
+
+                        </div>
 
 
                     </div>

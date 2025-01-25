@@ -473,6 +473,17 @@ h4.toolLabel {
     text-transform: none;
 }
 
+
+.plutoToolButton span.sub {
+    text-transform: uppercase;
+    font-size: 1.15vw;
+    color: #5D4037;
+    position: relative;
+    top: 0.25vw;
+    left: 0.5vw;
+    font-weight: normal;
+}
+
 .plutoToolButton img {
     width: 3vw;
     margin: 0.2vw 0.5vw;
@@ -495,12 +506,12 @@ h4.toolLabel {
     background: #adddcd;
 }
 
-.greenButton:active {
-    background: #5fe4ae;
+.greenButton:hover {
+    background: #fff;
 }
 
-.greenButton img {
-    width: 2.5vw;
+.greenButton:active {
+    background: #5fe4ae;
 }
 
 .blueButton {
@@ -509,6 +520,22 @@ h4.toolLabel {
 
 .blueButton:active {
     background: #5f9be4;
+}
+
+.redButton {
+    background: #ddadad;
+}
+
+.redButton:active {
+    background: #e45f5f;
+}
+
+.redButton img, .greenButton img, .blueButton img {
+    width: 2.5vw;
+}
+
+.redButton:hover, .greenButton:hover, .blueButton:hover, .plutoToolButton:hover {
+    background: #fff;
 }
 
 .plutoToolMathButton {
@@ -615,6 +642,13 @@ DELETE
 
 .toolsDropdownMenu li a {
     font-weight: bold;
+}
+
+.toolsDropdownMenu-extended {
+    display: none;
+    list-style: none;   
+    position: relative;
+    top: -1vw;
 }
 
 
