@@ -178,6 +178,7 @@
                                 </div>
                             </button>
                         </a>
+
                         <div class="toolsDropdownMenu-extended margin-top-1vw" id="pre-processing">
 
                             <button class="plutoToolButton redButton" name="pre-processing" id="filter">
@@ -187,9 +188,27 @@
                             </button>
                             <div style="margin: 0.5vw">
                                 <input type="radio" name="data-pre-processing-filter" value="z-score" checked /> Z-Score
-                                <input type="radio" name="data-pre-processing-filter" value="irq" /> IQR
+                                <input type="radio" name="data-pre-processing-filter" value="iqr" /> IQR
                                 <input type="radio" name="data-pre-processing-filter" value="move-avg" /> Mozgóátlag
                             </div>
+
+                            <button class="plutoToolButton redButton" name="pre-processing" id="scale">
+                                <div style="height: 2vw">
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Skálázás</span>
+                                </div>
+                            </button>
+                            <div style="margin: 0.5vw">
+                                <input type="radio" name="data-pre-processing-scale" value="standardize" checked /> Standardizáció
+                                <input type="radio" name="data-pre-processing-scale" value="min-max-0-1" /> Min-Max [0;1]
+                                <input type="radio" name="data-pre-processing-scale" value="min-max-1-1" /> Min-Max [-1;1]
+                            </div>
+
+                            <button class="plutoToolButton redButton" name="pre-processing" id="normalize">
+                                <div style="height: 2vw">
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Normalizálás (L2)</span>
+                                </div>
+                            </button>
+
                         </div>
 
 
@@ -215,6 +234,7 @@
 
     <script src="script/calc.transformation.js"></script>
     <script src="script/calc.filter.js"></script>
+    <script src="script/calc.scale.js"></script>    
     <script src="script/pluto.js"></script>
     <script src="script/pluto.connection.js"></script>
     <script src="script/pluto.rectangle.js"></script>

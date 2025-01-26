@@ -85,6 +85,16 @@ const descriptive = {
             temp /= Math.pow(standardDeviation,4);
         });
         return reciprocalCount * temp;
-    }  
+    },
+    quantile: (data, q) => {
+        const pos = (data.length - 1) * q;
+        const base = Math.floor(pos);
+        const rest = pos - base;
+        if (base + 1 < data.length) {
+            return data[base] + rest * (data[base + 1] - data[base]);
+        } else {
+            return data[base];
+        }
+    }
 
 }
