@@ -169,6 +169,7 @@ functionButtons.forEach(a => {
 
 // arithmetic
 const arithmeticButtons = document.getElementsByName("arithmetic");
+
 const isConstAndDefaultOrCalculated = (arr) =>
     arr.includes("const") && (arr.includes("default") || arr.includes("calculated") || arr.includes("function"));
 
@@ -306,12 +307,9 @@ arithmeticButtons.forEach(button => {
         let arithmeticArguments = [];
         let outputArray = [];
 
+        // Actual IDs
         selectedRectangles.forEach((rect, index) => {
-            // actual ID
             dataID[index] = rect.getAttribute("data-id");
-
-            // actual type for 
-            dataType.push(pluto.inputData.type[pluto.inputData.ID.indexOf(dataID[index])]);
         });
 
         // at least two values
@@ -319,6 +317,15 @@ arithmeticButtons.forEach(button => {
             console.log('Egyszerre legalább két elemet kell kijelölni.');
             return;
         }
+
+        // Actual types for the valid IDs
+        dataID.forEach(id => {
+            const typeIndex = pluto.inputData.ID.indexOf(id);
+            if (typeIndex !== -1) {
+                dataType.push(pluto.inputData.type[typeIndex]);
+            }
+            // dataType.push(pluto.inputData.type[pluto.inputData.ID.indexOf(dataID[index])]);
+        });
 
         // max one constant
         let count = 0;

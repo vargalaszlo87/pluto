@@ -649,6 +649,12 @@ DELETE
     list-style: none;   
     position: relative;
     top: -1vw;
+    text-align: right;
+}
+
+.toolsDropdownMenu-extended input[type="radio"] {
+    margin-left: 1vw;
+
 }
 
 
