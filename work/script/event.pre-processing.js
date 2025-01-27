@@ -17,6 +17,12 @@ preProcessingButtons.forEach(button => {
             if (clickedButtonId == "scale")
                 selectedRadioFilter = document.querySelector('input[name="data-pre-processing-scale"]:checked').value;
 
+            if (clickedButtonId == "normalize")
+                selectedRadioFilter = document.querySelector('input[name="data-pre-processing-normalize"]:checked').value; 
+            
+            if (clickedButtonId == "transformation")
+                selectedRadioFilter = document.querySelector('input[name="data-pre-processing-transformation"]:checked').value;             
+
         // rectangle ID
         let dataID = [];
        
@@ -39,7 +45,7 @@ preProcessingButtons.forEach(button => {
         const data = pluto.inputData.all[dataTypeIndex];
 
         // push
-        // dataType.push(pluto.inputData.type[pluto.inputData.ID.indexOf(dataID[index])]);
+        //dataType.push(pluto.inputData.type[dataTypeIndex]);
 
         // calc process
         let outputArray = [];
@@ -54,8 +60,8 @@ preProcessingButtons.forEach(button => {
             else if (selectedRadioFilter == "move-avg") {
                 outputArray = filter.movingAverage(data, 3);
             }
+
             // scale
-            
             else if (selectedRadioFilter == "standardize") {
                 outputArray = scale.standardizeData(data);
             }
@@ -64,13 +70,35 @@ preProcessingButtons.forEach(button => {
             }
             else if (selectedRadioFilter == "min-max-1-1") {
                 outputArray = scale.minMaxScaling(data, -1, 1); 
-            }            
+            }      
+            
+            // normalize
+            else if (selectedRadioFilter == "l2") {
+                outputArray = normalize.normalizeL2(data);
+            }         
+            else if (selectedRadioFilter == "l1") {
+                outputArray = normalize.normalizeL1(data);
+            }   
+            
+            // transform
+            else if (selectedRadioFilter == "log") {
+                outputArray = transformation.log(data);
+            }         
+            else if (selectedRadioFilter == "sqrt") {
+                outputArray = transformation.sqrt(data);
+            }   
+            else if (selectedRadioFilter == "reciprocal") {
+                outputArray = transformation.reciprocal(data);
+            }         
+            else if (selectedRadioFilter == "power") {
+                outputArray = transformation.power(data);
+            }   
+            
+            // dev
             else {
                 // dev
             }
             
-
-
 
         // new vector
         pluto.inputData.all.push(outputArray);
@@ -79,16 +107,16 @@ preProcessingButtons.forEach(button => {
         // ID
         let tempID = generateID();
         pluto.inputData.ID.push(tempID);
-        pluto.inputData.name.push("Kalkuláció - " + pluto.calculation.counter);
+        pluto.inputData.name.push("Előfeldolgozás - " + pluto.calculation.counter);
 
         // type
-        pluto.inputData.type.push('calculated');
+        pluto.inputData.type.push('preprocessing');
 
         // event
         pluto.event.lastMathToolButtonId = clickedButtonId;
 
         // create rectangle
-        createRectangle(tempID, 50, 50, 'calculated', [...dataID, tempID]);
+        createRectangle(tempID, 50, 50, 'preprocessing', [...dataID, tempID]);
         pluto.inputData.counter++;
 
         // add lines

@@ -13,20 +13,14 @@ const scale = {
         });
     },
 
-
     standardizeData: (data) => {
-        //const mean = data.reduce((sum, value) => sum + value, 0) / data.length;
-        //const variance = data.reduce((sum, value) => sum + Math.pow(value - descriptive.mean(data), 2), 0) / data.length;
         const stdDev = Math.sqrt(descriptive.variance(data));
     
         if (stdDev === 0) {
             throw new Error("Standard deviation is zero, all values are identical.");
         }
-    
+
         return data.map(value => (value - descriptive.mean(data)) / stdDev);
     }
 
-
-
-    
 };

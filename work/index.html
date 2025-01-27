@@ -170,7 +170,7 @@
                         <a href="#" class="toggle-menu" data-menu-id="pre-processing">
                             <button class="plutoToolButton open-floatbox redButton">
                                 <div style="width: 4vw; float: left; height: 100%;">
-                                    <img src="img/icon-raw.png" style="margin-bottom: 0.75vw;" />
+                                    <img src="img/icon-process.png" style="margin-bottom: 0.5vw; padding-top: 0.25vw;" />
                                 </div>
                                 <div height="100%" style="float: left;">
                                     <span>Előfeldolgozás</span><br />
@@ -205,13 +205,28 @@
 
                             <button class="plutoToolButton redButton" name="pre-processing" id="normalize">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Normalizálás (L2)</span>
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Normalizálás</span>
                                 </div>
                             </button>
+                            <div style="margin: 0.5vw">
+                                <input type="radio" name="data-pre-processing-normalize" value="l2" checked /> L2-norma
+                                <input type="radio" name="data-pre-processing-normalize" value="l1" /> L1-norma
+                            </div>    
+                            
+                            <button class="plutoToolButton redButton" name="pre-processing" id="transformation">
+                                <div style="height: 2vw">
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Transzformáció</span>
+                                </div>
+                            </button>
+                            <div style="margin: 0.5vw">
+                                <input type="radio" name="data-pre-processing-transformation" value="log" checked /> Logaritmus
+                                <input type="radio" name="data-pre-processing-transformation" value="sqrt" /> Négyzetgyök
+                                <input type="radio" name="data-pre-processing-transformation" value="reciprocal" /> Reciprok
+                                <input type="radio" name="data-pre-processing-transformation" value="power" /> Power
+
+                            </div>                              
 
                         </div>
-
-
                     </div>
                 </div>
 
@@ -235,6 +250,7 @@
     <script src="script/calc.transformation.js"></script>
     <script src="script/calc.filter.js"></script>
     <script src="script/calc.scale.js"></script>    
+    <script src="script/calc.normalize.js"></script>
     <script src="script/pluto.js"></script>
     <script src="script/pluto.connection.js"></script>
     <script src="script/pluto.rectangle.js"></script>

@@ -47,6 +47,22 @@ function createRectangle(generatedID, x, y, type = 'default', connection) {
             '<h5 class="data">' + (parents.length > 2 ? "" : parent2Name) + '</h5>';
     }
 
+    if (type == 'preprocessing') {
+        // search the parents
+        const parents = findParentsByChildId(connection, generatedID);
+        parent1Name = pluto.inputData.name[pluto.inputData.ID.indexOf(parents[0])];
+        parent2Name = pluto.inputData.name[pluto.inputData.ID.indexOf(parents[1])];
+
+        // make the icons
+        let iconTagType = pluto.event.lastMathToolButtonId.replace("math-", "");
+        iconTagType = (iconTagType != "divide") ? iconTagType : "minus rotate45";
+
+        rectangle.innerHTML =
+            '<h5 class="title">'+ pluto.event.lastMathToolButtonId +'</h5>' +
+            '<h5 class="data">' + (parents.length > 2 ? parents.length + " adatsorral" : parent1Name) + '</h5>' +
+            '<img src="img/icon-process-color.png" draggable="false"  />';
+    }
+
     if (type == 'function') {
         // search ID
         const tempIndex = pluto.inputData.ID.indexOf(generatedID);
