@@ -108,7 +108,7 @@
                             <div height="100%" style="text-align: center">
                                 <span style="font-size: 1vw">&radic;</span>
                             </div>
-                        </button>                       
+                        </button>
                         <br />
 
                         <input type="text" id="math-function-input" class="math-input" value="32" />
@@ -134,7 +134,7 @@
                             <li>Négyzetgyök függvény [ <a href="#" id="math-sqrt-up" name="function">növekvő</a> / <a href="#" id="math-sqrt-down" name="function">csökkenő</a> ]</li>
                         </ul>
 
-                    <!-- automatic tools -->
+                        <!-- automatic tools -->
                         <div class="toolSpace"></div>
                         <h4 class="toolLabel">Automatikus eszközök</h4>
 
@@ -163,7 +163,7 @@
                             <li><input type="checkbox" name="mlc"> Intelligens adattranszformáció alkalmazása</li>
                         </ul>
 
-                    <!-- manual tools -->
+                        <!-- manual tools -->
                         <div class="toolSpace"></div>
                         <h4 class="toolLabel">Manuális eszközök</h4>
 
@@ -209,8 +209,8 @@
                             <div style="margin: 0.5vw">
                                 <input type="radio" name="data-pre-processing-normalize" value="l2" checked /> L2-norma
                                 <input type="radio" name="data-pre-processing-normalize" value="l1" /> L1-norma
-                            </div>    
-                            
+                            </div>
+
                             <button class="plutoToolButton redButton" name="pre-processing" id="transformation">
                                 <div style="height: 2vw">
                                     <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Transzformáció</span>
@@ -221,8 +221,7 @@
                                 <input type="radio" name="data-pre-processing-transformation" value="sqrt" /> Négyzetgyök
                                 <input type="radio" name="data-pre-processing-transformation" value="reciprocal" /> Reciprok
                                 <input type="radio" name="data-pre-processing-transformation" value="power" /> Power
-
-                            </div>                              
+                            </div>
                         </div>
 
                         <a href="#" class="toggle-menu" data-menu-id="data-imputation">
@@ -236,6 +235,60 @@
                                 </div>
                             </button>
                         </a>
+                        <div class="toolsDropdownMenu-extended margin-top-1vw" id="data-imputation">
+
+                            Hiányzó adat jelölése az adatsorban: <input type="text" name="data-imputation-missing-value" value="0" style="width: 4vw; text-align: right" />
+
+                            <button class="plutoToolButton redButton" name="data-imputation" id="regression">
+                                <div style="height: 2vw">
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Regresszió</span>
+                                </div>
+                            </button>
+
+                            <button class="plutoToolButton redButton" name="data-imputation" id="knn">
+                                <div style="height: 2vw">
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> KNN módszer</span>
+                                </div>
+                            </button>
+
+                            <button class="plutoToolButton redButton" name="data-imputation" id="timeseries">
+                                <div style="height: 2vw">
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Idősor interpoláció</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <a href="#" class="toggle-menu" data-menu-id="feature-engineering">
+                            <button class="plutoToolButton open-floatbox redButton">
+                                <div style="width: 4vw; float: left; height: 100%;">
+                                    <img src="img/icon-feature-engineering.png" style="margin-bottom: 0.5vw; padding-top: 0.25vw;" />
+                                </div>
+                                <div height="100%" style="float: left;">
+                                    <span>Jellemző kinyerés</span><br />
+                                    <span>feature engineering</span>
+                                </div>
+                            </button>
+                        </a>
+                        <div class="toolsDropdownMenu-extended margin-top-1vw" id="feature-engineering">
+
+                            <button class="plutoToolButton redButton" name="feature-engineering" id="polynomal">
+                                <div style="height: 2vw">
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Polinomális vektor</span>
+                                </div>
+                            </button>
+
+                            <button class="plutoToolButton redButton" name="feature-engineering" id="interaction">
+                                <div style="height: 2vw">
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Interakciós termék</span>
+                                </div>
+                            </button>
+
+                            <button class="plutoToolButton redButton" name="feature-engineering" id="statistical">
+                                <div style="height: 2vw">
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Statisztikai</span>
+                                </div>
+                            </button>
+                        </div>
 
 
 
@@ -261,18 +314,21 @@
 
     <script src="script/calc.transformation.js"></script>
     <script src="script/calc.filter.js"></script>
-    <script src="script/calc.scale.js"></script>    
+    <script src="script/calc.scale.js"></script>
     <script src="script/calc.normalize.js"></script>
+    <script src="script/calc.data-imputation.js"></script>
+    <script src="script/calc.feature-engineering.js"></script>
+
     <script src="script/pluto.js"></script>
     <script src="script/pluto.connection.js"></script>
     <script src="script/pluto.rectangle.js"></script>
     <script src="script/pluto.contextMenu.js"></script>
     <script src="script/navigation.js"></script>
 
-
-
     <script src="script/event.mathtool.js"></script>
     <script src="script/event.pre-processing.js"></script>
+    <script src="script/event.data-imputation.js"></script>
+    <script src="script/event.feature-engineering.js"></script>
     <script src="script/event.correlation.js"></script>
     <script src="script/event.toggle.js"></script>
 

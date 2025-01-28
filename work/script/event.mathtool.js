@@ -61,8 +61,8 @@ const createExponentialArray = (n, ascending = true) => {
     }
 
     // Normalize to 0 and 1
-    const max = Math.max(...array); 
-    array = array.map(value => value / max); 
+    const max = Math.max(...array);
+    array = array.map(value => value / max);
 
     // desc
     if (!ascending)
@@ -97,19 +97,16 @@ functionButtons.forEach(button => {
         if (clickedButtonId.includes("lin")) {
             value = createLinearArray((value < 2 || isNaN(value)) ? 2 : value, (clickedButtonId == "math-lin-up") ? true : false);
             pluto.inputData.name.push("Lineáris " + ((clickedButtonId == "math-lin-up") ? "növekvő" : "csökkenő"));
-        }
-        else if (clickedButtonId.includes("exp")) {
+        } else if (clickedButtonId.includes("exp")) {
             value = createExponentialArray((value < 2 || isNaN(value)) ? 2 : value, (clickedButtonId == "math-exp-up") ? true : false);
-            pluto.inputData.name.push("Exponenciális " + ((clickedButtonId == "math-exp-up") ? "növekvő" : "csökkenő"));
-        }
-        else if (clickedButtonId.includes("sqrt")) {
+            pluto.inputData.name.push("Exp. " + ((clickedButtonId == "math-exp-up") ? "növekvő" : "csökkenő"));
+        } else if (clickedButtonId.includes("sqrt")) {
             value = createSqrtArray((value < 2 || isNaN(value)) ? 2 : value, (clickedButtonId == "math-sqrt-up") ? true : false);
-            pluto.inputData.name.push("Négyzetgyök " + ((clickedButtonId == "math-sqrt-up") ? "növekvő" : "csökkenő"));
-        }        
-        else {
+            pluto.inputData.name.push("Gyök " + ((clickedButtonId == "math-sqrt-up") ? "növekvő" : "csökkenő"));
+        } else {
 
         }
-        
+
         // data
         pluto.inputData.all.push(value);
 

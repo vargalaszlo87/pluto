@@ -48,19 +48,36 @@ function createRectangle(generatedID, x, y, type = 'default', connection) {
     }
 
     if (type == 'preprocessing') {
-        // search the parents
-        const parents = findParentsByChildId(connection, generatedID);
-        parent1Name = pluto.inputData.name[pluto.inputData.ID.indexOf(parents[0])];
-        parent2Name = pluto.inputData.name[pluto.inputData.ID.indexOf(parents[1])];
-
-        // make the icons
-        let iconTagType = pluto.event.lastMathToolButtonId.replace("math-", "");
-        iconTagType = (iconTagType != "divide") ? iconTagType : "minus rotate45";
+        // search the parent
+        const parent = findParentsByChildId(connection, generatedID);
+        parent1Name = pluto.inputData.name[pluto.inputData.ID.indexOf(parent[0])];
 
         rectangle.innerHTML =
-            '<h5 class="title">'+ pluto.event.lastMathToolButtonId +'</h5>' +
-            '<h5 class="data">' + (parents.length > 2 ? parents.length + " adatsorral" : parent1Name) + '</h5>' +
+            '<h5 class="title">' + pluto.event.lastMathToolButtonId + '</h5>' +
+            '<h5 class="data">' + (parent.length > 2 ? parent.length + " adatsorral" : parent1Name) + '</h5>' +
             '<img src="img/icon-process-color.png" draggable="false"  />';
+    }
+
+    if (type == 'imputation') {
+        // search the parent
+        const parent = findParentsByChildId(connection, generatedID);
+        parent1Name = pluto.inputData.name[pluto.inputData.ID.indexOf(parent[0])];
+
+        rectangle.innerHTML =
+            '<h5 class="title">' + pluto.event.lastMathToolButtonId + '</h5>' +
+            '<h5 class="data">' + (parent.length > 2 ? parent.length + " adatsorral" : parent1Name) + '</h5>' +
+            '<img src="img/icon-data-imputation-color.png" draggable="false"  />';
+    }
+
+    if (type == 'feature') {
+        // search the parent
+        const parent = findParentsByChildId(connection, generatedID);
+        parent1Name = pluto.inputData.name[pluto.inputData.ID.indexOf(parent[0])];
+
+        rectangle.innerHTML =
+            '<h5 class="title">' + pluto.event.lastMathToolButtonId + '</h5>' +
+            '<h5 class="data">' + (parent.length > 2 ? parent.length + " adatsorral" : parent1Name) + '</h5>' +
+            '<img src="img/icon-feature-engineering-color.png" draggable="false"  />';
     }
 
     if (type == 'function') {
