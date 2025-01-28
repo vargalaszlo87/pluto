@@ -48,11 +48,11 @@ const examin = {
         return this.output.join("");
     },
 
-    chartJS(multiDataY) {
-        const borderColors = ['#922b21', '#76448a', '#1f618d', '#148f77', '#1e8449', '#b7950b','#af601a','#717d7e', '#283747', '#000000'];
+    chartJS(multiDataY, datasetNames) {
+        const borderColors = ['#922b21', '#76448a', '#1f618d', '#148f77', '#1e8449', '#b7950b', '#af601a', '#717d7e', '#283747', '#000000'];
 
         const datasets = multiDataY.map((dataset, index) => ({
-            label: `Adatsor ${index + 1}`,
+            label: datasetNames[index],
             data: dataset,
             borderColor: borderColors[index],
             fill: false,
@@ -90,7 +90,7 @@ const examin = {
                             position: index % 2 === 0 ? 'left' : 'right',
                             scaleLabel: {
                                 display: true,
-                                labelString: `Adatsor ${index + 1} tengely`,
+                                labelString: datasetNames[index] + ' tengely',
                                 fontColor: color,
                             },
                             ticks: {
@@ -120,11 +120,16 @@ const examin = {
 // events
 // Esemény a "raw-examin" gombra
 buttonRawExamin.addEventListener('click', (event) => {
+
     let dataID = [];
-    let multiDataY = [];
+    let multiYDatas = [];
+    let datasetNames = [];
+
+    // selected rectangles
     selectedRectangles.forEach((rect, index) => {
         dataID[index] = rect.getAttribute("data-id");
-        multiDataY.push(pluto.inputData.all[pluto.inputData.ID.indexOf(dataID[index])]);
+        multiYDatas.push(pluto.inputData.all[pluto.inputData.ID.indexOf(dataID[index])]);
+        datasetNames.push(pluto.inputData.name[pluto.inputData.ID.indexOf(dataID[index])]);
 
         if (dataID.length > 5) {
             alert('A demó verzió 5 kijelölt adatsorral képes dolgozni.');
@@ -139,12 +144,6 @@ buttonRawExamin.addEventListener('click', (event) => {
     floatBox.open(event, data, sizer.width - 100);
 
     // Diagram hozzáadása
-    examin.chartJS(multiDataY);
+    examin.chartJS(multiYDatas, datasetNames);
 
 });
-
-
-
-
-
-
