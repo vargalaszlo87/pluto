@@ -132,7 +132,7 @@ const correlation = {
 
         return correlation.output.join("");
     },
-    chartJS: (dataY1, dataY2) => {
+    chartJS: (dataY1, dataY2, datasetNames) => {
 
         // chart
         const ctx = document.getElementById('collerationLineChart').getContext('2d');
@@ -143,7 +143,8 @@ const correlation = {
             data: {
                 labels: dataX, // X tengely indexek
                 datasets: [{
-                        label: 'Adatsor 1',
+                        //label: 'Adatsor 1',
+                        label: datasetNames[0],
                         data: dataY1, // Első Y adatsor
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderColor: 'rgba(255, 99, 132, 1)',
@@ -151,7 +152,8 @@ const correlation = {
                         fill: false
                     },
                     {
-                        label: 'Adatsor 2',
+                        //label: 'Adatsor 2',
+                        label: datasetNames[1],
                         data: dataY2, // Második Y adatsor
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',

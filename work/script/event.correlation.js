@@ -3,8 +3,11 @@
 const button = document.getElementById("intelligent-correlation");
 
 button.addEventListener('click', (event) => {
+    
     let dataID = [];
     let isNotDefaultData = false;
+    let datasetNames = [];
+
     selectedRectangles.forEach((rect, index) => {
         dataID[index] = rect.getAttribute("data-id");
 
@@ -51,6 +54,10 @@ button.addEventListener('click', (event) => {
             }
         }
 
+        // names
+        datasetNames.push(pluto.inputData.name[pluto.inputData.ID.indexOf(dataID[0])]);
+        datasetNames.push(pluto.inputData.name[pluto.inputData.ID.indexOf(dataID[1])]);
+
 
         // calc
         const R = correlation.pearson(arr1, arr2);
@@ -62,7 +69,7 @@ button.addEventListener('click', (event) => {
         floatBox.open(event, data, sizer.width - 100);
 
         // add JS
-        correlation.chartJS(arr1, arr2);
+        correlation.chartJS(arr1, arr2, datasetNames);
     }
     // correlation-n
     else {
