@@ -53,6 +53,79 @@ function clearSelection() {
     selectedRectangles = [];
 }
 
+// estended paste (ctrl + v) function
+function paste(event) {
+
+    const pastedData = (event.clipboardData || window.clipboardData).getData('text');
+    if (pastedData.length > pluto.inputData.maxSize) {
+        alert('10kb-os limit túllépve');
+        return;
+    }
+
+    // row by row
+    let rows = pastedData.trim().split(/\n+/);
+    let matrix = rows.map(row => row.split(/[\t; ]+/).map(Number)); 
+
+    // if matrix and N = N
+    let isMatrix = matrix.length > 1 && matrix.every(row => row.length === matrix[0].length);
+
+    // if matrix but not equal length
+    if (!isMatrix && matrix.length > 1) {
+        alert ('Több oszlop bemásolása esetén, ugyanakkora méretű adatsorok szükségesek.');
+        return false;
+    }
+
+    if (isMatrix) {
+        // column by column
+        let columnVectors = Array.from({ length: matrix[0].length }, () => []);
+
+        matrix.forEach(row => {
+            row.forEach((value, colIndex) => {
+                columnVectors[colIndex].push(value);
+            });
+        });
+
+        // through all columns
+        columnVectors.forEach(vector => {
+
+            // ID
+            let tempID = generateID();
+            pluto.inputData.all.push(vector);
+            pluto.inputData.ID.push(tempID);
+
+            // if a matrix, the name of rectangle is the first row of column
+//            pluto.inputData.name.push("Adatsor - " + tempID);
+            pluto.inputData.name.push(vector[0]);
+            
+            // type
+            pluto.inputData.type.push('default');
+
+            // create rectangle
+            createRectangle(tempID, 50, 50);
+            pluto.inputData.counter++;
+        });
+
+    } else {  
+        // normal vector
+        let temp = pastedData.trim().split(/[\t\n; ]+/);
+        let vector = temp.map(Number);
+        pluto.inputData.all.push(vector);
+
+        // ID
+        let tempID = generateID();
+        pluto.inputData.ID.push(tempID);
+        pluto.inputData.name.push("Adatsor - " + tempID);
+
+        // type
+        pluto.inputData.type.push('default');
+
+        // create rectangle
+        createRectangle(tempID, 50, 50);
+        pluto.inputData.counter++;
+    }
+}
+
+/*
 // paste (ctrl + v) function
 function paste(event) {
     const pastedData = (event.clipboardData || window.clipboardData).getData('text');
@@ -78,6 +151,7 @@ function paste(event) {
     createRectangle(tempID, 50, 50);
     pluto.inputData.counter++;
 }
+*/
 
 // generate id for rectangle
 function generateID() {
