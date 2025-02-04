@@ -672,3 +672,18 @@ DELETE
 .margin-top-1vw {
     margin-top: 1vw;
 }
+
+/* ------------------ optimum
+ */
+
+table#optimum-default-weight {
+    border: none;
+}
+
+table#optimum-default-weight tr {
+    margin: 10px;
+}
+
+table#optimum-default-weight tr td {
+    padding: 0.5vw;
+}
