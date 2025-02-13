@@ -673,6 +673,7 @@ DELETE
     margin-top: 1vw;
 }
 
+
 /* ------------------ optimum
  */
 
@@ -686,4 +687,36 @@ table#optimum-default-weight tr {
 
 table#optimum-default-weight tr td {
     padding: 0.5vw;
+}
+
+
+/* ------------------ slider
+ */
+
+.slider {
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    outline: none;
+    transition: background 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+/* Firefox */
+
+.slider::-moz-range-track_ {
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(to right, green 50%, #ddd 50%);
+    border-radius: 5px;
 }

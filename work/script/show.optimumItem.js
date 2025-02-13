@@ -1,4 +1,19 @@
+// slider
+function updateSliderColor(slider) {
+    const value = slider.value;
+    const min = slider.min;
+    const max = slider.max;
+    const percentage = ((value - min) / (max - min)) * 100;
 
+    // Szín számítása (zöld → piros)
+    const red = Math.round((value / max) * 255);
+    const green = Math.round(255 - (value / max) * 255);
+    const color = `rgb(${red},${green},0)`;
+
+    // Háttérszín beállítása
+    slider.style.accentColor = color; // Modern böngészők
+    slider.style.background = `linear-gradient(to right, ${color} ${percentage}%, #ddd ${percentage}%)`; // Alternatíva
+}
 
 // button
 const buttonOptimumItem = document.getElementById("optimum-item");
@@ -21,38 +36,26 @@ const optimum = {
         //const tempIndex = pluto.inputData.ID.indexOf(dataID);
 
         // Fejléc
-        this.output.push('<h4 id="show-optimum-item">Az <u>optimális</u> elem kiválasztása</h4>');
+        this.output.push('<h4 id="show-optimum-item" style="margin-bottom: 2vw;">Az <u>optimális</u> elem kiválasztása</h4>');
         this.output.push('<div class="container-fluid" style="height: 90%">');
         this.output.push('<div class="row">');
         this.output.push('<h5 style="width: 100%; color: #336699">A kezdeti súlyok beállítása</h5>');
         this.output.push('<table id="optimum-default-weight">');
 
-        for (let i = 0 ; i < dataID.length ; i++) {
+        for (let i = 0; i < dataID.length; i++) {
             const name = pluto.inputData.name[pluto.inputData.ID.indexOf(dataID[i])]
-            this.output.push('<tr><td style="padding-right: 2.0vw">A(z) <b>' + name + '</b> nevű paraméter</td><td><b style="font-size: 1vw;">Kevésbé fontos</b></td><td><input class="slider" type="range" style="width: 30vw" /></td><td><b style="font-size: 1vw;">Inkább fontos</b></td></tr>');
+            this.output.push('<tr><td style="padding-right: 2.0vw">A(z) <b>' + name + '</b> nevű paraméter</td><td><span style="font-weight: bold; font-size: 0.9vw; text-transform: uppercase; color: green">Kevésbé fontos</span></td><td><input class="slider" name="data_pluto_id_' + pluto.inputData.ID.indexOf(dataID[i]) + '" type="range" min="0" max="1" step = 0.05 value="0.5" style="width: 30vw" /></td><td><span style="font-weight: bold; font-size: 0.9vw; text-transform: uppercase; color: red">Inkább fontos</span></td></tr>');
         }
 
         this.output.push('</table>');
 
-        // Canvas hozzáadása a DOM-hoz
-        //this.output.push('<div class="col-mg-12 col-lg-12" id="play-chart">');
-        //this.output.push('<canvas id="showExaminChart" style="width: 100%; height: 500px;"></canvas>');
-        //this.output.push('</div>');
-
         // DOM frissítése
         document.getElementById("floatbox-content").innerHTML = this.output.join("");
 
-        // Ellenőrizzük, hogy valóban létezik-e a canvas
-        /*const canvas = document.getElementById('showExaminChart');
-        if (!canvas) {
-            console.error('A canvas elem nem található!');
-            return;
-        }*/
-
         // Adatok a diagramhoz
-       // pluto.inputData.all[tempIndex].forEach((item, index) => {
-       //     this.labels.push(index);
-       // });
+        // pluto.inputData.all[tempIndex].forEach((item, index) => {
+        //     this.labels.push(index);
+        // });
 
         this.output.push('</div></div>');
 
@@ -147,10 +150,16 @@ buttonOptimumItem.addEventListener('click', (event) => {
     //if (dataID.length > 10 || dataID.length < 2) {
     if (false) {
         alert('Ebben a verzióban legalább 2 és legfeljebb 10 adatsorral képes dolgozni.');
-    }
-    else {
+    } else {
         // Adatok betöltése a lebegő ablakhoz
         const data = optimum.show(event, dataID);
+
+        // slider
+        document.getElementById("floatbox-content").addEventListener("input", function(event) {
+            if (event.target.classList.contains("slider")) {
+                updateSliderColor(event.target);
+            }
+        });
 
         // Lebegő ablak megnyitása
         floatBox.open(event, data, sizer.width - 100);
