@@ -689,6 +689,26 @@ table#optimum-default-weight tr td {
     padding: 0.5vw;
 }
 
+#optimum-result {
+    width: 100%;
+    float: left;
+}
+
+#calculate-optimum {
+    border: 0;
+    background: #8a21c5;
+    color: #fff;
+    margin-top: 1vw;
+    padding: 0.5vw 1vw;
+    font-size: 1vw;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#calculate-optimum:hover {
+    background:  #27ae60;
+}
 
 /* ------------------ slider
  */

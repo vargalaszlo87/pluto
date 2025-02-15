@@ -33,7 +33,7 @@
  * The "config" section can you set your parameters of project.
  */
 
-const config = {
+const geneticAlgorithmConfig = {
 
     // add your categories
     categories: [
@@ -221,23 +221,24 @@ const config = {
  */
 
 // setup for geneticAlgorithm()    
-const setup = {
+/*const setup = {
      generations: 500,
-     populationSize: config.inputDatas.length,
+     populationSize: geneticAlgorithmConfig.inputDatas.length,
      customWeights: null,
      eliteRate: 0.1,
      mutationRate: 0.05, 
      earlyStopThreshold: 0.01,
      earlyStopPatiente: 10,
-};
+};*/
 
 // calc
-const result = geneticAlgorithm(setup);
+//const result = geneticAlgorithm(setup);
 
+/*
 // output
 const generationValue = result.generation;
 const selectedItemId = result.bestItem.id;
-const selectedItemDatas = config.inputDatas[selectedItemId - 1];
+const selectedItemDatas = geneticAlgorithmConfig.inputDatas[selectedItemId - 1];
 const optimizedWeights = result.bestWeights;
 const fitnessValue = fitness(result.bestItem, result.bestWeights)
 
@@ -247,3 +248,4 @@ console.log("The ID of the best Item:", selectedItemId);
 console.log("The datas of the best Item", selectedItemDatas);
 console.log("Optimized weights", optimizedWeights);
 console.log("Fitness value", fitnessValue);
+*/
