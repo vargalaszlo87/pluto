@@ -50,7 +50,7 @@ const optimum = {
 
         for (let i = 0; i < dataID.length; i++) {
             const name = pluto.inputData.name[pluto.inputData.ID.indexOf(dataID[i])]
-            this.output.push('<tr><td style="padding-right: 2.0vw">A(z) <b>' + name + '</b> nevű paraméter</td><td><span style="font-weight: bold; font-size: 0.9vw; text-transform: uppercase; color: #229954">Kevésbé fontos</span></td><td><input class="slider" name="data_pluto_id_' + pluto.inputData.ID.indexOf(dataID[i]) + '" type="range" min="0" max="1" step = 0.05 value="0.5" style="width: 30vw" /></td><td><span style="font-weight: bold; font-size: 0.9vw; text-transform: uppercase; color: #a93226 ">Inkább fontos</span></td></tr>');
+            this.output.push('<tr><td style="padding-right: 2.0vw">A(z) <b>' + name + '</b> nevű paraméter</td><td><span style="font-weight: bold; font-size: 0.9vw; text-transform: uppercase; color: #229954">Kevésbé fontos</span></td><td><input class="slider optimumRange" name="' + dataID[i] + '" type="range" min="0" max="1" step = 0.05 value="0.5" style="width: 30vw" /></td><td><span style="font-weight: bold; font-size: 0.9vw; text-transform: uppercase; color: #a93226 ">Inkább fontos</span></td><td style="padding-left: 2.0vw"><input class="optimumNegativImpactCheckbox" type="checkbox" name="' + dataID[i] + '" /> Negatív hatású tényező.</td></tr>');
         }
 
         this.output.push('</table>');
@@ -69,76 +69,127 @@ const optimum = {
                 // reset inputDatas
                 geneticAlgorithmConfig.inputDatas.length = 0;
 
-                // setup for geneticAlgorithm()    
-                const setup = {
-                    generations: 500,
-                    populationSize: geneticAlgorithmConfig.inputDatas.length,
-                    customWeights: null,
-                    eliteRate: 0.1,
-                    mutationRate: 0.05, 
-                    earlyStopThreshold: 0.01,
-                    earlyStopPatiente: 10,
-                };
-
-                // calc
-                // const result = geneticAlgorithm(setup);
-
-                let result = "";
-                
-                
-                // push itmes of congis
+                // push itmes of configs
 
                 geneticAlgorithmConfig.categories.length = 0;
                 geneticAlgorithmConfig.categories.push("id");
 
                 geneticAlgorithmConfig.categoriesNames.length = 0;
 
-                dataID.forEach((item, index) =>{
+                dataID.forEach((item, index) => {
                     geneticAlgorithmConfig.categories.push(item);
                     geneticAlgorithmConfig.categoriesNames.push(pluto.inputData.name[pluto.inputData.ID.indexOf(item)]);
                 });
 
-                // push inputDatas
-                geneticAlgorithmConfig.inputDatas.length = 0;
+                // data scale
+                geneticAlgorithmConfig.categories.forEach((field, index) => {
+                    if (field !== "id") {
+                        pluto.inputData.all[pluto.inputData.ID.indexOf(field)] = scale.minMaxScaling(pluto.inputData.all[pluto.inputData.ID.indexOf(field)], 0, 1);
+                    }
 
-                const lengthOfDataset = pluto.inputData.all[pluto.inputData.ID.indexOf(dataID[0])].length;
-                for (let i = 0 ; i < lengthOfDataset ; i++) {
+                });
+
+                // push inputDatas
+
+                geneticAlgorithmConfig.inputDatas.length = 0;
+                const lengthOfDataset = pluto.inputData.all[
+                    pluto.inputData.ID.indexOf(
+                        dataID[0]
+                    )
+                ].length;
+
+                for (let i = 0; i < lengthOfDataset; i++) {
                     let newData = {};
 
                     geneticAlgorithmConfig.categories.forEach((field, index) => {
+
                         if (field === "id") {
                             newData[field] = i; // Az id legyen növekvő
                         } else {
-                            newData[field] = Math.random(); // Minden más mező véletlenszám
+                            newData[field] = pluto.inputData.all[
+                                pluto.inputData.ID.indexOf(
+                                    field
+                                )
+                            ][i];
                         }
                     });
-                    geneticAlgorithmConfig.inputDatas.push(newData);   
+                    geneticAlgorithmConfig.inputDatas.push(newData);
                 }
 
+                // delete "id" from categories
+                geneticAlgorithmConfig.categories = geneticAlgorithmConfig.categories.filter(item => item != "id");
 
-                
+                // range and checkbox
 
-              /*  dataID.forEach((item, index) => {
-                    result += item + " ";
+                geneticAlgorithmConfig.negativeImpact.length = 0;
+                geneticAlgorithmConfig.defaultWeights.length = 0;
 
-                    result += lengthOfDataset
+                document.querySelectorAll('.optimumRange').forEach(slider => {
+                    geneticAlgorithmConfig.defaultWeights[slider.name] = Number(slider.value);
                 });
-*/
 
-                console.log(geneticAlgorithmConfig.categoriesNames);
+                document.querySelectorAll('.optimumNegativImpactCheckbox').forEach(checkbox => {
+                    if (checkbox.checked)
+                        geneticAlgorithmConfig.negativeImpact.push(checkbox.name);
+                });
 
+                // calc
 
-                document.getElementById("optimum-result").innerText = result;
+                const setup = {
+                    generations: 500,
+                    populationSize: geneticAlgorithmConfig.inputDatas.length,
+                    customWeights: null,
+                    eliteRate: 0.1,
+                    mutationRate: 0.05,
+                    earlyStopThreshold: 0.01,
+                    earlyStopPatiente: 10,
+                }
+
+                const optimumResult = geneticAlgorithm(setup);
+
+                // output
+                const generationValue = optimumResult.generation;
+                const selectedItemId = optimumResult.bestItem.id;
+                //const selectedItemDatas = geneticAlgorithmConfig.inputDatas[selectedItemId - 1];
+                const selectedItemDatas = geneticAlgorithmConfig.inputDatas.find(item => item.id === selectedItemId);
+
+                const optimizedWeights = optimumResult.bestWeights;
+                const fitnessValue = fitness(optimumResult.bestItem, optimumResult.bestWeights)
+
+                // console output
+                console.log("The value of generation", generationValue);
+                console.log("The ID of the best Item:", selectedItemId);
+                console.log("The datas of the best Item", selectedItemDatas);
+                console.log("Optimized weights", optimizedWeights);
+                console.log("Fitness value", fitnessValue);
+
+                let result = [];
+
+                result.push('<h5 style="width: 100%; color: #8a21c5">Az optimális elem</h5>');
+                result.push('<table border="1"><tr>');
+
+                // head
+                result.push('<td style="padding: 1vw">ID</td>');
+                geneticAlgorithmConfig.categoriesNames.forEach((field, index) => {
+                    result.push('<td style="padding: 1vw">' + field + '</td>');
+                });
+                result.push('</tr>');
+
+                // the best item
+
+                result.push('<td style="padding: 1vw">' + selectedItemId + '</td>');
+                geneticAlgorithmConfig.categoriesNames.forEach((field, index) => {
+                    result.push('<td style="padding: 1vw">' + field + '</td>');
+                });
+                result.push('</tr>');
+
+                result.push('</table>');
+                document.getElementById("optimum-result").innerHTML = result;
             });
         }, 100);
 
-        // DOM frissítése
-       //document.getElementById("floatbox-content").innerHTML = this.output.join("");
 
-        // Adatok a diagramhoz
-        // pluto.inputData.all[tempIndex].forEach((item, index) => {
-        //     this.labels.push(index);
-        // });
+
 
         this.output.push('</div></div>');
 
