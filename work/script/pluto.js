@@ -53,7 +53,8 @@ function clearSelection() {
     selectedRectangles = [];
 }
 
-// estended paste (ctrl + v) function
+
+// extended paste (ctrl + v) function
 function paste(event) {
 
     const pastedData = (event.clipboardData || window.clipboardData).getData('text');
@@ -64,49 +65,57 @@ function paste(event) {
 
     // row by row
     let rows = pastedData.trim().split(/\n+/);
-    let matrix = rows.map(row => row.split(/[\t; ]+/).map(Number)); 
+    let matrix = rows.map(row => row.split(/[\t; ]+/).map(value => isNaN(value) ? value : Number(value)));
 
-    // if matrix and N = N
+    // Check if first row is text (column names)
+    let hasHeader = matrix[0].every(value => typeof value === 'string');
+
+    // If it's a matrix (all rows have the same length)
     let isMatrix = matrix.length > 1 && matrix.every(row => row.length === matrix[0].length);
 
-    // if matrix but not equal length
+    // If matrix but not equal length
     if (!isMatrix && matrix.length > 1) {
-        alert ('Több oszlop bemásolása esetén, ugyanakkora méretű adatsorok szükségesek.');
+        alert('Több oszlop bemásolása esetén, ugyanakkora méretű adatsorok szükségesek.');
         return false;
     }
 
     if (isMatrix) {
-        // column by column
-        let columnVectors = Array.from({ length: matrix[0].length }, () => []);
+        // If first row is text, extract it as column names
+        let columnNames = hasHeader ? matrix[0] : null;
+        let dataRows = hasHeader ? matrix.slice(1) : matrix; // Remove header row if exists
 
-        matrix.forEach(row => {
+        // Convert data rows into column-wise structure
+        let columnVectors = Array.from({ length: dataRows[0].length }, () => []);
+        dataRows.forEach(row => {
             row.forEach((value, colIndex) => {
                 columnVectors[colIndex].push(value);
             });
         });
 
-        // through all columns
-        columnVectors.forEach(vector => {
-
-            // ID
+        // Process columns
+        columnVectors.forEach((vector, colIndex) => {
             let tempID = generateID();
             pluto.inputData.all.push(vector);
             pluto.inputData.ID.push(tempID);
 
-            // if a matrix, the name of rectangle is the first row of column
-//            pluto.inputData.name.push("Adatsor - " + tempID);
-            pluto.inputData.name.push(vector[0]);
-            
-            // type
+            // Assign column name if available, otherwise default
+            if (columnNames) {
+                pluto.inputData.name.push(columnNames[colIndex]);
+            } else {
+                //pluto.inputData.name.push("Adatsor - " + tempID);
+                pluto.inputData.name.push(vector[0]);
+            }
+
+            // Type
             pluto.inputData.type.push('default');
 
-            // create rectangle
+            // Create rectangle
             createRectangle(tempID, 50, 50);
             pluto.inputData.counter++;
         });
 
-    } else {  
-        // normal vector
+    } else {
+        // Normal vector (single-column paste)
         let temp = pastedData.trim().split(/[\t\n; ]+/);
         let vector = temp.map(Number);
         pluto.inputData.all.push(vector);
@@ -116,42 +125,14 @@ function paste(event) {
         pluto.inputData.ID.push(tempID);
         pluto.inputData.name.push("Adatsor - " + tempID);
 
-        // type
+        // Type
         pluto.inputData.type.push('default');
 
-        // create rectangle
+        // Create rectangle
         createRectangle(tempID, 50, 50);
         pluto.inputData.counter++;
     }
 }
-
-/*
-// paste (ctrl + v) function
-function paste(event) {
-    const pastedData = (event.clipboardData || window.clipboardData).getData('text');
-    if (pastedData.length > pluto.inputData.maxSize) {
-        alert('10kb-os limit túllépve');
-        return;
-    }
-
-    // new vector
-    let temp = pastedData.trim().split(/[\t\n; ]+/);
-    let vector = temp.map(Number);
-    pluto.inputData.all.push(vector);
-
-    // ID
-    let tempID = generateID();
-    pluto.inputData.ID.push(tempID);
-    pluto.inputData.name.push("Adatsor - " + tempID);
-
-    // type
-    pluto.inputData.type.push('default');
-
-    // create rectangle
-    createRectangle(tempID, 50, 50);
-    pluto.inputData.counter++;
-}
-*/
 
 // generate id for rectangle
 function generateID() {
