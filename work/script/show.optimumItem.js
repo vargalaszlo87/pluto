@@ -82,11 +82,14 @@ const optimum = {
                 });
 
                 // data scale
-                geneticAlgorithmConfig.categories.forEach((field, index) => {
+                let scaledInputData = JSON.parse(JSON.stringify(pluto.inputData.all));
+                geneticAlgorithmConfig.categories.forEach((field) => {
                     if (field !== "id") {
-                        pluto.inputData.all[pluto.inputData.ID.indexOf(field)] = scale.minMaxScaling(pluto.inputData.all[pluto.inputData.ID.indexOf(field)], 0, 1);
+                        let index = pluto.inputData.ID.indexOf(field);
+                        if (index !== -1) { // Csak akkor módosítunk, ha az index érvényes
+                            scaledInputData[index] = scale.minMaxScaling(scaledInputData[index], 0, 1);
+                        }
                     }
-
                 });
 
                 // push inputDatas
@@ -106,7 +109,7 @@ const optimum = {
                         if (field === "id") {
                             newData[field] = i; // Az id legyen növekvő
                         } else {
-                            newData[field] = pluto.inputData.all[
+                            newData[field] = scaledInputData[
                                 pluto.inputData.ID.indexOf(
                                     field
                                 )
@@ -163,28 +166,36 @@ const optimum = {
                 console.log("Optimized weights", optimizedWeights);
                 console.log("Fitness value", fitnessValue);
 
+                // the result 
+
                 let result = [];
 
                 result.push('<h5 style="width: 100%; color: #8a21c5">Az optimális elem</h5>');
-                result.push('<table border="1"><tr>');
+                result.push('<table border="1" id="optimedItem"><tr>');
 
                 // head
-                result.push('<td style="padding: 1vw">ID</td>');
+
+                result.push('<td>Sorszám</td>');
                 geneticAlgorithmConfig.categoriesNames.forEach((field, index) => {
-                    result.push('<td style="padding: 1vw">' + field + '</td>');
+                    result.push('<td>' + field + '</td>');
                 });
                 result.push('</tr>');
 
                 // the best item
 
-                result.push('<td style="padding: 1vw">' + selectedItemId + '</td>');
-                geneticAlgorithmConfig.categoriesNames.forEach((field, index) => {
-                    result.push('<td style="padding: 1vw">' + field + '</td>');
+                result.push('<td>' + selectedItemId + '</td>');
+                selectedRectangles.forEach((rect, index) => {
+                    result.push('<td>' + pluto.inputData.all[pluto.inputData.ID.indexOf(dataID[index])][Number(selectedItemId)] + '</td>');
                 });
-                result.push('</tr>');
 
+                result.push('</tr>');
                 result.push('</table>');
-                document.getElementById("optimum-result").innerHTML = result;
+
+
+
+
+                document.getElementById("optimum-result").innerHTML = result.join("");
+                document.getElementById("calculate-optimum").innerHTML = "Új számítás indítása";
             });
         }, 100);
 

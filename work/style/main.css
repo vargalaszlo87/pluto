@@ -707,8 +707,28 @@ table#optimum-default-weight tr td {
 }
 
 #calculate-optimum:hover {
-    background:  #27ae60;
+    background: #27ae60;
 }
+
+table#optimedItem {
+    background: #ededed;
+    margin-bottom: 2vw;
+}
+
+table#optimedItem tr td {
+    border: solid 2px #fff;
+    padding: 0.85vw 2vw;
+}
+
+table#optimedItem tr:nth-child(1) {
+    background: #d4b7e4;
+    color: #424;
+}
+
+table#optimedItem tr:nth-child(2) td {
+    text-align: center;
+}
+
 
 /* ------------------ slider
  */
