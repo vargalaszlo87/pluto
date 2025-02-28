@@ -323,9 +323,9 @@ function sortWorkSpace() {
         return;
     }
 
-    const workSpace = document.getElementById('workspace'); // A munkaterület
+    // new positions
     offsetX = 50;
-    offsetY = 20;
+    offsetY = 30;
     const spacingX = 225;
     const spacingY = 160;
     const cols = Math.ceil(Math.sqrt(rectangles.length));
@@ -337,15 +337,11 @@ function sortWorkSpace() {
         const newX = offsetX + col * spacingX;
         const newY = offsetY + row * spacingY;
 
-        // Frissítjük a téglalap pozícióját
+        // new rectangles positions
         rect.style.left = `${newX}px`;
         rect.style.top = `${newY}px`;
 
-        // A hozzá tartozó vonalakat is mozgatni kell
-        const rectID = rect.getAttribute('data-id');
-        updateLinesForRectangle(rectID, newX, newY);
-
-        // Következő oszlopra lépünk
+        // next col
         col++;
         if (col >= cols) {
             col = 0;
@@ -353,30 +349,7 @@ function sortWorkSpace() {
         }
     });
 
+    // new lines positions
+    updateAllLines();
     console.log("Téglalapok rácsszerűen elrendezve.");
-}
-
-// Segédfüggvény: Frissíti a vonalak pozícióját a téglalap áthelyezése után
-function updateLinesForRectangle(rectID, newX, newY) {
-    document.querySelectorAll('.line').forEach(line => {
-        if (line.getAttribute('data-from') === rectID || line.getAttribute('data-to') === rectID) {
-            // Itt kellene frissíteni a vonal pozícióját a kapcsolat alapján
-            adjustLinePosition(line, rectID, newX, newY);
-        }
-    });
-}
-
-// Segédfüggvény: Egyedi vonalpozíciók frissítése
-function adjustLinePosition(line, rectID, newX, newY) {
-    // Példa: egyszerű frissítés, ha a vonalak SVG elemek
-    if (line.tagName === "line") {
-        if (line.getAttribute('data-from') === rectID) {
-            line.setAttribute("x1", newX + 50); // Igazítsd a téglalap méretéhez
-            line.setAttribute("y1", newY + 50);
-        }
-        if (line.getAttribute('data-to') === rectID) {
-            line.setAttribute("x2", newX + 50);
-            line.setAttribute("y2", newY + 50);
-        }
-    }
 }

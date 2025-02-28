@@ -211,3 +211,103 @@ function createRectangle(generatedID, x, y, type = 'default', connection) {
     if (offsetX > workSpaceRect.width - 50) offsetX = 20;
     if (offsetY > workSpaceRect.height - 50) offsetY = 20;
 }
+
+// csoportos kijelölés
+
+let isSelecting = false;
+let selectionBox;
+selectedRectangles = [];
+
+document.addEventListener("mousedown", (event) => {
+    if (event.button !== 0) return; // Csak bal egérgombnál működjön
+
+    // Ha nem a workspace-re kattintottunk, ne induljon el a kijelölés
+    if (!workSpace.contains(event.target)) return;
+
+    // Ha egy téglalapra kattintottunk, ne kezdjük el a kijelölést
+    if (event.target.classList.contains("rectangle") || event.target.closest(".rectangle")) {
+        return;
+    }
+
+    // Ellenőrizzük, hogy nem egy gombra kattintottunk-e
+    if (event.target.closest("button")) return;
+
+    // Kijelölő négyzet létrehozása, ha még nincs
+    if (!selectionBox) {
+        selectionBox = document.createElement("div");
+        selectionBox.id = "selectionBox";
+        document.body.appendChild(selectionBox);
+    }
+
+    isSelecting = true;
+    startX = event.clientX;
+    startY = event.clientY;
+
+    selectionBox.style.left = `${startX}px`;
+    selectionBox.style.top = `${startY}px`;
+    selectionBox.style.width = "0px";
+    selectionBox.style.height = "0px";
+    selectionBox.style.display = "block";
+});
+
+
+document.addEventListener("mousemove", (event) => {
+    if (!isSelecting) return;
+
+    let elem = document.querySelector("#workSpace");
+    let rect = elem.getBoundingClientRect();
+
+    let minX = rect.x;
+    let maxX = rect.width;
+    let minY = rect.y;
+    let maxY = rect.height;
+
+    let currentX = event.clientX < minX ? minX + 5 : (event.clientX > maxX) ? maxX : event.clientX;
+    let currentY = event.clientY < minY ? minY + 5 : (event.clientY > maxY) ? maxY : event.clientY;
+
+    //    let currentY = event.clientY;
+
+    let width = Math.abs(currentX - startX);
+    let height = Math.abs(currentY - startY);
+    let left = Math.min(startX, currentX);
+    let top = Math.min(startY, currentY);
+
+    selectionBox.style.left = `${left}px`;
+    selectionBox.style.top = `${top}px`;
+    selectionBox.style.width = `${width}px`;
+    selectionBox.style.height = `${height}px`;
+
+    selectRectangles(left, top, width, height);
+});
+
+
+
+document.addEventListener("mouseup", () => {
+    if (!isSelecting) return;
+
+    isSelecting = false;
+    selectionBox.style.display = "none"; // Elrejtjük a kijelölő négyzetet
+});
+
+function selectRectangles(left, top, width, height) {
+    const selectionRect = { left, top, right: left + width, bottom: top + height };
+
+    selectedRectangles = [];
+    document.querySelectorAll(".rectangle").forEach(rect => {
+        const rectBox = rect.getBoundingClientRect();
+
+        if (
+            rectBox.right > selectionRect.left &&
+            rectBox.left < selectionRect.right &&
+            rectBox.bottom > selectionRect.top &&
+            rectBox.top < selectionRect.bottom
+        ) {
+            rect.style.borderBottom = pluto.design.selectedRectangleBorder; // Kijelölés vizuálisan
+            selectedRectangles.push(rect);
+        } else {
+            rect.style.borderBottom = pluto.design.unSelectedRectangleBorder; // Alapértelmezett border
+        }
+    });
+
+    console.log("Kijelölt téglalapok száma:", selectedRectangles.length);
+}

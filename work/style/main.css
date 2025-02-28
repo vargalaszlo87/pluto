@@ -361,8 +361,8 @@ body {
     width: 35px;
     height: 35px;
     position: absolute;
-    top: 0;
-    right: -40px;
+    top: -18px;
+    right: -18px;
     background: #c0392b;
     color: #fff;
     border: none;
@@ -797,4 +797,17 @@ table#optimedItem tr:nth-child(2) td {
     100% {
         transform: scale(1, 1);
     }
+}
+
+
+/* ------------------ selectionbox
+ */
+
+#selectionBox {
+    position: absolute;
+    border: 2px dashed #007bff;
+    background: rgba(0, 123, 255, 0.2);
+    display: none;
+    pointer-events: none;
+    /* Ne lehessen rákattintani */
 }
