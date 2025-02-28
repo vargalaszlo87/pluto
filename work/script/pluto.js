@@ -240,3 +240,143 @@ document.addEventListener("contextmenu", (event) => {
     // others are disabled
     event.preventDefault();
 });
+
+/* ------------------main nav-event in pluto */
+
+// new
+
+function resetFullWorkspace() {
+    // delete rectangles and lines
+    document.querySelectorAll('.rectangle').forEach(rect => rect.remove());
+    document.querySelectorAll('.line').forEach(line => line.remove());
+
+    // erase all data
+    pluto.inputData.all = [];
+    pluto.inputData.ID = [];
+    pluto.inputData.type = [];
+    pluto.inputData.name = [];
+    pluto.inputData.counter = 0;
+
+    pluto.calculation.counter = 0;
+    pluto.network.connections = [];
+
+    selectedRectangles = [];
+
+    offsetX = 20;
+    offsetY = 20;
+
+}
+
+document.getElementById("newSheet").addEventListener('click', function() {
+    if (confirm('Biztsan egy új üres WorkSpace-t nyitsz meg?')) {
+        resetFullWorkspace();
+    } else
+        return false;
+});
+
+// save
+document.getElementById("saveWorkSpace").addEventListener('click', function() {
+
+    const rectangles = Array.from(document.querySelectorAll('.rectangle')).map(rect => ({
+        id: rect.getAttribute('data-id'),
+        x: rect.offsetLeft,
+        y: rect.offsetTop,
+        type: rect.getAttribute('data-type') || 'default',
+        content: rect.innerHTML
+    }));
+
+    const lines = Array.from(document.querySelectorAll('.line')).map(line => ({
+        id: line.getAttribute('data-id'),
+        from: line.getAttribute('data-from'),
+        to: line.getAttribute('data-to'),
+        type: line.getAttribute('data-type') || 'default'
+    }));
+
+    const data = {
+        rectangles: rectangles,
+        lines: lines,
+        inputData: JSON.parse(JSON.stringify(pluto.inputData)), // Mély másolat
+        calculation: JSON.parse(JSON.stringify(pluto.calculation)),
+        network: JSON.parse(JSON.stringify(pluto.network)),
+        event: JSON.parse(JSON.stringify(pluto.event))
+    };
+
+    const jsonData = JSON.stringify(data, null, 4); // Szépített JSON
+
+    // Blob létrehozása és letöltés indítása
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'pluto-workspace-' + new Date().toJSON().slice(0, 10) + '.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
+
+// sort
+
+function sortWorkSpace() {
+    const rectangles = Array.from(document.querySelectorAll('.rectangle'));
+
+    if (rectangles.length === 0) {
+        console.log("Nincs mit rendezni.");
+        return;
+    }
+
+    const workSpace = document.getElementById('workspace'); // A munkaterület
+    offsetX = 50;
+    offsetY = 20;
+    const spacingX = 225;
+    const spacingY = 160;
+    const cols = Math.ceil(Math.sqrt(rectangles.length));
+
+    let row = 0,
+        col = 0;
+
+    rectangles.forEach(rect => {
+        const newX = offsetX + col * spacingX;
+        const newY = offsetY + row * spacingY;
+
+        // Frissítjük a téglalap pozícióját
+        rect.style.left = `${newX}px`;
+        rect.style.top = `${newY}px`;
+
+        // A hozzá tartozó vonalakat is mozgatni kell
+        const rectID = rect.getAttribute('data-id');
+        updateLinesForRectangle(rectID, newX, newY);
+
+        // Következő oszlopra lépünk
+        col++;
+        if (col >= cols) {
+            col = 0;
+            row++;
+        }
+    });
+
+    console.log("Téglalapok rácsszerűen elrendezve.");
+}
+
+// Segédfüggvény: Frissíti a vonalak pozícióját a téglalap áthelyezése után
+function updateLinesForRectangle(rectID, newX, newY) {
+    document.querySelectorAll('.line').forEach(line => {
+        if (line.getAttribute('data-from') === rectID || line.getAttribute('data-to') === rectID) {
+            // Itt kellene frissíteni a vonal pozícióját a kapcsolat alapján
+            adjustLinePosition(line, rectID, newX, newY);
+        }
+    });
+}
+
+// Segédfüggvény: Egyedi vonalpozíciók frissítése
+function adjustLinePosition(line, rectID, newX, newY) {
+    // Példa: egyszerű frissítés, ha a vonalak SVG elemek
+    if (line.tagName === "line") {
+        if (line.getAttribute('data-from') === rectID) {
+            line.setAttribute("x1", newX + 50); // Igazítsd a téglalap méretéhez
+            line.setAttribute("y1", newY + 50);
+        }
+        if (line.getAttribute('data-to') === rectID) {
+            line.setAttribute("x2", newX + 50);
+            line.setAttribute("y2", newY + 50);
+        }
+    }
+}
