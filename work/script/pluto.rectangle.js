@@ -169,6 +169,7 @@ function createRectangle(generatedID, x, y, type = 'default', connection) {
     // Téglalap kijelölése
     rectangle.addEventListener('click', (event) => {
         event.stopPropagation(); // Megakadályozzuk, hogy a workSpacera átmenjen a kattintás
+        console.log(rectangle);
         if (event.ctrlKey) {
             // Ctrl lenyomása esetén többszörös kijelölés
             if (selectedRectangles.includes(rectangle)) {
@@ -216,7 +217,7 @@ function createRectangle(generatedID, x, y, type = 'default', connection) {
 
 let isSelecting = false;
 let selectionBox;
-selectedRectangles = [];
+//selectedRectangles = [];
 
 document.addEventListener("mousedown", (event) => {
     if (event.button !== 0) return; // Csak bal egérgombnál működjön
@@ -249,6 +250,9 @@ document.addEventListener("mousedown", (event) => {
     selectionBox.style.height = "0px";
     selectionBox.style.display = "block";
 });
+
+
+
 
 
 document.addEventListener("mousemove", (event) => {
@@ -289,10 +293,12 @@ document.addEventListener("mouseup", () => {
     selectionBox.style.display = "none"; // Elrejtjük a kijelölő négyzetet
 });
 
+
 function selectRectangles(left, top, width, height) {
     const selectionRect = { left, top, right: left + width, bottom: top + height };
 
-    selectedRectangles = [];
+    //selectedRectangles = [];
+    //clearSelection();
     document.querySelectorAll(".rectangle").forEach(rect => {
         const rectBox = rect.getBoundingClientRect();
 
@@ -302,12 +308,23 @@ function selectRectangles(left, top, width, height) {
             rectBox.bottom > selectionRect.top &&
             rectBox.top < selectionRect.bottom
         ) {
-            rect.style.borderBottom = pluto.design.selectedRectangleBorder; // Kijelölés vizuálisan
-            selectedRectangles.push(rect);
+            //rect.style.borderBottom = pluto.design.selectedRectangleBorder; // Kijelölés vizuálisan
+            //console.log(rect.getAttribute("data-id"));
+
+            if (!selectedRectangles.includes(rect)) {
+                selectedRectangles.push(rect);
+            } else {
+                // DEV
+            }
         } else {
-            rect.style.borderBottom = pluto.design.unSelectedRectangleBorder; // Alapértelmezett border
+            // rect.style.borderBottom = pluto.design.unSelectedRectangleBorder; // Alapértelmezett border
         }
     });
 
-    console.log("Kijelölt téglalapok száma:", selectedRectangles.length);
+
+    selectedRectangles.forEach(rect => {
+        rect.style.borderBottom = pluto.design.selectedRectangleBorder;
+        //console.log(rect);
+    });
+
 }

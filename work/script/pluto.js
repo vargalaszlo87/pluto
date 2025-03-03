@@ -314,7 +314,6 @@ document.getElementById("saveWorkSpace").addEventListener('click', function() {
 });
 
 // sort
-
 function sortWorkSpace() {
     const rectangles = Array.from(document.querySelectorAll('.rectangle'));
 
@@ -352,4 +351,58 @@ function sortWorkSpace() {
     // new lines positions
     updateAllLines();
     console.log("Téglalapok rácsszerűen elrendezve.");
+}
+
+
+/*
+function clipboardItem() {
+
+    if (selectedRectangles.length < 1) return;
+
+    selectedRectangles.forEach(rect => {
+        rectID = rect.getAttribute('data-id');
+        dataID = pluto.inputData.ID.indexOf(rectID);
+
+        //pluto.inputData.all
+
+        console.log(dataID);
+
+    });
+
+}
+*/
+
+
+function clipboardItem() {
+    if (selectedRectangles.length < 1) return;
+
+    let columnData = [];
+
+    selectedRectangles.forEach(rect => {
+        let rectID = rect.getAttribute('data-id');
+        let dataID = pluto.inputData.ID.indexOf(rectID);
+        let dataName = pluto.inputData.name[dataID];
+
+        if (dataID !== -1) {
+            let rowData = [dataName, ...pluto.inputData.all[dataID]]; // ID + összes adat
+            columnData.push(rowData); // Hozzáadjuk az oszloplistához
+        }
+    });
+
+    // Megnézzük, hány sorunk van
+    let maxRows = columnData.reduce((max, row) => Math.max(max, row.length), 0);
+
+    // Függőleges formázás (soronként egy adat)
+    let transposedData = [];
+    for (let i = 0; i < maxRows; i++) {
+        let row = columnData.map(col => col[i] || ""); // Ha nincs adat, üres string legyen
+        transposedData.push(row.join(";"));
+    }
+
+    let csvText = transposedData.join("\n"); // Sorokat összefűzzük
+
+    // Másolás a vágólapra
+    navigator.clipboard.writeText(csvText)
+        .then(() => console.log("Sikeresen másolva a vágólapra!"))
+        .catch(err => console.error("Hiba történt a másolás során:", err));
 }
