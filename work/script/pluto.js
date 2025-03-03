@@ -372,8 +372,8 @@ function clipboardItem() {
 }
 */
 
-
-function clipboardItem() {
+// export clipboard
+function clipboardItem22() {
     if (selectedRectangles.length < 1) return;
 
     let columnData = [];
@@ -405,4 +405,88 @@ function clipboardItem() {
     navigator.clipboard.writeText(csvText)
         .then(() => console.log("Sikeresen másolva a vágólapra!"))
         .catch(err => console.error("Hiba történt a másolás során:", err));
+}
+
+
+function clipboardItem() {
+    if (selectedRectangles.length < 1) return;
+
+    let columnData = [];
+
+    selectedRectangles.forEach(rect => {
+        let rectID = rect.getAttribute('data-id');
+        let dataID = pluto.inputData.ID.indexOf(rectID);
+        let dataName = pluto.inputData.name[dataID];
+
+        if (dataID !== -1) {
+            let rowData = [dataName, ...pluto.inputData.all[dataID]]; // ID + összes adat
+            columnData.push(rowData); // Hozzáadjuk az oszloplistához
+        }
+    });
+
+    let csvText = "";
+
+    if (columnData.length === 1) {
+        // Ha csak egy rectangle van, akkor egy sorba írjuk ki
+        csvText = columnData[0].join(";");
+    } else {
+        // Megnézzük, hány sorunk van
+        let maxRows = columnData.reduce((max, row) => Math.max(max, row.length), 0);
+
+        // Függőleges formázás (soronként egy adat)
+        let transposedData = [];
+        for (let i = 0; i < maxRows; i++) {
+            let row = columnData.map(col => col[i] || ""); // Ha nincs adat, üres string legyen
+            transposedData.push(row.join(";"));
+        }
+
+        csvText = transposedData.join("\n"); // Sorokat összefűzzük
+    }
+
+    // Másolás a vágólapra
+    navigator.clipboard.writeText(csvText)
+        .then(() => console.log("Sikeresen másolva a vágólapra!"))
+        .catch(err => console.error("Hiba történt a másolás során:", err));
+}
+
+
+
+// export CSV
+function CSVItem() {
+    if (selectedRectangles.length < 1) return;
+
+    let columnData = [];
+
+    selectedRectangles.forEach(rect => {
+        let rectID = rect.getAttribute('data-id');
+        let dataID = pluto.inputData.ID.indexOf(rectID);
+        let dataName = pluto.inputData.name[dataID];
+
+        if (dataID !== -1) {
+            let rowData = [dataName, ...pluto.inputData.all[dataID]]; // ID + összes adat
+            columnData.push(rowData); // Hozzáadjuk az oszloplistához
+        }
+    });
+
+    // Megnézzük, hány sorunk van
+    let maxRows = columnData.reduce((max, row) => Math.max(max, row.length), 0);
+
+    // Függőleges formázás (soronként egy adat)
+    let transposedData = [];
+    for (let i = 0; i < maxRows; i++) {
+        let row = columnData.map(col => col[i] || ""); // Ha nincs adat, üres string legyen
+        transposedData.push(row.join(";"));
+    }
+
+    let csvText = transposedData.join("\n"); // Sorokat összefűzzük
+
+    // CSV fájl mentése
+    let blob = new Blob([csvText], { type: "text/csv" });
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "export.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
 }
