@@ -136,16 +136,19 @@ const optimum = {
                         geneticAlgorithmConfig.negativeImpact.push(checkbox.name);
                 });
 
+                console.log(geneticAlgorithmConfig.negativeImpact);
+                console.log(geneticAlgorithmConfig.defaultWeights);
+
                 // calc
 
                 const setup = {
                     generations: 500,
                     populationSize: geneticAlgorithmConfig.inputDatas.length,
                     customWeights: null,
-                    eliteRate: 0.1,
+                    eliteRate: 0.2,
                     mutationRate: 0.05,
                     earlyStopThreshold: 0.01,
-                    earlyStopPatiente: 10,
+                    earlyStopPatiente: 50,
                 }
 
                 const optimumResult = geneticAlgorithm(setup);
