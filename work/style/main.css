@@ -811,3 +811,49 @@ table#optimedItem tr:nth-child(2) td {
     pointer-events: none;
     /* Ne lehessen rákattintani */
 }
+
+/* ------------------ tooltip
+ */
+
+.tooltip-container {
+    float: right;
+    position: relative;
+    top: 0.25vw;
+    right: 0.25vw;
+    cursor: pointer;
+  }
+
+  .tooltip-icon {
+    width: 1vw;
+    height: 1vw;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1vw;
+    font-family: sans-serif;
+    font-size: 14px;
+    user-select: none;
+  }
+
+  .tooltip-box {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #333;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: normal;
+    word-break: break-word;
+    min-width: 20vw; 
+    font-size: 13px;
+    z-index: 10000000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+
+  .tooltip-container:hover .tooltip-box {
+    display: block;
+  }

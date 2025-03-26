@@ -152,6 +152,10 @@
                                 <span>Adatvizualizáció</span><br />
                                 <span>egyszerű adatmegjelenítő</span>
                             </div>
+                            <div class="tooltip-container">
+                                <div class="tooltip-icon">?</div>
+                                <div class="tooltip-box">A kijelölt adatsorokat grafikonon ábrázolja vizuális elemzés céljából.</div>
+                            </div>
                         </button>
 
                         <button class="plutoToolButton open-floatbox" id="intelligent-correlation" style="width: 100%;">
@@ -161,6 +165,10 @@
                             <div height="100%" style="float: left;">
                                 <span>Összefüggések keresése</span><br />
                                 <span>intellignes korreláció vizsgálat</span>
+                            </div>
+                            <div class="tooltip-container">
+                                <div class="tooltip-icon">?</div>
+                                <div class="tooltip-box">Ez a funkció segít megtalálni, hogy milyen kapcsolat lehet az adatsorok között – például hogy egyik hatással van-e a másikra. </div>
                             </div>
                         </button>
                         <p class="plutoToolButtonSetup"><a href="#" class="toggle-menu" data-menu-id="correlationDropdown">összefüggés vizsgálat beállítása</a> <i class="fa fa-cog"></i></p>
@@ -175,7 +183,11 @@
                             </div>
                             <div height="100%" style="float: left;">
                                 <span>Optimum kiválasztás</span><br />
-                                <span>erős kiválasztási folyamat (genetikus algoritmus)</span>
+                                <span>robosztus kiválasztás (genetikus algoritmus)</span>
+                            </div>
+                            <div class="tooltip-container">
+                                <div class="tooltip-icon">?</div>
+                                <div class="tooltip-box">Segít megtalálni azokat az adatsorokat, amelyek közel állnak az ideálishoz – gyorsan és megbízhatóan kiválasztja a legjobb lehetőségeket.</div>
                             </div>
                         </button>
 
@@ -192,12 +204,20 @@
                                     <span>Előfeldolgozás</span><br />
                                     <span>szűrés, skálázás, transzofrmáció, etc.</span>
                                 </div>
+                                <div class="tooltip-container">
+                                    <div class="tooltip-icon">?</div>
+                                    <div class="tooltip-box">Itt választhatsz különböző előkészítő lépéseket, hogy az adatokkal tisztán és jól használható formában dolgozhass tovább.</div>
+                                </div>
                             </button>
                         </a>
                         <div class="toolsDropdownMenu-extended margin-top-1vw" id="pre-processing">
                             <button class="plutoToolButton redButton" name="pre-processing" id="filter">
                                 <div style="height: 2vw">
                                     <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Zajszűrés</span>
+                                    <div class="tooltip-container">
+                                        <div class="tooltip-icon">?</div>
+                                        <div class="tooltip-box">Eltávolítja az adatokból a kiugró vagy zavaró értékeket, hogy tisztább és megbízhatóbb eredményeket kaphass az elemzés során.</div>
+                                    </div>
                                 </div>
                             </button>
                             <div style="margin: 0.5vw">
@@ -209,6 +229,10 @@
                             <button class="plutoToolButton redButton" name="pre-processing" id="scale">
                                 <div style="height: 2vw">
                                     <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Skálázás</span>
+                                    <div class="tooltip-container">
+                                        <div class="tooltip-icon">?</div>
+                                        <div class="tooltip-box">Egységesíti az adatok mértékét, hogy azok összehasonlíthatók és jobban feldolgozhatók legyenek a további lépések során.</div>
+                                    </div>
                                 </div>
                             </button>
                             <div style="margin: 0.5vw">
@@ -220,6 +244,10 @@
                             <button class="plutoToolButton redButton" name="pre-processing" id="normalize">
                                 <div style="height: 2vw">
                                     <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Normalizálás</span>
+                                    <div class="tooltip-container">
+                                        <div class="tooltip-icon">?</div>
+                                        <div class="tooltip-box">Átalakítja az adatokat egy közös tartományba, hogy kiegyensúlyozottabbá és könnyebben kezelhetővé váljanak az elemzés során.</div>
+                                    </div>
                                 </div>
                             </button>
                             <div style="margin: 0.5vw">
@@ -230,6 +258,10 @@
                             <button class="plutoToolButton redButton" name="pre-processing" id="transformation">
                                 <div style="height: 2vw">
                                     <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Transzformáció</span>
+                                    <div class="tooltip-container">
+                                        <div class="tooltip-icon">?</div>
+                                        <div class="tooltip-box">Lehetővé teszi az adatok átalakítását, hogy azok jobban megfeleljenek az elemzés feltételeinek vagy kiemeljék a fontos mintázatokat.</div>
+                                    </div>
                                 </div>
                             </button>
                             <div style="margin: 0.5vw">
@@ -249,6 +281,10 @@
                                     <span>Adatimputáció</span><br />
                                     <span>hiányzó adatok kitöltése</span>
                                 </div>
+                                <div class="tooltip-container">
+                                    <div class="tooltip-icon">?</div>
+                                    <div class="tooltip-box">Segít kitölteni a hiányzó adatokat olyan értékekkel, amelyek a legjobban illenek az adatok összképéhez.</div>
+                                </div>
                             </button>
                         </a>
                         <div class="toolsDropdownMenu-extended margin-top-1vw" id="data-imputation">
@@ -257,19 +293,31 @@
 
                             <button class="plutoToolButton redButton" name="data-imputation" id="regression">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Regresszió</span>
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Regresszió</span>                             
+                                    <div class="tooltip-container">
+                                        <div class="tooltip-icon">?</div>
+                                        <div class="tooltip-box">Akkor érdemes használni, ha a hiányzó értékek más adatokból jó eséllyel kikövetkeztethetők.</div>
+                                    </div>
                                 </div>
                             </button>
 
                             <button class="plutoToolButton redButton" name="data-imputation" id="knn">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> KNN módszer</span>
+                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> KNN módszer</span>   
+                                    <div class="tooltip-container">
+                                        <div class="tooltip-icon">?</div>
+                                        <div class="tooltip-box">Akkor hasznos, ha vannak más, hasonló adatsorok – ez a módszer ezek alapján becsli meg a hiányzó értékeket.</div>
+                                    </div>
                                 </div>
                             </button>
 
                             <button class="plutoToolButton redButton" name="data-imputation" id="timeseries">
                                 <div style="height: 2vw">
                                     <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Idősor interpoláció</span>
+                                    <div class="tooltip-container">
+                                        <div class="tooltip-icon">?</div>
+                                        <div class="tooltip-box">Ha az adataid időrendben vannak, ez a módszer segít kitölteni a hiányzó értékeket az előtte és utána lévő értékek alapján.</div>
+                                    </div>
                                 </div>
                             </button>
                         </div>
@@ -282,6 +330,10 @@
                                 <div height="100%" style="float: left;">
                                     <span>Jellemző kinyerés</span><br />
                                     <span>feature engineering</span>
+                                </div>
+                                <div class="tooltip-container">
+                                    <div class="tooltip-icon">?</div>
+                                    <div class="tooltip-box">gít olyan új adatpontokat létrehozni, amelyek jobban tükrözik a lényeges mintázatokat vagy összefüggéseket az adatokban.</div>
                                 </div>
                             </button>
                         </a>
