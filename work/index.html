@@ -30,7 +30,7 @@
     <!-- context-menu -->
     <div id="context-menu" class="hidden">
         Név: <input type="text" id="rename-input" maxlength="16" placeholder="Új név" />
-        <button id="rename-btn">Módosítás</button>
+        <button id="rename-btn" data-i18n="update"></button>
     </div>
 
 
@@ -40,18 +40,18 @@
             <div class="row" id="navigation">
                 <div class="col-md-12 col-lg-12" id="starmap">
                     <!-- normal -->
-                    <button data-type="nav" id="newSheet" class="home"><i class="fa fa-plus-circle fa-2x"><p>Új</p></i></button>
+                    <button data-type="nav" id="newSheet" class="home"><i class="fa fa-plus-circle fa-2x"><p data-i18n="new"></p></i></button>
                     <span class="space"></span>
-                    <button data-type="nav" id="saveWorkSpace" class="save"><i class="fa fa-floppy-o fa-2x"><p>Mentés</p></i></button>
-                    <button data-type="nav" class="load"><i class="fa fa-folder-open-o fa-2x"><p>Betöltés</p></i></button>
-                    <span class="space"></span>
-
-                    <button data-type="nav" id=="clipboardItem" onclick="clipboardItem()" class="export"><i class="fa fa-clipboard fa-2x"><p>Vágólap</p></i></button>
-                    <button data-type="nav" id=="CSVItem" onclick="CSVItem()" class="export"><i class="fa fa-share fa-2x"><p>CSV</p></i></button>
-
+                    <button data-type="nav" id="saveWorkSpace" class="save"><i class="fa fa-floppy-o fa-2x"><p data-i18n="save"></p></i></button>
+                    <button data-type="nav" class="load"><i class="fa fa-folder-open-o fa-2x"><p data-i18n="loading"></p></i></button>
                     <span class="space"></span>
 
-                    <button data-type="nav" id="sortWorkSpace" onclick="sortWorkSpace()"><i class="fa fa-sort-amount-asc fa-2x"><p>Rendezés</p></i></button>
+                    <button data-type="nav" id=="clipboardItem" onclick="clipboardItem()" class="export"><i class="fa fa-clipboard fa-2x"><p data-i18n="clipboard"></p></i></button>
+                    <button data-type="nav" id=="CSVItem" onclick="CSVItem()" class="export"><i class="fa fa-share fa-2x"><p data-i18n="csv"></p></i></button>
+
+                    <span class="space"></span>
+
+                    <button data-type="nav" id="sortWorkSpace" onclick="sortWorkSpace()"><i class="fa fa-sort-amount-asc fa-2x"><p data-i18n="sort"></p></i></button>
 
 
                     <p style="float: right; font-family: 'Speedy-Regular'; font-size: 2.5rem; color: #898; padding: 0; margin: 0 0.75rem 0 0;">PLUTO</p>
@@ -71,7 +71,7 @@
                 <div id="toolsDiv" class="col-md-3 col-lg-3 row-full">
                     <div class="watermark">Tools</div>
                     <div class="scroll-container">
-                        <h4 class="toolLabel">Matematikai eszközök</h4>
+                        <h4 class="toolLabel" data-i18n="mathTools"></h4>
 
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-plus" name="arithmetic">
                             <div height="100%" style="text-align: center">
@@ -100,7 +100,7 @@
                         <input type="text" id="math-const-input" class="math-input" value="1.0" />
                         <button class="plutoToolMathButton open-floatbox greenButton" id="math-const">
                             <div height="100%" style="text-align: center">
-                                <span style="font-size: 1vw">CONST</span>
+                                <span style="font-size: 1vw" data-i18n="constant"></span>
                             </div>
                         </button>
 
@@ -136,25 +136,29 @@
                         </div>
                         </button></a>
                         <ul class="toolsDropdownMenu margin-top-1vw" id="moreFunctions">
-                            <li>Exponenciális függvény [ <a href="#" id="math-exp-up" name="function">növekvő</a> / <a href="#" id="math-exp-down" name="function">csökkenő</a> ]</li>
-                            <li>Négyzetgyök függvény [ <a href="#" id="math-sqrt-up" name="function">növekvő</a> / <a href="#" id="math-sqrt-down" name="function">csökkenő</a> ]</li>
+                            <li><span data-i18n="exp"></span> [
+                                <a href="#" id="math-exp-up" name="function" data-i18n="inc"></a> /
+                                <a href="#" id="math-exp-down" name="function" data-i18n="desc"></a> ]</li>
+                            <li><span data-i18n="sqrt"></span> [
+                                <a href="#" id="math-sqrt-up" name="function" data-i18n="inc"></a> /
+                                <a href="#" id="math-sqrt-down" name="function" data-i18n="desc"></a> ]</li>
                         </ul>
 
                         <!-- automatic tools -->
                         <div class="toolSpace"></div>
-                        <h4 class="toolLabel">Automatikus eszközök</h4>
+                        <h4 class="toolLabel" data-i18n="autoTools"></h4>
 
                         <button class="plutoToolButton open-floatbox greenButton" id="raw-examin">
                             <div style="width: 4vw; float: left; height: 100%;">
                                 <img src="img/icon-raw.png" style="margin-bottom: 0.75vw;" />
                             </div>
                             <div height="100%" style="float: left;">
-                                <span>Adatvizualizáció</span><br />
-                                <span>egyszerű adatmegjelenítő</span>
+                                <span data-i18n="dataShow"></span><br />
+                                <span data-i18n="dataShowDescription"></span>
                             </div>
                             <div class="tooltip-container">
                                 <div class="tooltip-icon">?</div>
-                                <div class="tooltip-box">A kijelölt adatsorokat grafikonon ábrázolja vizuális elemzés céljából.</div>
+                                <div class="tooltip-box" data-i18n="dataShowTooltip"></div>
                             </div>
                         </button>
 
@@ -163,18 +167,19 @@
                                 <img src="img/icon-correlation.png" />
                             </div>
                             <div height="100%" style="float: left;">
-                                <span>Összefüggések keresése</span><br />
-                                <span>intellignes korreláció vizsgálat</span>
+                                <span data-i18n="connectSearch"></span><br />
+                                <span data-i18n="connectSearchDescription"></span>
                             </div>
                             <div class="tooltip-container">
                                 <div class="tooltip-icon">?</div>
-                                <div class="tooltip-box">Ez a funkció segít megtalálni, hogy milyen kapcsolat lehet az adatsorok között – például hogy egyik hatással van-e a másikra. </div>
+                                <div class="tooltip-box" data-i18n="connectSearchTooltip"></div>
                             </div>
                         </button>
-                        <p class="plutoToolButtonSetup"><a href="#" class="toggle-menu" data-menu-id="correlationDropdown">összefüggés vizsgálat beállítása</a> <i class="fa fa-cog"></i></p>
+                        <p class="plutoToolButtonSetup">
+                            <a href="#" class="toggle-menu" data-menu-id="correlationDropdown" data-i18n="connectSearchSetup"></a> <i class="fa fa-cog"></i></p>
                         <ul class="toolsDropdownMenu" id="correlationDropdown">
-                            <li><input type="checkbox" name="aac" checked> Automatikus adatmennyiség korrekció</li>
-                            <li><input type="checkbox" name="mlc"> Intelligens adattranszformáció alkalmazása</li>
+                            <li><input type="checkbox" name="aac" checked> <span data-i18n="connectSearchSetupType1"></span></li>
+                            <li><input type="checkbox" name="mlc"> <span data-i18n="connectSearchSetupType2"></span></li>
                         </ul>
 
                         <button class="plutoToolButton open-floatbox" id="optimum-item" style="width: 100%;">
@@ -182,18 +187,18 @@
                                 <img src="img/icon-optimum.png" style="margin-bottom: 0.25vw; padding-top: 0.25vw;" />
                             </div>
                             <div height="100%" style="float: left;">
-                                <span>Optimum kiválasztás</span><br />
-                                <span>robosztus kiválasztás (genetikus algoritmus)</span>
-                            </div>
-                            <div class="tooltip-container">
-                                <div class="tooltip-icon">?</div>
-                                <div class="tooltip-box">Segít megtalálni azokat az adatsorokat, amelyek közel állnak az ideálishoz – gyorsan és megbízhatóan kiválasztja a legjobb lehetőségeket.</div>
-                            </div>
-                        </button>
+                                <span data-i18n="optimumChoice"></span><br />
+                                <span data-i18n="optimumChoiceDescription"></span>
+                    </div>
+                    <div class="tooltip-container">
+                        <div class="tooltip-icon">?</div>
+                        <div class="tooltip-box" data-i18n="optimumChoiceTooltip"></div>
+                    </div>
+                    </button>
 
                         <!-- manual tools -->
                         <div class="toolSpace"></div>
-                        <h4 class="toolLabel">Manuális eszközök</h4>
+                        <h4 class="toolLabel" data-i18n="manuTools"></h4>
 
                         <a href="#" class="toggle-menu" data-menu-id="pre-processing">
                             <button class="plutoToolButton open-floatbox redButton">
@@ -201,91 +206,75 @@
                                     <img src="img/icon-process.png" style="margin-bottom: 0.5vw; padding-top: 0.25vw;" />
                                 </div>
                                 <div height="100%" style="float: left;">
-                                    <span>Előfeldolgozás</span><br />
-                                    <span>szűrés, skálázás, transzofrmáció, etc.</span>
+                                    <span data-i18n="dataPreproc"></span><br />
+                                    <span data-i18n="dataPreprocDescription"></span>
                                 </div>
                                 <div class="tooltip-container">
                                     <div class="tooltip-icon">?</div>
-                                    <div class="tooltip-box">Itt választhatsz különböző előkészítő lépéseket, hogy az adatokkal tisztán és jól használható formában dolgozhass tovább.</div>
+                                    <div class="tooltip-box" data-i18n="dataPreprocTooltip"></div>
                                 </div>
                             </button>
                         </a>
                         <div class="toolsDropdownMenu-extended margin-top-1vw" id="pre-processing">
-                            <button class="plutoToolButton redButton" name="pre-processing" id="filter">
+                            <button class="plutoToolButton purpleButton" name="pre-processing" id="filter">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Zajszűrés</span>
+                                    <span class="sub" data-i18n="dataPreprocNoise"></span>
                                     <div class="tooltip-container">
                                         <div class="tooltip-icon">?</div>
-                                        <div class="tooltip-box">Eltávolítja az adatokból a kiugró vagy zavaró értékeket, hogy tisztább és megbízhatóbb eredményeket kaphass az elemzés során:
-                                            <br />&nbsp;<br />– <b>IQR:</b> kiszűri a szélsőséges értékeket a tartományon kívül.
-                                            <br />&nbsp;<br />– <b>Z-score:</b> az átlagtól való eltérések alapján azonosítja a kiugró pontokat.
-                                            <br />&nbsp;<br />– <b>Mozgóátlag:</b> kisimítja az ingadozásokat az adatsorban.”
-
-                                        </div>
+                                        <div class="tooltip-box" data-i18n="dataPreprocNoiseTooltip"></div>
                                     </div>
                                 </div>
                             </button>
                             <div style="margin: 0.5vw">
-                                <input type="radio" name="data-pre-processing-filter" value="z-score" checked /> Z-Score
-                                <input type="radio" name="data-pre-processing-filter" value="iqr" /> IQR
-                                <input type="radio" name="data-pre-processing-filter" value="move-avg" /> Mozgóátlag
+                                <input type="radio" name="data-pre-processing-filter" value="z-score" checked /> <span data-i18n=""></span><span data-i18n="dataPreprocNoiseType1"></span>
+                                <input type="radio" name="data-pre-processing-filter" value="iqr" /> <span data-i18n=""></span><span data-i18n="dataPreprocNoiseType2"></span>
+                                <input type="radio" name="data-pre-processing-filter" value="move-avg" /> <span data-i18n=""></span><span data-i18n="dataPreprocNoiseType3"></span>
                             </div>
 
-                            <button class="plutoToolButton redButton" name="pre-processing" id="scale">
+                            <button class="plutoToolButton purpleButton" name="pre-processing" id="scale">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Skálázás</span>
+                                    <span class="sub" data-i18n="dataPreprocScale"></span>
                                     <div class="tooltip-container">
                                         <div class="tooltip-icon">?</div>
-                                        <div class="tooltip-box">Egységesíti az adatok mértékét, hogy azok összehasonlíthatók és jobban feldolgozhatók legyenek a további lépések során.
-                                            <br />&nbsp;<br />– <b>Standardizáció:</b> az adatokat átlag köré igazítja, egységnyi szórással.
-                                            <br />&nbsp;<br />– <b>Min–Max [0;1]:</b> az értékeket 0 és 1 közé nyújtja.
-                                            <br />&nbsp;<br />– <b>Min–Max [–1;1]:</b> az értékeket –1 és 1 közé skálázza.
-                                        </div>
+                                        <div class="tooltip-box" data-i18n="dataPreprocScaleTooltip">
                                     </div>
                                 </div>
                             </button>
                             <div style="margin: 0.5vw">
-                                <input type="radio" name="data-pre-processing-scale" value="standardize" checked /> Standardizáció
-                                <input type="radio" name="data-pre-processing-scale" value="min-max-0-1" /> Min-Max [0;1]
-                                <input type="radio" name="data-pre-processing-scale" value="min-max-1-1" /> Min-Max [-1;1]
+                                <input type="radio" name="data-pre-processing-scale" value="standardize" checked /> <span data-i18n=""></span><span data-i18n="dataPreprocScaleType1"></span>
+                                <input type="radio" name="data-pre-processing-scale" value="min-max-0-1" /> <span data-i18n=""></span><span data-i18n="dataPreprocScaleType2"></span>
+                                <input type="radio" name="data-pre-processing-scale" value="min-max-1-1" /> <span data-i18n=""></span><span data-i18n="dataPreprocScaleType3"></span>
                             </div>
 
-                            <button class="plutoToolButton redButton" name="pre-processing" id="normalize">
+                            <button class="plutoToolButton purpleButton" name="pre-processing" id="normalize">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Normalizálás</span>
+                                    <span class="sub" data-i18n="dataPreprocNormal"></span>
                                     <div class="tooltip-container">
                                         <div class="tooltip-icon">?</div>
-                                        <div class="tooltip-box">Átalakítja az adatokat egy közös tartományba, hogy kiegyensúlyozottabbá és könnyebben kezelhetővé váljanak az elemzés során.
-                                            <br />&nbsp;<br />– <b>L2-norma:</b> minden sort úgy alakít át, hogy a teljes hosszúsága (távolsága) 1 legyen.
-                                            <br />&nbsp;<br />– <b>L1-norma:</b> minden sort úgy módosít, hogy az elemek összege 1 legyen.
+                                        <div class="tooltip-box" data-i18n="dataPreprocNormalTooltip">
                                         </div>
                                     </div>
                                 </div>
                             </button>
                             <div style="margin: 0.5vw">
-                                <input type="radio" name="data-pre-processing-normalize" value="l2" checked /> L2-norma
-                                <input type="radio" name="data-pre-processing-normalize" value="l1" /> L1-norma
+                                <input type="radio" name="data-pre-processing-normalize" value="l2" checked /> <span data-i18n=""></span><span data-i18n="dataPreprocNormalType1"></span>
+                                <input type="radio" name="data-pre-processing-normalize" value="l1" /> <span data-i18n=""></span><span data-i18n="dataPreprocNormalType2"></span>
                             </div>
 
-                            <button class="plutoToolButton redButton" name="pre-processing" id="transformation">
+                            <button class="plutoToolButton purpleButton" name="pre-processing" id="transformation">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Transzformáció</span>
+                                    <span class="sub" data-i18n="dataPreprocTransform"></span>
                                     <div class="tooltip-container">
                                         <div class="tooltip-icon">?</div>
-                                        <div class="tooltip-box">Lehetővé teszi az adatok átalakítását, hogy azok jobban megfeleljenek az elemzés feltételeinek vagy kiemeljék a fontos mintázatokat.
-                                            <br />&nbsp;<br />– <b>Logaritmus:</b> csökkenti a nagy értékek hatását, kiegyensúlyozza az eloszlást.
-                                            <br />&nbsp;<br />– <b>Négyzetgyök:</b> kisimítja az ingadozásokat, segít a szórás csökkentésében.
-                                            <br />&nbsp;<br />– <b>Reciprok:</b> erőteljesen csökkenti a nagyobb értékeket, különösen erősen ferde eloszlásnál hasznos.
-                                            <br />&nbsp;<br />– <b>Power:</b> hatványozással módosítja az értékeket, kiemelve vagy tompítva az eltéréseket.
-                                        </div>
+                                        <div class="tooltip-box" data-i18n="dataPreprocTransformTooltip"></div>
                                     </div>
                                 </div>
                             </button>
                             <div style="margin: 0.5vw">
-                                <input type="radio" name="data-pre-processing-transformation" value="log" checked /> Logaritmus
-                                <input type="radio" name="data-pre-processing-transformation" value="sqrt" /> Négyzetgyök
-                                <input type="radio" name="data-pre-processing-transformation" value="reciprocal" /> Reciprok
-                                <input type="radio" name="data-pre-processing-transformation" value="power" /> Power
+                                <input type="radio" name="data-pre-processing-transformation" value="log" checked /> <span data-i18n="dataPreprocTransformType1"></span>
+                                <input type="radio" name="data-pre-processing-transformation" value="sqrt" /> <span data-i18n="dataPreprocTransformType2"></span>
+                                <input type="radio" name="data-pre-processing-transformation" value="reciprocal" /> <span data-i18n="dataPreprocTransformType3"></span>
+                                <input type="radio" name="data-pre-processing-transformation" value="power" /> <span data-i18n="dataPreprocTransformType4"></span>
                             </div>
                         </div>
 
@@ -295,45 +284,45 @@
                                     <img src="img/icon-data-imputation.png" style="margin-bottom: 1vw; padding-top: 0.75vw;" />
                                 </div>
                                 <div height="100%" style="float: left;">
-                                    <span>Adatimputáció</span><br />
-                                    <span>hiányzó adatok kitöltése</span>
+                                    <span data-i18n="dataImput"></span><br />
+                                    <span data-i18n="dataImputDescription"></span>
                                 </div>
                                 <div class="tooltip-container">
                                     <div class="tooltip-icon">?</div>
-                                    <div class="tooltip-box">Segít kitölteni a hiányzó adatokat olyan értékekkel, amelyek a legjobban illenek az adatok összképéhez.</div>
+                                    <div class="tooltip-box" data-i18n="dataImputTooltip"></div>
                                 </div>
                             </button>
                         </a>
                         <div class="toolsDropdownMenu-extended margin-top-1vw" id="data-imputation">
 
-                            Hiányzó adat jelölése az adatsorban: <input type="text" name="data-imputation-missing-value" value="0" style="width: 4vw; text-align: right" />
+                            <span data-i18n="dataImputMissingValue"></span> <input type="text" name="data-imputation-missing-value" value="0" style="width: 4vw; text-align: right" />
 
-                            <button class="plutoToolButton redButton" name="data-imputation" id="regression">
+                            <button class="plutoToolButton purpleButton" name="data-imputation" id="regression">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Regresszió</span>                             
+                                    <span class="sub" data-i18n="dataImputRegression"></span>                             
                                     <div class="tooltip-container">
                                         <div class="tooltip-icon">?</div>
-                                        <div class="tooltip-box">Akkor érdemes használni, ha a hiányzó értékek más adatokból jó eséllyel kikövetkeztethetők.</div>
+                                        <div class="tooltip-box" data-i18n="dataImputRegressionTooltip"></div>
                                     </div>
                                 </div>
                             </button>
 
-                            <button class="plutoToolButton redButton" name="data-imputation" id="knn">
+                            <button class="plutoToolButton purpleButton" name="data-imputation" id="knn">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> KNN módszer</span>   
+                                    <span class="sub" data-i18n="dataImputKnn"></span>   
                                     <div class="tooltip-container">
                                         <div class="tooltip-icon">?</div>
-                                        <div class="tooltip-box">Akkor hasznos, ha vannak más, hasonló adatsorok – ez a módszer ezek alapján becsli meg a hiányzó értékeket.</div>
+                                        <div class="tooltip-box" data-i18n="dataImputKnnTooltip"></div>
                                     </div>
                                 </div>
                             </button>
 
-                            <button class="plutoToolButton redButton" name="data-imputation" id="timeseries">
+                            <button class="plutoToolButton purpleButton" name="data-imputation" id="timeseries">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Idősor interpoláció</span>
+                                    <span class="sub" data-i18n="dataImputTimes"></span>
                                     <div class="tooltip-container">
                                         <div class="tooltip-icon">?</div>
-                                        <div class="tooltip-box">Ha az adataid időrendben vannak, ez a módszer segít kitölteni a hiányzó értékeket az előtte és utána lévő értékek alapján.</div>
+                                        <div class="tooltip-box" data-i18n="dataImputTimesTooltip"></div>
                                     </div>
                                 </div>
                             </button>
@@ -345,43 +334,43 @@
                                     <img src="img/icon-feature-engineering.png" style="margin-bottom: 0.5vw; padding-top: 0.25vw;" />
                                 </div>
                                 <div height="100%" style="float: left;">
-                                    <span>Jellemző kinyerés</span><br />
-                                    <span>feature engineering</span>
+                                    <span data-i18n="dataFeature"></span><br />
+                                    <span data-i18n="dataFeatureDescription"></span>
                                 </div>
                                 <div class="tooltip-container">
                                     <div class="tooltip-icon">?</div>
-                                    <div class="tooltip-box">Segít olyan új adatpontokat létrehozni, amelyek jobban tükrözik a lényeges mintázatokat vagy összefüggéseket az adatokban.</div>
+                                    <div class="tooltip-box" data-i18n="dataFeatureTooltip"></div>
                                 </div>
                             </button>
                         </a>
                         <div class="toolsDropdownMenu-extended margin-top-1vw" id="feature-engineering">
 
-                            <button class="plutoToolButton redButton" name="feature-engineering" id="polynomal">
+                            <button class="plutoToolButton purpleButton" name="feature-engineering" id="polynomal">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Polinomális vektor</span>
+                                    <span class="sub" data-i18n="dataFeaturePolinom"></span>
                                     <div class="tooltip-container">
                                         <div class="tooltip-icon">?</div>
-                                        <div class="tooltip-box">Akkor használd, ha szeretnél új oszlopokat létrehozni úgy, hogy az adatok hatványait (pl. négyzet, köb) is figyelembe veszed – ez segíthet bonyolultabb összefüggések felismerésében.</div>
+                                        <div class="tooltip-box" data-i18n="dataFeaturePolinomTooltip"></div>
                                     </div>
                                 </div>
                             </button>
 
-                            <button class="plutoToolButton redButton" name="feature-engineering" id="interaction">
+                            <button class="plutoToolButton purpleButton" name="feature-engineering" id="interaction">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Interakciós termék</span>
+                                    <span class="sub" data-i18n="dataFeatureInteract"></span>
                                     <div class="tooltip-container">
                                         <div class="tooltip-icon">?</div>
-                                        <div class="tooltip-box">Akkor használd, ha kíváncsi vagy arra, hogyan befolyásolják egymást az adatpontok – ez a művelet új jellemzőket hoz létre az oszlopok összeszorzásával.</div>
+                                        <div class="tooltip-box" data-i18n="dataFeatureInteractTooltip"></div>
                                     </div>
                                 </div>
                             </button>
 
-                            <button class="plutoToolButton redButton" name="feature-engineering" id="statistical">
+                            <button class="plutoToolButton purpleButton" name="feature-engineering" id="statistical">
                                 <div style="height: 2vw">
-                                    <span class="sub"><span style="font-size: 1.15vw">&raquo;</span> Statisztikai</span>
+                                    <span class="sub" data-i18n="dataFeatureStat"></span>
                                     <div class="tooltip-container">
                                         <div class="tooltip-icon">?</div>
-                                        <div class="tooltip-box">Akkor használd, ha szeretnél új adatpontokat létrehozni az adatok statisztikai tulajdonságai alapján – például átlag, szórás vagy maximum érték.</div>
+                                        <div class="tooltip-box" data-i18n="dataFeatureStatTooltip"></div>
                                     </div>
                                 </div>
                             </button>
@@ -431,6 +420,8 @@
     <script src="script/event.feature-engineering.js"></script>
     <script src="script/event.correlation.js"></script>
     <script src="script/event.toggle.js"></script>
+
+    <script src="lang/lang-smart.js"></script>
 
     <!-- dev -->
     <script type="text/javascript">
